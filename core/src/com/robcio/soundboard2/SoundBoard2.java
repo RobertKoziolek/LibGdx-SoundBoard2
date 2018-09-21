@@ -1,12 +1,10 @@
 package com.robcio.soundboard2;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.registrar.ScreenRegistrar;
@@ -27,9 +25,9 @@ public class SoundBoard2 extends Game {
         Assets.initialize();
         initializeCamera();
         initializeBatch();
-        initializeRegistars();
+        initializeRegistrars();
 
-        setScreen(ScreenId.SPLASH);
+        setScreen(ScreenId.MAIN);
     }
 
     public void setScreen(final ScreenId screenId) {
@@ -43,7 +41,7 @@ public class SoundBoard2 extends Game {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    private void initializeRegistars() {
+    private void initializeRegistrars() {
         screenRegistrar = new ScreenRegistrar(camera);
     }
 
@@ -57,7 +55,6 @@ public class SoundBoard2 extends Game {
         batch.enableBlending();
         batch.setProjectionMatrix(camera.combined);
     }
-
 
     @Override
     public void render() {

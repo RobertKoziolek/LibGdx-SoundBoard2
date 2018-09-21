@@ -3,6 +3,7 @@ package com.robcio.soundboard2.registrar;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.gui.AbstractScreen;
+import com.robcio.soundboard2.gui.main.MainScreen;
 import com.robcio.soundboard2.gui.splash.SplashScreen;
 
 import java.util.HashMap;
@@ -15,9 +16,9 @@ public class ScreenRegistrar {
     public ScreenRegistrar(final OrthographicCamera camera) {
         map = new HashMap<>();
         map.put(ScreenId.SPLASH, new SplashScreen(camera));
-//        map.put(ScreenId.LOADING, );
-//        map.put(ScreenId.MAIN, );
-//        map.put(ScreenId.OPTIONS, );
+        map.put(ScreenId.MAIN, new MainScreen(camera));
+//        map.put(ScreenId.LOADING, new LoadingScreen(camera));
+//        map.put(ScreenId.OPTIONS, new OptionsScreen(camera));
     }
 
     public AbstractScreen get(final ScreenId screenId) {
@@ -33,7 +34,7 @@ public class ScreenRegistrar {
     }
 
     public void dispose() {
-        for (final AbstractScreen screen : map.values()){
+        for (final AbstractScreen screen : map.values()) {
             screen.dispose();
         }
     }
