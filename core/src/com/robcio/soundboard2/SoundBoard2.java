@@ -11,11 +11,12 @@ import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.registrar.ScreenRegistrar;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.voice.Voice;
 
 import java.util.List;
 
-public class SoundBoard2 extends Game {
+public class SoundBoard2 extends Game implements ScreenChanger {
     public static final int WIDTH = (int) (9 * Maths.PPM);
     public static final int HEIGHT = (int) (16 * Maths.PPM);
     public static final String TITLE = "SoundBoard2";
@@ -33,14 +34,14 @@ public class SoundBoard2 extends Game {
 
         final VoiceLoader voiceLoader = new VoiceLoader();
         voiceLoader.load();
-        Assets.finishLoading();
-        final List<Voice> voiceList = voiceLoader.getVoiceList();
+//        Assets.finishLoading();
 
-        initializeRegistrars(voiceList);
+        initializeRegistrars(voiceLoader);
 
-        setScreen(ScreenId.MAIN);
+        setScreen(ScreenId.LOAD);
     }
 
+    @Override
     public void setScreen(final ScreenId screenId) {
         setScreen(screenRegistrar.get(screenId));
         setUpInput();
@@ -52,8 +53,8 @@ public class SoundBoard2 extends Game {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    private void initializeRegistrars(final List<Voice> voiceList) {
-        screenRegistrar = new ScreenRegistrar(camera, voiceList);
+    private void initializeRegistrars(final VoiceLoader voiceLoader) {
+        screenRegistrar = new ScreenRegistrar(this, camera, voiceLoader);
     }
 
     private void initializeCamera() {

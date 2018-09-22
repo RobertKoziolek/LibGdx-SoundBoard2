@@ -18,11 +18,11 @@ import java.util.List;
 import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 
-public class MainStageController extends Stage {
+class MainStageController extends Stage {
 
     private final List<Voice> voiceList;
 
-    public MainStageController(final Camera camera,
+    MainStageController(final Camera camera,
                                final List<Voice> voiceList) {
         super(new FillViewport(WIDTH, HEIGHT, camera));
         this.voiceList = voiceList;

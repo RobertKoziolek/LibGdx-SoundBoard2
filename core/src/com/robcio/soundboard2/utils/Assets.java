@@ -75,4 +75,12 @@ public class Assets {
     public static void finishLoading() {
         assetManager.finishLoading();
     }
+
+    public static boolean update() {
+        return assetManager.update();
+    }
+
+    public static float getProgress() {
+        return assetManager.getProgress();
+    }
 }

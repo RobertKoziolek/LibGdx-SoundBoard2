@@ -13,11 +13,11 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
 
-public class SplashStageController extends Stage {
+class SplashStageController extends Stage {
 
     private final Image logo;
 
-    public SplashStageController(final Camera camera) {
+    SplashStageController(final Camera camera) {
         super(new FillViewport(WIDTH, HEIGHT, camera));
         logo = Assets.getImage(TextureId.LOGO);
         logo.setPosition(getWidth() / 2, getHeight());

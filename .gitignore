@@ -8,6 +8,9 @@ hs_err_pid*
 ## Robovm
 /ios/robovm-build/
 
+##json
+/android/assets/json/packets-
+
 ## GWT
 /html/war/
 /html/gwt-unitCache/

@@ -2,20 +2,26 @@ package com.robcio.soundboard2.gui.main;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.robcio.soundboard2.gui.AbstractScreen;
-import com.robcio.soundboard2.voice.Voice;
-
-import java.util.List;
+import com.robcio.soundboard2.loader.VoiceLoader;
+import com.robcio.soundboard2.utils.ScreenChanger;
 
 public class MainScreen extends AbstractScreen {
-    public MainScreen(final Camera camera,
-                      final List<Voice> voiceModelList) {
-        final MainStageController stageController = new MainStageController(camera, voiceModelList);
+    private final Camera camera;
+    private final VoiceLoader voiceLoader;
 
-        setStage(stageController);
+    public MainScreen(final ScreenChanger screenChanger,
+                      final Camera camera,
+                      final VoiceLoader voiceLoader) {
+        this.camera = camera;
+        this.voiceLoader = voiceLoader;
     }
 
     @Override
     public void show() {
+        if (getStage() == null) {
+            final MainStageController stageController = new MainStageController(camera, voiceLoader.getVoiceList());
 
+            setStage(stageController);
+        }
     }
 }
