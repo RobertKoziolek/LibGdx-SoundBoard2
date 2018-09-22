@@ -14,8 +14,10 @@ public class GuiAssembler {
 
     public static Table tableOf(final Button... buttons) {
         final Table table = new Table(Assets.getSkin());
-        for (final Button button: buttons) {
-            table.add(button);
+        for (final Button button : buttons) {
+            table.add(button)
+                 .width(button.getWidth())
+                 .height(button.getHeight());
         }
         return table;
     }
@@ -32,7 +34,7 @@ public class GuiAssembler {
         private final TextButton button;
         private float width, height;
         private float x, y;
-//        private Observable observable;
+        //        private Observable observable;
         private Command command;
 
         private TextButtonAssembler(final String text) {

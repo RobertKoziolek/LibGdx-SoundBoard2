@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.robcio.soundboard2.enumeration.ScreenId;
+import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.registrar.ScreenRegistrar;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.voice.Voice;
+
+import java.util.List;
 
 public class SoundBoard2 extends Game {
     public static final int WIDTH = (int) (9 * Maths.PPM);
@@ -25,7 +29,14 @@ public class SoundBoard2 extends Game {
         Assets.initialize();
         initializeCamera();
         initializeBatch();
-        initializeRegistrars();
+
+
+        final VoiceLoader voiceLoader = new VoiceLoader();
+        voiceLoader.load();
+        Assets.finishLoading();
+        final List<Voice> voiceList = voiceLoader.getVoiceList();
+
+        initializeRegistrars(voiceList);
 
         setScreen(ScreenId.MAIN);
     }
@@ -41,8 +52,8 @@ public class SoundBoard2 extends Game {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    private void initializeRegistrars() {
-        screenRegistrar = new ScreenRegistrar(camera);
+    private void initializeRegistrars(final List<Voice> voiceList) {
+        screenRegistrar = new ScreenRegistrar(camera, voiceList);
     }
 
     private void initializeCamera() {

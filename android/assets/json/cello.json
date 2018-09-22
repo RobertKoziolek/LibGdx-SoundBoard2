@@ -1,0 +1,16 @@
+{
+  name: "Cello",
+  folder: "cello",
+  filter: "CELLO",
+  format: ".ogg",
+  voiceModels: [
+    {
+      name: "Cello 1",
+      file: "cello01",
+      filter: [
+        INSTRUMENT,
+        CELLO
+      ] 
+    } 
+  ]
+}

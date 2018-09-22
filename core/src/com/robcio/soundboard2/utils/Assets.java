@@ -7,11 +7,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.robcio.soundboard2.enumeration.SoundId;
 import com.robcio.soundboard2.enumeration.TextureId;
+import com.robcio.soundboard2.loader.model.VoiceModel;
 import lombok.Getter;
-
-import static com.robcio.soundboard2.enumeration.SoundId.*;
 
 public class Assets {
 
@@ -34,19 +32,8 @@ public class Assets {
     public static void initialize() {
         loadFont();
         loadSkin();
-        loadSounds();
         assetManager.finishLoading();
         textureAtlas = assetManager.get(TEXTURE_ATLAS);
-    }
-
-    private static void loadSounds() {
-        assetManager.load(SOUND_BASS_1.getFilename(), Sound.class);
-        assetManager.load(SOUND_BASS_2.getFilename(), Sound.class);
-        assetManager.load(SOUND_CELLO_1.getFilename(), Sound.class);
-        assetManager.load(SOUND_ORGAN_1.getFilename(), Sound.class);
-        assetManager.load(SOUND_ORGAN_2.getFilename(), Sound.class);
-        assetManager.load(SOUND_ORGAN_3.getFilename(), Sound.class);
-        assetManager.load(SOUND_ORGAN_4.getFilename(), Sound.class);
     }
 
     private static void loadFont() {
@@ -69,19 +56,23 @@ public class Assets {
         skin.dispose();
     }
 
-    public static Sound getSound(final SoundId soundId) {
-        return assetManager.get(soundId.getFilename(), Sound.class);
-    }
-
     public static Image getImage(final TextureId textureId) {
         return new Image(getRegion(textureId));
     }
-//
-//    public static Sprite getSprite(final TextureId textureId) {
-//        return textureAtlas.createSprite(textureId.getFilename());
-//    }
 
     public static TextureAtlas.AtlasRegion getRegion(final TextureId textureId) {
         return textureAtlas.findRegion(textureId.getFilename());
+    }
+
+    public static void loadVoice(final VoiceModel voiceModel) {
+        assetManager.load(voiceModel.getFile(), Sound.class);
+    }
+
+    public static Sound getSound(final String file){
+        return assetManager.get(file, Sound.class);
+    }
+
+    public static void finishLoading() {
+        assetManager.finishLoading();
     }
 }
