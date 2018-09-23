@@ -12,9 +12,6 @@ import com.robcio.soundboard2.registrar.ScreenRegistrar;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
 import com.robcio.soundboard2.utils.ScreenChanger;
-import com.robcio.soundboard2.voice.Voice;
-
-import java.util.List;
 
 public class SoundBoard2 extends Game implements ScreenChanger {
     public static final int WIDTH = (int) (9 * Maths.PPM);
@@ -34,10 +31,8 @@ public class SoundBoard2 extends Game implements ScreenChanger {
 
         final VoiceLoader voiceLoader = new VoiceLoader();
         voiceLoader.load();
-//        Assets.finishLoading();
 
         initializeRegistrars(voiceLoader);
-
         setScreen(ScreenId.LOAD);
     }
 

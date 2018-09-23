@@ -72,10 +72,6 @@ public class Assets {
         return assetManager.get(file, Sound.class);
     }
 
-    public static void finishLoading() {
-        assetManager.finishLoading();
-    }
-
     public static boolean update() {
         return assetManager.update();
     }

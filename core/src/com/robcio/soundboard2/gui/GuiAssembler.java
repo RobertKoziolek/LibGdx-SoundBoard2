@@ -2,10 +2,7 @@ package com.robcio.soundboard2.gui;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
@@ -28,6 +25,10 @@ public class GuiAssembler {
 
     public static TextButtonAssembler textButtonOf(final String text) {
         return new TextButtonAssembler(text);
+    }
+
+    public static Label labelOf(final String text) {
+        return new Label(text, Assets.getSkin());
     }
 
     public static class TextButtonAssembler {

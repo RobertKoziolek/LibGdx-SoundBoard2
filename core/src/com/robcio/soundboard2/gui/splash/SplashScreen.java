@@ -7,7 +7,7 @@ import com.robcio.soundboard2.utils.ScreenChanger;
 public class SplashScreen extends AbstractScreen {
 
     public SplashScreen(final ScreenChanger screenChanger, final Camera camera){
-        final SplashStageController stageController = new SplashStageController(camera);
+        final SplashStageController stageController = new SplashStageController(screenChanger, camera);
 
         setStage(stageController);
     }

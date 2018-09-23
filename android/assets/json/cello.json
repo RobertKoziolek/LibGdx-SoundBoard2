@@ -8,8 +8,8 @@
       name: "Cello 1",
       file: "cello01",
       filter: [
-        INSTRUMENT,
-        CELLO
+        "P_Instrument",
+        "CELLO"
       ] 
     } 
   ]

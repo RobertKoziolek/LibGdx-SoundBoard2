@@ -2,35 +2,40 @@ package com.robcio.soundboard2.gui.main;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.gui.GuiAssembler;
+import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
+import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.voice.Voice;
 
 import java.util.List;
 
-import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
+import static com.robcio.soundboard2.gui.GuiConstants.HALF_WIDTH;
+import static com.robcio.soundboard2.gui.GuiConstants.MENU_HEIGHT;
 
-class MainStageController extends Stage {
+class MainStageController extends StageController {
 
     private final List<Voice> voiceList;
+    private final ScrollPane buttonPane;
 
-    MainStageController(final Camera camera,
-                               final List<Voice> voiceList) {
-        super(new FillViewport(WIDTH, HEIGHT, camera));
+    MainStageController(final ScreenChanger screenChanger,
+                        final Camera camera,
+                        final List<Voice> voiceList) {
+        super(screenChanger, camera);
         this.voiceList = voiceList;
 
         final Table mainTable = getMainTable();
 
-        final Actor buttonPane = getButtonPane();
         final Actor topBar = getTopBar();
+        buttonPane = getButtonPane();
 
 
         mainTable.add(topBar)
@@ -39,6 +44,7 @@ class MainStageController extends Stage {
                  .row();
 
         addActor(mainTable);
+        updateButtons();
     }
 
     private Actor getTopBar() {
@@ -46,15 +52,30 @@ class MainStageController extends Stage {
                                                  .withCommand(new Command() {
                                                      @Override
                                                      public void execute() {
-                                                         for (final Voice voice : voiceList) {
-                                                             voice.getSound()
-                                                                  .stop();
-                                                         }
+                                                         silenceAllVoices();
                                                      }
                                                  })
-                                                 .withSize(WIDTH, HEIGHT / 12f)
+                                                 .withSize(HALF_WIDTH, MENU_HEIGHT)
                                                  .assemble();
-        return GuiAssembler.tableOf(silenceButton);
+        final TextButton optionsButton = GuiAssembler.textButtonOf("Opcje")
+                                                     .withCommand(new Command() {
+                                                         @Override
+                                                         public void execute() {
+                                                             silenceAllVoices();
+                                                             changeScreen(ScreenId.OPTIONS);
+                                                         }
+                                                     })
+                                                     .withSize(HALF_WIDTH, MENU_HEIGHT)
+                                                     .assemble();
+
+        return GuiAssembler.tableOf(silenceButton, optionsButton);
+    }
+
+    private void silenceAllVoices() {
+        for (final Voice voice : voiceList) {
+            voice.getSound()
+                 .stop();
+        }
     }
 
     private Table getMainTable() {
@@ -64,7 +85,14 @@ class MainStageController extends Stage {
         return mainTable;
     }
 
-    private Actor getButtonPane() {
+    private ScrollPane getButtonPane() {
+        final ScrollPane buttonPane = GuiAssembler.paneOf(null)
+                                                  .withScrollingDisabled(true, false)
+                                                  .assemble();
+        return buttonPane;
+    }
+
+    public void updateButtons() {
         final Table table = new Table(Assets.getSkin());
         for (final Voice voice : voiceList) {
             final TextButton button = GuiAssembler.textButtonOf(voice.getName())
@@ -78,11 +106,9 @@ class MainStageController extends Stage {
                                                   .assemble();
             table.add(button)
                  .width(WIDTH)
-                 .height(HEIGHT / 12f)
+                 .height(MENU_HEIGHT)
                  .row();
         }
-        return GuiAssembler.paneOf(table)
-                           .withScrollingDisabled(true, false)
-                           .assemble();
+        buttonPane.setActor(table);
     }
 }

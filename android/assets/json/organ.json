@@ -8,32 +8,32 @@
       name: "Organy 1",
       file: "church_organ01",
       filter: [
-        INSTRUMENT,
-        ORGAN
+        "P_Instrument",
+        "ORGAN"
       ] 
     },
     {
       name: "Organy 2",
       file: "church_organ02",
       filter: [
-        INSTRUMENT,
-        ORGAN
+        "P_Instrument",
+        "ORGAN"
       ] 
     },
     {
       name: "Organy 3",
       file: "church_organ03",
       filter: [
-        INSTRUMENT,
-        ORGAN
+        "P_Instrument",
+        "ORGAN"
       ] 
     },
     {
       name: "Organy 4",
       file: "church_organ04",
       filter: [
-        INSTRUMENT,
-        ORGAN
+        "P_Instrument",
+        "ORGAN"
       ] 
     }
   ]

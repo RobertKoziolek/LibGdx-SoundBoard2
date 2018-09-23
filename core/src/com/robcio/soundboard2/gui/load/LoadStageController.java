@@ -1,28 +1,31 @@
 package com.robcio.soundboard2.gui.load;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.robcio.soundboard2.enumeration.ScreenId;
+import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
 import com.robcio.soundboard2.utils.ScreenChanger;
+import com.robcio.soundboard2.voice.VoiceHolder;
 
-import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
-import static com.robcio.soundboard2.SoundBoard2.WIDTH;
+import static com.robcio.soundboard2.gui.GuiConstants.*;
 
-class LoadStageController extends Stage {
+class LoadStageController extends StageController {
 
     private final Slider slider;
-    private final ScreenChanger screenChanger;
+    private final VoiceLoader voiceLoader;
+    private final VoiceHolder voiceHolder;
 
-    private float progress;
-
-    LoadStageController(final ScreenChanger screenChanger, final Camera camera) {
-        super(new FillViewport(WIDTH, HEIGHT, camera));
-        this.screenChanger = screenChanger;
+    LoadStageController(final ScreenChanger screenChanger,
+                        final Camera camera,
+                        final VoiceLoader voiceLoader,
+                        final VoiceHolder voiceHolder) {
+        super(screenChanger, camera);
+        this.voiceLoader = voiceLoader;
+        this.voiceHolder = voiceHolder;
 
         slider = new Slider(0, 1, 0.01f, false, Assets.getSkin());
         slider.getStyle().knob.setMinWidth(Maths.PPM / 2);
@@ -31,9 +34,9 @@ class LoadStageController extends Stage {
         final Table table = new Table();
         table.setFillParent(true);
         table.add(slider)
-             .width(WIDTH * 4 / 5)
-             .height(HEIGHT / 12)
-             .padBottom(HEIGHT * 4 / 9);
+             .width(ALMOST_WIDTH)
+             .height(MENU_HEIGHT)
+             .padBottom(HALF_HEIGHT);
         addActor(table);
     }
 
@@ -46,7 +49,9 @@ class LoadStageController extends Stage {
 
     private void loadAssets() {
         if (Assets.update()) {
-            screenChanger.setScreen(ScreenId.MAIN);
+            voiceHolder.loadUp(voiceLoader);
+//            changeScreen(ScreenId.SPLASH);
+            changeScreen(ScreenId.MAIN);
         }
     }
 

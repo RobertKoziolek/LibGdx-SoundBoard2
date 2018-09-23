@@ -8,16 +8,17 @@
       name: "Bass 1",
       file: "bassslap01",
       filter: [
-        INSTRUMENT,
-        BASS
+        "P_Instrument",
+        "BASS",
+        "TIBIA"
       ] 
     },
     {
       name: "Inny bass",
       file: "bassslap02",
       filter: [
-        INSTRUMENT,
-        BASS
+        "P_Instrument",
+        "BASS"
       ] 
     }
   ]
