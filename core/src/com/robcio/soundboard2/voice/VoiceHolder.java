@@ -42,4 +42,12 @@ public class VoiceHolder {
             }
         }
     }
+
+    public int getFullSize() {
+        return fullList.size();
+    }
+
+    public int getCurrentSize() {
+        return currentList.size();
+    }
 }

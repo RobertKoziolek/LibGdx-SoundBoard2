@@ -2,11 +2,14 @@ package com.robcio.soundboard2.gui;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.utils.ScreenChanger;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 
@@ -20,6 +23,16 @@ public abstract class StageController extends Stage {
 
     final protected void changeScreen(final ScreenId screenId) {
         screenChanger.setScreen(screenId);
+    }
+
+    final protected void changeScreen(final ScreenId screenId, final Action action) {
+        addAction(sequence(action,
+                           run(new Runnable() {
+                               @Override
+                               public void run() {
+                                   changeScreen(screenId);
+                               }
+                           })));
     }
 
     public static void setScreenChangerAndCamera(final ScreenChanger screenChanger, final OrthographicCamera camera) {

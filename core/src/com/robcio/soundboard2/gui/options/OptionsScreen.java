@@ -2,6 +2,7 @@ package com.robcio.soundboard2.gui.options;
 
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.gui.AbstractScreen;
+import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.voice.VoiceHolder;
 
 public class OptionsScreen extends AbstractScreen {
@@ -14,6 +15,7 @@ public class OptionsScreen extends AbstractScreen {
 
     @Override
     public void show() {
+        StageAnimation.enterFromTop(optionsStageController);
         final int size = optionsStageController.getActors().size;
         if (size < 1) {
             optionsStageController.buildStage();

@@ -2,6 +2,7 @@ package com.robcio.soundboard2.gui.main;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.robcio.soundboard2.gui.AbstractScreen;
+import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.voice.VoiceHolder;
 
 public class MainScreen extends AbstractScreen {
@@ -19,6 +20,7 @@ public class MainScreen extends AbstractScreen {
 
             setStage(stageController);
         } else {
+            StageAnimation.enterFromTop(stage);
             final MainStageController mainStageController = (MainStageController) stage;
             mainStageController.updateButtons();
         }

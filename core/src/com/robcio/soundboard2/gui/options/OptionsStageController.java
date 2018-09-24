@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
@@ -35,7 +36,7 @@ class OptionsStageController extends StageController {
     }
 
     void buildStage() {
-        final Table mainTable = TableAssembler.table()
+        final Table rootTable = TableAssembler.table()
                                               .align(Align.top)
                                               .fillParent()
                                               .assemble();
@@ -44,14 +45,14 @@ class OptionsStageController extends StageController {
         final Actor filterPane = getFilterPane();
 
 
-        mainTable.add(topBar)
+        rootTable.add(topBar)
                  .row();
-        mainTable.add(filterPane)
+        rootTable.add(filterPane)
                  .width(WIDTH)
                  .height(ALMOST_HEIGHT)
                  .row();
 
-        addActor(mainTable);
+        addActor(rootTable);
     }
 
     private Actor getTopBar() {
@@ -61,7 +62,8 @@ class OptionsStageController extends StageController {
                                                              public void execute() {
                                                                  voiceHolder.filter(FilterCheckBox.getCurrentFilter(),
                                                                                     filterMap.getFilterInformation());
-                                                                 changeScreen(ScreenId.MAIN);
+                                                                 changeScreen(ScreenId.MAIN,
+                                                                              StageAnimation.exitToBot());
                                                              }
                                                          })
                                                          .withSize(WIDTH, MENU_HEIGHT)

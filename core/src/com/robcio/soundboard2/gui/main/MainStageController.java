@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
@@ -17,8 +18,10 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import java.util.List;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.constants.Sizes.*;
+import static com.robcio.soundboard2.gui.constants.Sizes.MENU_HEIGHT;
+import static com.robcio.soundboard2.gui.constants.Sizes.THIRD_WIDTH;
 import static com.robcio.soundboard2.gui.constants.Strings.*;
+import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
 
 class MainStageController extends StageController {
 
@@ -29,23 +32,24 @@ class MainStageController extends StageController {
         super();
         this.voiceList = voiceList;
 
-        final Table mainTable = getMainTable();
+        final Table rootTable = getMainTable();
 
         final Actor topBar = getTopBar();
         buttonPane = getButtonPane();
 
 
-        mainTable.add(topBar)
+        rootTable.add(topBar)
                  .row();
-        mainTable.add(buttonPane)
+        rootTable.add(buttonPane)
                  .row();
 
-        addActor(mainTable);
+        addActor(rootTable);
         updateButtons();
     }
 
     private Actor getTopBar() {
         final Button silenceButton = TextButtonAssembler.buttonOf(SILENCE_BUTTON)
+                                                        .shake(this)
                                                         .withCommand(new Command() {
                                                             @Override
                                                             public void execute() {
@@ -59,7 +63,7 @@ class MainStageController extends StageController {
                                                                 @Override
                                                                 public void execute() {
                                                                     silenceAllVoices();
-                                                                    changeScreen(ScreenId.OPTIONS);
+                                                                    changeScreen(ScreenId.OPTIONS, StageAnimation.exitToTop());
                                                                 }
                                                             })
                                                             .withSize(THIRD_WIDTH, MENU_HEIGHT)
@@ -87,10 +91,10 @@ class MainStageController extends StageController {
     }
 
     private Table getMainTable() {
-        final Table mainTable = new Table(Assets.getSkin());
-        mainTable.setFillParent(true);
-        mainTable.align(Align.top);
-        return mainTable;
+        final Table rootTable = new Table(Assets.getSkin());
+        rootTable.setFillParent(true);
+        rootTable.align(Align.top);
+        return rootTable;
     }
 
     private ScrollPane getButtonPane() {
@@ -106,7 +110,8 @@ class MainStageController extends StageController {
     private void updateButtons(final String searchString) {
         final Table table = new Table(Assets.getSkin());
         for (final Voice voice : voiceList) {
-            if (!searchString.isEmpty() && FuzzySearch.tokenSetPartialRatio(voice.getName(), searchString) < 65) {
+            if (!searchString.isEmpty() && FuzzySearch.tokenSetPartialRatio(voice.getName(),
+                                                                            searchString) < SEARCH_RATIO) {
                 continue;
             }
             final TextButton button = TextButtonAssembler.buttonOf(voice.getName())
