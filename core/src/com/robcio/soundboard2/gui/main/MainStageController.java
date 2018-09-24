@@ -1,35 +1,32 @@
 package com.robcio.soundboard2.gui.main;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
-import com.robcio.soundboard2.gui.GuiAssembler;
 import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.assembler.PaneAssembler;
+import com.robcio.soundboard2.gui.assembler.TableAssembler;
+import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
+import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
-import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.voice.Voice;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 import java.util.List;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.GuiConstants.HALF_WIDTH;
-import static com.robcio.soundboard2.gui.GuiConstants.MENU_HEIGHT;
+import static com.robcio.soundboard2.gui.constants.Sizes.*;
+import static com.robcio.soundboard2.gui.constants.Strings.*;
 
 class MainStageController extends StageController {
 
     private final List<Voice> voiceList;
     private final ScrollPane buttonPane;
 
-    MainStageController(final ScreenChanger screenChanger,
-                        final Camera camera,
-                        final List<Voice> voiceList) {
-        super(screenChanger, camera);
+    MainStageController(final List<Voice> voiceList) {
+        super();
         this.voiceList = voiceList;
 
         final Table mainTable = getMainTable();
@@ -48,27 +45,38 @@ class MainStageController extends StageController {
     }
 
     private Actor getTopBar() {
-        final Button silenceButton = GuiAssembler.textButtonOf("Silentium")
-                                                 .withCommand(new Command() {
-                                                     @Override
-                                                     public void execute() {
-                                                         silenceAllVoices();
-                                                     }
-                                                 })
-                                                 .withSize(HALF_WIDTH, MENU_HEIGHT)
-                                                 .assemble();
-        final TextButton optionsButton = GuiAssembler.textButtonOf("Opcje")
-                                                     .withCommand(new Command() {
-                                                         @Override
-                                                         public void execute() {
-                                                             silenceAllVoices();
-                                                             changeScreen(ScreenId.OPTIONS);
-                                                         }
-                                                     })
-                                                     .withSize(HALF_WIDTH, MENU_HEIGHT)
-                                                     .assemble();
+        final Button silenceButton = TextButtonAssembler.buttonOf(SILENCE_BUTTON)
+                                                        .withCommand(new Command() {
+                                                            @Override
+                                                            public void execute() {
+                                                                silenceAllVoices();
+                                                            }
+                                                        })
+                                                        .withSize(THIRD_WIDTH, MENU_HEIGHT)
+                                                        .assemble();
+        final TextButton optionsButton = TextButtonAssembler.buttonOf(OPTIONS_BUTTON)
+                                                            .withCommand(new Command() {
+                                                                @Override
+                                                                public void execute() {
+                                                                    silenceAllVoices();
+                                                                    changeScreen(ScreenId.OPTIONS);
+                                                                }
+                                                            })
+                                                            .withSize(THIRD_WIDTH, MENU_HEIGHT)
+                                                            .assemble();
+        final TextField searchField = TextFieldAssembler.fieldOf(SEARCH_STRING)
+                                                        .withSize(THIRD_WIDTH, MENU_HEIGHT)
+                                                        .withTextFieldListener(
+                                                                new TextField.TextFieldListener() {
+                                                                    @Override
+                                                                    public void keyTyped(TextField textField, char c) {
+                                                                        updateButtons(textField.getText());
+                                                                    }
+                                                                })
+                                                        .assemble();
 
-        return GuiAssembler.tableOf(silenceButton, optionsButton);
+        return TableAssembler.tableOf(searchField, silenceButton, optionsButton)
+                             .assemble();
     }
 
     private void silenceAllVoices() {
@@ -86,24 +94,30 @@ class MainStageController extends StageController {
     }
 
     private ScrollPane getButtonPane() {
-        final ScrollPane buttonPane = GuiAssembler.paneOf(null)
-                                                  .withScrollingDisabled(true, false)
-                                                  .assemble();
-        return buttonPane;
+        return PaneAssembler.paneOf(null)
+                            .withScrollingDisabled(true, false)
+                            .assemble();
     }
 
-    public void updateButtons() {
+    void updateButtons() {
+        updateButtons(EMPTY_STRING);
+    }
+
+    private void updateButtons(final String searchString) {
         final Table table = new Table(Assets.getSkin());
         for (final Voice voice : voiceList) {
-            final TextButton button = GuiAssembler.textButtonOf(voice.getName())
-                                                  .withCommand(new Command() {
-                                                      @Override
-                                                      public void execute() {
-                                                          voice.getSound()
-                                                               .play();
-                                                      }
-                                                  })
-                                                  .assemble();
+            if (!searchString.isEmpty() && FuzzySearch.tokenSetPartialRatio(voice.getName(), searchString) < 65) {
+                continue;
+            }
+            final TextButton button = TextButtonAssembler.buttonOf(voice.getName())
+                                                         .withCommand(new Command() {
+                                                             @Override
+                                                             public void execute() {
+                                                                 voice.getSound()
+                                                                      .play();
+                                                             }
+                                                         })
+                                                         .assemble();
             table.add(button)
                  .width(WIDTH)
                  .height(MENU_HEIGHT)

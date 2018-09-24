@@ -1,5 +1,6 @@
 package com.robcio.soundboard2.filter;
 
+import com.robcio.soundboard2.utils.Maths;
 import lombok.Getter;
 
 import java.util.HashSet;
@@ -42,12 +43,8 @@ public class FilterInformation {
     void addFilterBit(final boolean isPersonBit, final int index) {
         if (isPersonBit) {
             peopleFilters = peopleFilters | index;
-        } else if (!isPacketBit(index)) {
+        } else if (!Maths.containsBit(packetFilters, index)) {
             otherFilters.add(index);
         }
-    }
-
-    private boolean isPacketBit(final int index) {
-        return (packetFilters & index) > 0;
     }
 }

@@ -1,6 +1,5 @@
 package com.robcio.soundboard2.gui.load;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.robcio.soundboard2.enumeration.ScreenId;
@@ -8,10 +7,9 @@ import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
-import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.voice.VoiceHolder;
 
-import static com.robcio.soundboard2.gui.GuiConstants.*;
+import static com.robcio.soundboard2.gui.constants.Sizes.*;
 
 class LoadStageController extends StageController {
 
@@ -19,11 +17,9 @@ class LoadStageController extends StageController {
     private final VoiceLoader voiceLoader;
     private final VoiceHolder voiceHolder;
 
-    LoadStageController(final ScreenChanger screenChanger,
-                        final Camera camera,
-                        final VoiceLoader voiceLoader,
+    LoadStageController(final VoiceLoader voiceLoader,
                         final VoiceHolder voiceHolder) {
-        super(screenChanger, camera);
+        super();
         this.voiceLoader = voiceLoader;
         this.voiceHolder = voiceHolder;
 

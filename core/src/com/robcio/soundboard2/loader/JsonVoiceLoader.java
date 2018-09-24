@@ -11,9 +11,9 @@ import com.robcio.soundboard2.utils.Assets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonVoiceLoader {
+class JsonVoiceLoader {
 
-    public List<VoiceModel> load(final FilterMap filterMap) {
+    List<VoiceModel> load(final FilterMap filterMap) {
         final List<VoiceModel> voiceModelList = new ArrayList<>();
         final Json json = new Json();
         final PacketsInformationModel packetsInformationModel = json

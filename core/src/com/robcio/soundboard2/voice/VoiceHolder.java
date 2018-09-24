@@ -2,6 +2,7 @@ package com.robcio.soundboard2.voice;
 
 import com.robcio.soundboard2.filter.FilterInformation;
 import com.robcio.soundboard2.loader.VoiceLoader;
+import com.robcio.soundboard2.utils.Maths;
 import lombok.Getter;
 
 import java.util.LinkedList;
@@ -30,9 +31,9 @@ public class VoiceHolder {
         voiceLoop:
         for (final Voice voice : fullList) {
             final Integer voiceFilter = voice.getFilter();
-            if ((packetFilter & voiceFilter) > 0 && (peopleFilter & voiceFilter) > 0) {
+            if (Maths.containsBit(packetFilter, voiceFilter) && Maths.containsBit(peopleFilter, voiceFilter)) {
                 for (final Integer otherFilterBit : otherFilters) {
-                    if ((otherFilterBit & voiceFilter) > 0 && (otherFilterBit & filter) == 0) {
+                    if (Maths.containsBit(otherFilterBit, voiceFilter) && !Maths.containsBit(otherFilterBit, filter)) {
                         continue voiceLoop;
                     }
                 }

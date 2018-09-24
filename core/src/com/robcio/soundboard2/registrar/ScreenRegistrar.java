@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.gui.AbstractScreen;
+import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.gui.load.LoadScreen;
 import com.robcio.soundboard2.gui.main.MainScreen;
 import com.robcio.soundboard2.gui.options.OptionsScreen;
@@ -22,13 +23,14 @@ public class ScreenRegistrar {
     public ScreenRegistrar(final ScreenChanger screenChanger,
                            final OrthographicCamera camera,
                            final VoiceLoader voiceLoader) {
+        StageController.setScreenChangerAndCamera(screenChanger, camera);
         final VoiceHolder voiceHolder = new VoiceHolder();
         final FilterMap filterMap = voiceLoader.getFilterMap();
         map = new HashMap<>();
-        map.put(ScreenId.LOAD, new LoadScreen(screenChanger, camera, voiceLoader, voiceHolder));
-        map.put(ScreenId.SPLASH, new SplashScreen(screenChanger, camera));
-        map.put(ScreenId.MAIN, new MainScreen(screenChanger, camera, voiceHolder));
-        map.put(ScreenId.OPTIONS, new OptionsScreen(screenChanger, camera, voiceHolder, filterMap));
+        map.put(ScreenId.LOAD, new LoadScreen(voiceLoader, voiceHolder));
+        map.put(ScreenId.SPLASH, new SplashScreen());
+        map.put(ScreenId.MAIN, new MainScreen(voiceHolder));
+        map.put(ScreenId.OPTIONS, new OptionsScreen(voiceHolder, filterMap));
     }
 
     public AbstractScreen get(final ScreenId screenId) {

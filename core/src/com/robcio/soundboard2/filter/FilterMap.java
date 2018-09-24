@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class FilterMap extends HashMap<String, Integer> {
     public static final String PERSON_PREFIX = "P_";
-    public static final String EMPTY_STRING = "";
 
     @Getter
     final private FilterInformation filterInformation = new FilterInformation();

@@ -7,8 +7,8 @@ import lombok.Getter;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.robcio.soundboard2.filter.FilterMap.EMPTY_STRING;
 import static com.robcio.soundboard2.filter.FilterMap.PERSON_PREFIX;
+import static com.robcio.soundboard2.gui.constants.Strings.EMPTY_STRING;
 
 public class FilterCheckBox extends CheckBox {
     static private Set<FilterCheckBox> set = new HashSet<>();
