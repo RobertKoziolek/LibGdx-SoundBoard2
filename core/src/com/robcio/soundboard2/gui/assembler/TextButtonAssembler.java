@@ -52,7 +52,7 @@ public class TextButtonAssembler {
         return this;
     }
 
-    public TextButtonAssembler shake(final Stage stage) {
+    public TextButtonAssembler shakeStage(final Stage stage) {
         this.stage = stage;
         return this;
     }

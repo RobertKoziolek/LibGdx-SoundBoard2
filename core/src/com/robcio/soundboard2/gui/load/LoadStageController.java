@@ -4,12 +4,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
 import com.robcio.soundboard2.voice.VoiceHolder;
 
-import static com.robcio.soundboard2.gui.constants.Sizes.*;
+import static com.robcio.soundboard2.gui.constants.Numeral.*;
 
 class LoadStageController extends StageController {
 
@@ -27,8 +28,9 @@ class LoadStageController extends StageController {
         slider.getStyle().knob.setMinWidth(Maths.PPM / 2);
         slider.getStyle().knob.setMinHeight(Maths.PPM);
 
-        final Table table = new Table();
-        table.setFillParent(true);
+        final Table table = TableAssembler.table()
+                                          .fillParent()
+                                          .assemble();
         table.add(slider)
              .width(ALMOST_WIDTH)
              .height(MENU_HEIGHT)

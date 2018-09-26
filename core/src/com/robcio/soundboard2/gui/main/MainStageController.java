@@ -10,7 +10,6 @@ import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
-import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.voice.Voice;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
@@ -18,8 +17,8 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import java.util.List;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.constants.Sizes.MENU_HEIGHT;
-import static com.robcio.soundboard2.gui.constants.Sizes.THIRD_WIDTH;
+import static com.robcio.soundboard2.gui.constants.Numeral.MENU_HEIGHT;
+import static com.robcio.soundboard2.gui.constants.Numeral.THIRD_WIDTH;
 import static com.robcio.soundboard2.gui.constants.Strings.*;
 import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
 
@@ -32,10 +31,15 @@ class MainStageController extends StageController {
         super();
         this.voiceList = voiceList;
 
-        final Table rootTable = getMainTable();
+        final Table rootTable = TableAssembler.table()
+                                              .fillParent()
+                                              .align(Align.top)
+                                              .assemble();
 
         final Actor topBar = getTopBar();
-        buttonPane = getButtonPane();
+        buttonPane = PaneAssembler.paneOf(null)
+                                  .withScrollingDisabled(true, false)
+                                  .assemble();
 
 
         rootTable.add(topBar)
@@ -49,7 +53,7 @@ class MainStageController extends StageController {
 
     private Actor getTopBar() {
         final Button silenceButton = TextButtonAssembler.buttonOf(SILENCE_BUTTON)
-                                                        .shake(this)
+                                                        .shakeStage(this)
                                                         .withCommand(new Command() {
                                                             @Override
                                                             public void execute() {
@@ -63,7 +67,8 @@ class MainStageController extends StageController {
                                                                 @Override
                                                                 public void execute() {
                                                                     silenceAllVoices();
-                                                                    changeScreen(ScreenId.OPTIONS, StageAnimation.exitToTop());
+                                                                    changeScreen(ScreenId.OPTIONS,
+                                                                                 StageAnimation.exitToTop());
                                                                 }
                                                             })
                                                             .withSize(THIRD_WIDTH, MENU_HEIGHT)
@@ -90,25 +95,13 @@ class MainStageController extends StageController {
         }
     }
 
-    private Table getMainTable() {
-        final Table rootTable = new Table(Assets.getSkin());
-        rootTable.setFillParent(true);
-        rootTable.align(Align.top);
-        return rootTable;
-    }
-
-    private ScrollPane getButtonPane() {
-        return PaneAssembler.paneOf(null)
-                            .withScrollingDisabled(true, false)
-                            .assemble();
-    }
-
     void updateButtons() {
         updateButtons(EMPTY_STRING);
     }
 
     private void updateButtons(final String searchString) {
-        final Table table = new Table(Assets.getSkin());
+        final Table table = TableAssembler.table()
+                                          .assemble();
         for (final Voice voice : voiceList) {
             if (!searchString.isEmpty() && FuzzySearch.tokenSetPartialRatio(voice.getName(),
                                                                             searchString) < SEARCH_RATIO) {

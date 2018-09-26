@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.utils.Assets;
 
-import static com.robcio.soundboard2.gui.constants.Sizes.OPTION_HEIGHT;
+import static com.robcio.soundboard2.gui.constants.Numeral.OPTION_HEIGHT;
 
 public class TableAssembler {
 
@@ -30,7 +30,7 @@ public class TableAssembler {
     }
 
     public static TableAssembler tableOf(final Actor... buttons) {
-        final TableAssembler tableAssembler = new TableAssembler(null);
+        final TableAssembler tableAssembler = table();
         for (final Actor button : buttons) {
             tableAssembler.table.add(button)
                                 .width(button.getWidth())

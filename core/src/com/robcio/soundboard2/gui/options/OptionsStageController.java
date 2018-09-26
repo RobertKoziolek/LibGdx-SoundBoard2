@@ -1,8 +1,8 @@
 package com.robcio.soundboard2.gui.options;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.filter.FilterMap;
@@ -19,7 +19,7 @@ import com.robcio.soundboard2.voice.VoiceHolder;
 import java.util.Map;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.constants.Sizes.*;
+import static com.robcio.soundboard2.gui.constants.Numeral.*;
 import static com.robcio.soundboard2.gui.constants.Strings.*;
 
 class OptionsStageController extends StageController {
@@ -31,6 +31,7 @@ class OptionsStageController extends StageController {
     OptionsStageController(final VoiceHolder voiceHolder,
                            final FilterMap filterMap) {
         super();
+        FilterCheckBox.setFilterInformation(filterMap.getFilterInformation());
         this.voiceHolder = voiceHolder;
         this.filterMap = filterMap;
     }
@@ -56,20 +57,30 @@ class OptionsStageController extends StageController {
     }
 
     private Actor getTopBar() {
-        final TextButton backButton = TextButtonAssembler.buttonOf(BACK_BUTTON_TEXT)
-                                                         .withCommand(new Command() {
-                                                             @Override
-                                                             public void execute() {
-                                                                 voiceHolder.filter(FilterCheckBox.getCurrentFilter(),
-                                                                                    filterMap.getFilterInformation());
-                                                                 changeScreen(ScreenId.MAIN,
-                                                                              StageAnimation.exitToBot());
-                                                             }
-                                                         })
-                                                         .withSize(WIDTH, MENU_HEIGHT)
-                                                         .assemble();
+        final Button allFiltersButton = TextButtonAssembler.buttonOf(ALL_FILTERS_BUTTON)
+                                                           .shakeStage(this)
+                                                           .withCommand(new Command() {
+                                                               @Override
+                                                               public void execute() {
+                                                                   FilterCheckBox.setAll();
+                                                               }
+                                                           })
+                                                           .withSize(HALF_WIDTH, MENU_HEIGHT)
+                                                           .assemble();
+        final Button backButton = TextButtonAssembler.buttonOf(BACK_BUTTON)
+                                                     .withCommand(new Command() {
+                                                         @Override
+                                                         public void execute() {
+                                                             voiceHolder.filter(FilterCheckBox.getCurrentFilter(),
+                                                                                filterMap.getFilterInformation());
+                                                             changeScreen(ScreenId.MAIN,
+                                                                          StageAnimation.exitToBot());
+                                                         }
+                                                     })
+                                                     .withSize(HALF_WIDTH, MENU_HEIGHT)
+                                                     .assemble();
 
-        return TableAssembler.tableOf(backButton)
+        return TableAssembler.tableOf(allFiltersButton, backButton)
                              .assemble();
     }
 
