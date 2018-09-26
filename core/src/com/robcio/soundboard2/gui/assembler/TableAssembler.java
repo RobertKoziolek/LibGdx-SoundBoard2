@@ -29,6 +29,12 @@ public class TableAssembler {
         return new TableAssembler(text);
     }
 
+    public static TableAssembler table(final Actor actor) {
+        final TableAssembler tableAssembler = table();
+        tableAssembler.table.add(actor);
+        return tableAssembler;
+    }
+
     public static TableAssembler tableOf(final Actor... buttons) {
         final TableAssembler tableAssembler = table();
         for (final Actor button : buttons) {

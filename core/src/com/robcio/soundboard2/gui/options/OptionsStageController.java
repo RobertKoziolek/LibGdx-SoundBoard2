@@ -1,13 +1,18 @@
 package com.robcio.soundboard2.gui.options;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
+import com.robcio.soundboard2.gui.assembler.LabelAssembler;
 import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
@@ -27,6 +32,7 @@ class OptionsStageController extends StageController {
 
     private final VoiceHolder voiceHolder;
     private final FilterMap filterMap;
+    private final EventListener filterClickListener;
 
     OptionsStageController(final VoiceHolder voiceHolder,
                            final FilterMap filterMap) {
@@ -34,6 +40,13 @@ class OptionsStageController extends StageController {
         FilterCheckBox.setFilterInformation(filterMap.getFilterInformation());
         this.voiceHolder = voiceHolder;
         this.filterMap = filterMap;
+        filterClickListener = new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                filter();
+            }
+        };
     }
 
     void buildStage() {
@@ -44,7 +57,7 @@ class OptionsStageController extends StageController {
 
         final Actor topBar = getTopBar();
         final Actor filterPane = getFilterPane();
-
+        final Actor counter = getCounter();
 
         rootTable.add(topBar)
                  .row();
@@ -52,8 +65,19 @@ class OptionsStageController extends StageController {
                  .width(WIDTH)
                  .height(ALMOST_HEIGHT)
                  .row();
-
+        rootTable.add(counter)
+                 .width(WIDTH)
+                 .height(MENU_HEIGHT);
         addActor(rootTable);
+    }
+
+    private Actor getCounter() {
+        final Label counter = LabelAssembler.labelOf(ALL_FILTERS_BUTTON)
+                                            .observing(voiceHolder)
+                                            .assemble();
+        return PaneAssembler.paneOfInTable(counter)
+                            .withScrollingDisabled(true, true)
+                            .assemble();
     }
 
     private Actor getTopBar() {
@@ -63,6 +87,7 @@ class OptionsStageController extends StageController {
                                                                @Override
                                                                public void execute() {
                                                                    FilterCheckBox.setAll();
+                                                                   filter();
                                                                }
                                                            })
                                                            .withSize(HALF_WIDTH, MENU_HEIGHT)
@@ -71,8 +96,6 @@ class OptionsStageController extends StageController {
                                                      .withCommand(new Command() {
                                                          @Override
                                                          public void execute() {
-                                                             voiceHolder.filter(FilterCheckBox.getCurrentFilter(),
-                                                                                filterMap.getFilterInformation());
                                                              changeScreen(ScreenId.MAIN,
                                                                           StageAnimation.exitToBot());
                                                          }
@@ -82,6 +105,11 @@ class OptionsStageController extends StageController {
 
         return TableAssembler.tableOf(allFiltersButton, backButton)
                              .assemble();
+    }
+
+    private void filter() {
+        voiceHolder.filter(FilterCheckBox.getCurrentFilter(),
+                           filterMap.getFilterInformation());
     }
 
     private Actor getFilterPane() {
@@ -127,6 +155,7 @@ class OptionsStageController extends StageController {
             } else if (Maths.containsBit(entry.getValue(), personFilters)) {
                 column = secondColumn;
             }
+            filterCheckBox.addListener(filterClickListener);
             column.add(filterCheckBox)
                   .width(HALF_WIDTH)
                   .height(OPTION_HEIGHT)

@@ -17,7 +17,7 @@ public class OptionsScreen extends AbstractScreen {
     public void show() {
         StageAnimation.enterFromTop(optionsStageController);
         final int size = optionsStageController.getActors().size;
-        if (size < 1) {
+        if (size == 0) {
             optionsStageController.buildStage();
         }
     }

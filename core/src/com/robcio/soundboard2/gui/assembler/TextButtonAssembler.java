@@ -11,7 +11,6 @@ import com.robcio.soundboard2.utils.Command;
 public class TextButtonAssembler {
     private final TextButton button;
     private float width, height;
-    //        private Observable observable;
     private Command command;
     private Stage stage;
 
@@ -35,9 +34,6 @@ public class TextButtonAssembler {
                 }
             }
         });
-//            if (observable != null) {
-//                observable.addObserver(new ButtonListener(button));
-//            }
         return button;
     }
 
@@ -56,10 +52,5 @@ public class TextButtonAssembler {
         this.stage = stage;
         return this;
     }
-
-//        public TextButtonAssembler observing(final Observable observable) {
-//            this.observable = observable;
-//            return this;
-//        }
 
 }

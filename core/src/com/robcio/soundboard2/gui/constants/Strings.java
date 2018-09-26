@@ -20,5 +20,14 @@ public class Strings {
     public static final String SILENCE_BUTTON = "Silentium";
     public static final String SEARCH_STRING = "Szukaj";
 
+    //INTERNAL
+    private static final String BLANK = "Nic";
+    private static final String FULL = "Wszystko";
 
+
+    public static String counter(final int current, final int all) {
+        if (current == 0) return BLANK;
+        if (current == all) return FULL;
+        return current + " / " + all;
+    }
 }

@@ -1,5 +1,6 @@
 package com.robcio.soundboard2.gui.main;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
@@ -38,7 +39,6 @@ class MainStageController extends StageController {
 
         final Actor topBar = getTopBar();
         buttonPane = PaneAssembler.paneOf(null)
-                                  .withScrollingDisabled(true, false)
                                   .assemble();
 
 
@@ -52,6 +52,16 @@ class MainStageController extends StageController {
     }
 
     private Actor getTopBar() {
+        final TextField searchField = TextFieldAssembler.fieldOf(SEARCH_STRING)
+                                                        .withSize(THIRD_WIDTH, MENU_HEIGHT)
+                                                        .withTextFieldListener(
+                                                                new TextField.TextFieldListener() {
+                                                                    @Override
+                                                                    public void keyTyped(TextField textField, char c) {
+                                                                        updateButtons(textField.getText());
+                                                                    }
+                                                                })
+                                                        .assemble();
         final Button silenceButton = TextButtonAssembler.buttonOf(SILENCE_BUTTON)
                                                         .shakeStage(this)
                                                         .withCommand(new Command() {
@@ -73,16 +83,6 @@ class MainStageController extends StageController {
                                                             })
                                                             .withSize(THIRD_WIDTH, MENU_HEIGHT)
                                                             .assemble();
-        final TextField searchField = TextFieldAssembler.fieldOf(SEARCH_STRING)
-                                                        .withSize(THIRD_WIDTH, MENU_HEIGHT)
-                                                        .withTextFieldListener(
-                                                                new TextField.TextFieldListener() {
-                                                                    @Override
-                                                                    public void keyTyped(TextField textField, char c) {
-                                                                        updateButtons(textField.getText());
-                                                                    }
-                                                                })
-                                                        .assemble();
 
         return TableAssembler.tableOf(searchField, silenceButton, optionsButton)
                              .assemble();
@@ -111,8 +111,9 @@ class MainStageController extends StageController {
                                                          .withCommand(new Command() {
                                                              @Override
                                                              public void execute() {
-                                                                 voice.getSound()
-                                                                      .play();
+                                                                 final Sound sound = voice.getSound();
+                                                                 sound.stop();
+                                                                 sound.play();
                                                              }
                                                          })
                                                          .assemble();
@@ -121,6 +122,13 @@ class MainStageController extends StageController {
                  .height(MENU_HEIGHT)
                  .row();
         }
+        final int size = table.getCells().size;
+        if (size < 11) {
+            table.add()
+                 .height(MENU_HEIGHT * (11 - size))
+                 .width(WIDTH);
+        }
+        buttonPane.setScrollingDisabled(true, size < 11);
         buttonPane.setActor(table);
     }
 }

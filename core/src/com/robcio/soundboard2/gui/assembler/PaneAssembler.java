@@ -2,6 +2,7 @@ package com.robcio.soundboard2.gui.assembler;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.robcio.soundboard2.utils.Assets;
 
 public class PaneAssembler {
@@ -17,6 +18,12 @@ public class PaneAssembler {
 
     public static PaneAssembler paneOf(final Actor widget) {
         return new PaneAssembler(widget);
+    }
+
+    public static PaneAssembler paneOfInTable(final Actor counter) {
+        final Table table = TableAssembler.table(counter)
+                                          .assemble();
+        return paneOf(table);
     }
 
     public ScrollPane assemble() {

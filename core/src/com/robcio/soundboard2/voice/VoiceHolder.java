@@ -1,16 +1,18 @@
 package com.robcio.soundboard2.voice;
 
 import com.robcio.soundboard2.filter.FilterInformation;
+import com.robcio.soundboard2.gui.constants.Strings;
 import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.utils.Maths;
 import lombok.Getter;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
 @Getter
-public class VoiceHolder {
+public class VoiceHolder extends Observable {
     final private List<Voice> fullList = new LinkedList<>();
     final private List<Voice> currentList = new LinkedList<>();
 
@@ -41,13 +43,7 @@ public class VoiceHolder {
                 currentList.add(voice);
             }
         }
-    }
-
-    public int getFullSize() {
-        return fullList.size();
-    }
-
-    public int getCurrentSize() {
-        return currentList.size();
+        setChanged();
+        notifyObservers(Strings.counter(currentList.size(), fullList.size()));
     }
 }
