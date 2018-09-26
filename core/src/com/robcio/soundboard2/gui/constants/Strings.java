@@ -8,12 +8,18 @@ public class Strings {
 
     public static final String EMPTY_STRING = "";
 
+    //SHARING
+    public static final String SHARE_SUBJECT = "Cud natury";
+    public static final String SHARE_QUESTION = "Gdzie wysłać ten cud natury";
+
     //OPTIONS
     public static final String ALL_FILTERS_BUTTON = "Wszystko";
     public static final String BACK_BUTTON = "Wróć";
     public static final String PACKETS_LABEL = "Pakiety:";
     public static final String PEOPLE_LABEL = "Ludzie:";
     public static final String FILTERS_LABEL = "Filtry:";
+    public static final String OPTIONS_LABEL = "Opcje:";
+    public static final String SHARING_LABEL = "Udostępnianie";
 
     //MAIN
     public static final String OPTIONS_BUTTON = "Opcje";

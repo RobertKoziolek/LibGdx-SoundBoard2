@@ -10,6 +10,6 @@ public class DesktopLauncher {
 		config.width = SoundBoard2.WIDTH;
 		config.height = SoundBoard2.HEIGHT;
 		config.title = SoundBoard2.TITLE;
-		new LwjglApplication(new SoundBoard2(), config);
+		new LwjglApplication(new SoundBoard2(new DesktopSharingManager()), config);
 	}
 }

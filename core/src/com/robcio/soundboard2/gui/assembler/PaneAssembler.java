@@ -40,9 +40,19 @@ public class PaneAssembler {
         return this;
     }
 
-    public PaneAssembler withScrollingDisabled(final boolean scrollingDisabledX, final boolean scrollingDisabledY) {
-        this.scrollingDisabledX = scrollingDisabledX;
-        this.scrollingDisabledY = scrollingDisabledY;
+    public PaneAssembler withScrollingDisabledX() {
+        this.scrollingDisabledX = true;
+        return this;
+    }
+
+    public PaneAssembler withScrollingDisabledY() {
+        this.scrollingDisabledY = true;
+        return this;
+    }
+
+    public PaneAssembler withScrollingDisabled() {
+        this.scrollingDisabledX = true;
+        this.scrollingDisabledY = true;
         return this;
     }
 

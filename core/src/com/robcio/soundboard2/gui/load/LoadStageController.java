@@ -33,7 +33,7 @@ class LoadStageController extends StageController {
                                           .assemble();
         table.add(slider)
              .width(ALMOST_WIDTH)
-             .height(MENU_HEIGHT)
+             .height(UNIT_HEIGHT)
              .padBottom(HALF_HEIGHT);
         addActor(table);
     }

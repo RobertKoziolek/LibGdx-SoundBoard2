@@ -8,10 +8,12 @@ import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
 
+import static com.robcio.soundboard2.gui.constants.Numeral.UNIT_WIDTH;
+
 public class TextButtonAssembler {
     private final TextButton button;
     private float width, height;
-    private Command command;
+    private Command clickCommand, specialClickCommand;
     private Stage stage;
 
     private TextButtonAssembler(final String text) {
@@ -24,11 +26,17 @@ public class TextButtonAssembler {
 
     public TextButton assemble() {
         button.setSize(width, height);
-        if (command == null) throw new IllegalArgumentException("Cannot assemble a button without any action");
+        if (clickCommand == null) {
+            throw new IllegalArgumentException("Cannot assemble a button without click action");
+        }
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                command.execute();
+                if (specialClickCommand != null && x < UNIT_WIDTH) {
+                    specialClickCommand.execute();
+                    return;
+                }
+                clickCommand.execute();
                 if (stage != null) {
                     StageAnimation.shake(stage);
                 }
@@ -43,8 +51,13 @@ public class TextButtonAssembler {
         return this;
     }
 
-    public TextButtonAssembler withCommand(final Command command) {
-        this.command = command;
+    public TextButtonAssembler withClickCommand(final Command command) {
+        this.clickCommand = command;
+        return this;
+    }
+
+    public TextButtonAssembler withSpecialClickCommand(final Command specialClickCommand) {
+        this.specialClickCommand = specialClickCommand;
         return this;
     }
 

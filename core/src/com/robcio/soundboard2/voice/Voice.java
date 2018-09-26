@@ -12,10 +12,11 @@ import lombok.Getter;
 public class Voice {
     private String name;
     private Sound sound;
+    private String filePath;
     private Integer filter;
 
     public static Voice of(final FilterMap filterMap, final VoiceModel model, final Sound sound) {
         final Integer filter = filterMap.getFilter(model.getFilter());
-        return new Voice(model.getName(), sound, filter);
+        return new Voice(model.getName(), sound, model.getFile(), filter);
     }
 }

@@ -12,13 +12,14 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
 import com.robcio.soundboard2.utils.Command;
+import com.robcio.soundboard2.utils.SharingManager;
 import com.robcio.soundboard2.voice.Voice;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 import java.util.List;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.constants.Numeral.MENU_HEIGHT;
+import static com.robcio.soundboard2.gui.constants.Numeral.UNIT_HEIGHT;
 import static com.robcio.soundboard2.gui.constants.Numeral.THIRD_WIDTH;
 import static com.robcio.soundboard2.gui.constants.Strings.*;
 import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
@@ -26,11 +27,13 @@ import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
 class MainStageController extends StageController {
 
     private final List<Voice> voiceList;
+    private final SharingManager sharingManager;
     private final ScrollPane buttonPane;
 
-    MainStageController(final List<Voice> voiceList) {
+    MainStageController(final List<Voice> voiceList, final SharingManager sharingManager) {
         super();
         this.voiceList = voiceList;
+        this.sharingManager = sharingManager;
 
         final Table rootTable = TableAssembler.table()
                                               .fillParent()
@@ -53,7 +56,7 @@ class MainStageController extends StageController {
 
     private Actor getTopBar() {
         final TextField searchField = TextFieldAssembler.fieldOf(SEARCH_STRING)
-                                                        .withSize(THIRD_WIDTH, MENU_HEIGHT)
+                                                        .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                         .withTextFieldListener(
                                                                 new TextField.TextFieldListener() {
                                                                     @Override
@@ -64,16 +67,16 @@ class MainStageController extends StageController {
                                                         .assemble();
         final Button silenceButton = TextButtonAssembler.buttonOf(SILENCE_BUTTON)
                                                         .shakeStage(this)
-                                                        .withCommand(new Command() {
+                                                        .withClickCommand(new Command() {
                                                             @Override
                                                             public void execute() {
                                                                 silenceAllVoices();
                                                             }
                                                         })
-                                                        .withSize(THIRD_WIDTH, MENU_HEIGHT)
+                                                        .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                         .assemble();
         final TextButton optionsButton = TextButtonAssembler.buttonOf(OPTIONS_BUTTON)
-                                                            .withCommand(new Command() {
+                                                            .withClickCommand(new Command() {
                                                                 @Override
                                                                 public void execute() {
                                                                     silenceAllVoices();
@@ -81,7 +84,7 @@ class MainStageController extends StageController {
                                                                                  StageAnimation.exitToTop());
                                                                 }
                                                             })
-                                                            .withSize(THIRD_WIDTH, MENU_HEIGHT)
+                                                            .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                             .assemble();
 
         return TableAssembler.tableOf(searchField, silenceButton, optionsButton)
@@ -107,25 +110,32 @@ class MainStageController extends StageController {
                                                                             searchString) < SEARCH_RATIO) {
                 continue;
             }
-            final TextButton button = TextButtonAssembler.buttonOf(voice.getName())
-                                                         .withCommand(new Command() {
-                                                             @Override
-                                                             public void execute() {
-                                                                 final Sound sound = voice.getSound();
-                                                                 sound.stop();
-                                                                 sound.play();
-                                                             }
-                                                         })
-                                                         .assemble();
-            table.add(button)
+            final Sound sound = voice.getSound();
+            final TextButtonAssembler buttonAssembler = TextButtonAssembler.buttonOf(voice.getName())
+                                                                           .withClickCommand(new Command() {
+                                                                               @Override
+                                                                               public void execute() {
+                                                                                   sound.stop();
+                                                                                   sound.play();
+                                                                               }
+                                                                           });
+            if (sharingManager.isSharingAllowed()) {
+                buttonAssembler.withSpecialClickCommand(new Command() {
+                    @Override
+                    public void execute() {
+                        sharingManager.share(voice.getFilePath());
+                    }
+                });
+            }
+            table.add(buttonAssembler.assemble())
                  .width(WIDTH)
-                 .height(MENU_HEIGHT)
+                 .height(UNIT_HEIGHT)
                  .row();
         }
         final int size = table.getCells().size;
         if (size < 11) {
             table.add()
-                 .height(MENU_HEIGHT * (11 - size))
+                 .height(UNIT_HEIGHT * (11 - size))
                  .width(WIDTH);
         }
         buttonPane.setScrollingDisabled(true, size < 11);

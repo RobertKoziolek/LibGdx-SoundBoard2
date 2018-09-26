@@ -12,15 +12,22 @@ import com.robcio.soundboard2.registrar.ScreenRegistrar;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
 import com.robcio.soundboard2.utils.ScreenChanger;
+import com.robcio.soundboard2.utils.SharingManager;
 
 public class SoundBoard2 extends Game implements ScreenChanger {
     public static final int WIDTH = (int) (9 * Maths.PPM);
     public static final int HEIGHT = (int) (16 * Maths.PPM);
     public static final String TITLE = "SoundBoard2";
 
+    private final SharingManager sharingManager;
+
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private ScreenRegistrar screenRegistrar;
+
+    public SoundBoard2(final SharingManager sharingManager){
+        this.sharingManager = sharingManager;
+    }
 
     @Override
     public void create() {
@@ -49,7 +56,7 @@ public class SoundBoard2 extends Game implements ScreenChanger {
     }
 
     private void initializeRegistrars(final VoiceLoader voiceLoader) {
-        screenRegistrar = new ScreenRegistrar(this, camera, voiceLoader);
+        screenRegistrar = new ScreenRegistrar(this, camera, voiceLoader, sharingManager);
     }
 
     private void initializeCamera() {
