@@ -20,6 +20,14 @@ public class Strings {
     public static final String FILTERS_LABEL = "Filtry:";
     public static final String OPTIONS_LABEL = "Opcje:";
     public static final String SHARING_LABEL = "Udostępnianie";
+    public static final String SORT_LABEL = "Sortowanie:  ";
+
+    //SORTING
+    public static final String SORT_PACKETS = "Po pakietach";
+    public static final String SORT_RANDOM = "Losowo";
+    public static final String SORT_ALPHABETICAL  = "Alfabetycznie";
+    public static final String SORT_ANALPHABETIC = "Analfabetycznie";
+
 
     //MAIN
     public static final String OPTIONS_BUTTON = "Opcje";

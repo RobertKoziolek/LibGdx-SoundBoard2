@@ -2,10 +2,10 @@ package com.robcio.soundboard2.desktop;
 
 
 import com.robcio.soundboard2.utils.Log;
-import com.robcio.soundboard2.utils.SharingManager;
+import com.robcio.soundboard2.utils.ShareDispatcher;
 import lombok.Getter;
 
-public class DesktopSharingManager implements SharingManager {
+public class DesktopShareDispatcher implements ShareDispatcher {
 
     private final String SHARING_TAG = "Sharing";
     private final String SHARE_PERMISSION = "Asking for permission to share";

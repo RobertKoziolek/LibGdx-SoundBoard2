@@ -11,8 +11,8 @@ import com.robcio.soundboard2.gui.options.OptionsScreen;
 import com.robcio.soundboard2.gui.splash.SplashScreen;
 import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.utils.ScreenChanger;
-import com.robcio.soundboard2.utils.SharingManager;
-import com.robcio.soundboard2.voice.VoiceHolder;
+import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.voice.VoiceContainer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,15 +24,15 @@ public class ScreenRegistrar {
     public ScreenRegistrar(final ScreenChanger screenChanger,
                            final OrthographicCamera camera,
                            final VoiceLoader voiceLoader,
-                           final SharingManager sharingManager) {
+                           final ShareDispatcher shareDispatcher) {
         StageController.setScreenChangerAndCamera(screenChanger, camera);
-        final VoiceHolder voiceHolder = new VoiceHolder();
+        final VoiceContainer voiceContainer = new VoiceContainer();
         final FilterMap filterMap = voiceLoader.getFilterMap();
         map = new HashMap<>();
-        map.put(ScreenId.LOAD, new LoadScreen(voiceLoader, voiceHolder));
+        map.put(ScreenId.LOAD, new LoadScreen(voiceLoader, voiceContainer));
         map.put(ScreenId.SPLASH, new SplashScreen());
-        map.put(ScreenId.MAIN, new MainScreen(voiceHolder, sharingManager));
-        map.put(ScreenId.OPTIONS, new OptionsScreen(voiceHolder, sharingManager, filterMap));
+        map.put(ScreenId.MAIN, new MainScreen(voiceContainer, shareDispatcher));
+        map.put(ScreenId.OPTIONS, new OptionsScreen(voiceContainer, shareDispatcher, filterMap));
     }
 
     public AbstractScreen get(final ScreenId screenId) {

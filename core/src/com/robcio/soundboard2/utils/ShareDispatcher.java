@@ -1,6 +1,6 @@
 package com.robcio.soundboard2.utils;
 
-public interface SharingManager {
+public interface ShareDispatcher {
     void share(String filePath);
     void askForSharingPermission();
     boolean isSharingAllowed();

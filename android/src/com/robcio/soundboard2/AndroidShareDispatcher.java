@@ -9,7 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
-import com.robcio.soundboard2.utils.SharingManager;
+import com.robcio.soundboard2.utils.ShareDispatcher;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +18,7 @@ import java.io.File;
 import static com.robcio.soundboard2.gui.constants.Strings.SHARE_QUESTION;
 import static com.robcio.soundboard2.gui.constants.Strings.SHARE_SUBJECT;
 
-public class AndroidSharingManager implements SharingManager {
+public class AndroidShareDispatcher implements ShareDispatcher {
     private final String PACKAGE_PATH = "/robcio/soundboard2/startSharingIntent/";
     private final String AUDIO_FORMAT = "audio/mp3";
     private final int REQUEST_CODE = 9;
@@ -29,7 +29,7 @@ public class AndroidSharingManager implements SharingManager {
 
     final private AndroidApplication application;
 
-    AndroidSharingManager(final AndroidApplication application) {
+    AndroidShareDispatcher(final AndroidApplication application) {
         this.application = application;
 
         askForSharingPermission();

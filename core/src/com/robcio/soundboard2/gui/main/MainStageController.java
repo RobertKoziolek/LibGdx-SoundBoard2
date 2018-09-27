@@ -12,7 +12,7 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
 import com.robcio.soundboard2.utils.Command;
-import com.robcio.soundboard2.utils.SharingManager;
+import com.robcio.soundboard2.utils.ShareDispatcher;
 import com.robcio.soundboard2.voice.Voice;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
@@ -27,13 +27,13 @@ import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
 class MainStageController extends StageController {
 
     private final List<Voice> voiceList;
-    private final SharingManager sharingManager;
+    private final ShareDispatcher shareDispatcher;
     private final ScrollPane buttonPane;
 
-    MainStageController(final List<Voice> voiceList, final SharingManager sharingManager) {
+    MainStageController(final List<Voice> voiceList, final ShareDispatcher shareDispatcher) {
         super();
         this.voiceList = voiceList;
-        this.sharingManager = sharingManager;
+        this.shareDispatcher = shareDispatcher;
 
         final Table rootTable = TableAssembler.table()
                                               .fillParent()
@@ -110,27 +110,7 @@ class MainStageController extends StageController {
                                                                             searchString) < SEARCH_RATIO) {
                 continue;
             }
-            final Sound sound = voice.getSound();
-            final TextButtonAssembler buttonAssembler = TextButtonAssembler.buttonOf(voice.getName())
-                                                                           .withClickCommand(new Command() {
-                                                                               @Override
-                                                                               public void execute() {
-                                                                                   sound.stop();
-                                                                                   sound.play();
-                                                                               }
-                                                                           });
-            if (sharingManager.isSharingAllowed()) {
-                buttonAssembler.withSpecialClickCommand(new Command() {
-                    @Override
-                    public void execute() {
-                        sharingManager.share(voice.getFilePath());
-                    }
-                });
-            }
-            table.add(buttonAssembler.assemble())
-                 .width(WIDTH)
-                 .height(UNIT_HEIGHT)
-                 .row();
+            addVoiceButton(table, voice);
         }
         final int size = table.getCells().size;
         if (size < 11) {
@@ -140,5 +120,29 @@ class MainStageController extends StageController {
         }
         buttonPane.setScrollingDisabled(true, size < 11);
         buttonPane.setActor(table);
+    }
+
+    private void addVoiceButton(final Table table, final Voice voice) {
+        final Sound sound = voice.getSound();
+        final TextButtonAssembler buttonAssembler = TextButtonAssembler.buttonOf(voice.getName())
+                                                                       .withClickCommand(new Command() {
+                                                                           @Override
+                                                                           public void execute() {
+                                                                               sound.stop();
+                                                                               sound.play();
+                                                                           }
+                                                                       });
+        if (shareDispatcher.isSharingAllowed()) {
+            buttonAssembler.withSpecialClickCommand(new Command() {
+                @Override
+                public void execute() {
+                    shareDispatcher.share(voice.getFilePath());
+                }
+            });
+        }
+        table.add(buttonAssembler.assemble())
+             .width(WIDTH)
+             .height(UNIT_HEIGHT)
+             .row();
     }
 }

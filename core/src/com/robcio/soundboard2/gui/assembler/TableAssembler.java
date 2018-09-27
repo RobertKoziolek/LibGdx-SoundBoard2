@@ -35,12 +35,12 @@ public class TableAssembler {
         return tableAssembler;
     }
 
-    public static TableAssembler tableOf(final Actor... buttons) {
+    public static TableAssembler tableOf(final Actor... actors) {
         final TableAssembler tableAssembler = table();
-        for (final Actor button : buttons) {
-            tableAssembler.table.add(button)
-                                .width(button.getWidth())
-                                .height(button.getHeight());
+        for (final Actor actor : actors) {
+            tableAssembler.table.add(actor)
+                                .width(actor.getWidth())
+                                .height(actor.getHeight());
         }
         return tableAssembler;
     }

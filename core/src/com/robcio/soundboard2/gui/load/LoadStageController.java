@@ -8,7 +8,7 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.loader.VoiceLoader;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;
-import com.robcio.soundboard2.voice.VoiceHolder;
+import com.robcio.soundboard2.voice.VoiceContainer;
 
 import static com.robcio.soundboard2.gui.constants.Numeral.*;
 
@@ -16,13 +16,13 @@ class LoadStageController extends StageController {
 
     private final Slider slider;
     private final VoiceLoader voiceLoader;
-    private final VoiceHolder voiceHolder;
+    private final VoiceContainer voiceContainer;
 
     LoadStageController(final VoiceLoader voiceLoader,
-                        final VoiceHolder voiceHolder) {
+                        final VoiceContainer voiceContainer) {
         super();
         this.voiceLoader = voiceLoader;
-        this.voiceHolder = voiceHolder;
+        this.voiceContainer = voiceContainer;
 
         slider = new Slider(0, 1, 0.01f, false, Assets.getSkin());
         slider.getStyle().knob.setMinWidth(Maths.PPM / 2);
@@ -47,7 +47,7 @@ class LoadStageController extends StageController {
 
     private void loadAssets() {
         if (Assets.update()) {
-            voiceHolder.loadUp(voiceLoader);
+            voiceContainer.loadUp(voiceLoader);
 //            changeScreen(ScreenId.SPLASH);
             changeScreen(ScreenId.MAIN);
         }

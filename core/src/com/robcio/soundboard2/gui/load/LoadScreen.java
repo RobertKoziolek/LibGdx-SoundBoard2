@@ -2,12 +2,12 @@ package com.robcio.soundboard2.gui.load;
 
 import com.robcio.soundboard2.gui.AbstractScreen;
 import com.robcio.soundboard2.loader.VoiceLoader;
-import com.robcio.soundboard2.voice.VoiceHolder;
+import com.robcio.soundboard2.voice.VoiceContainer;
 
 public class LoadScreen extends AbstractScreen {
 
-    public LoadScreen(final VoiceLoader voiceLoader, final VoiceHolder voiceHolder) {
-        final LoadStageController stageController = new LoadStageController(voiceLoader, voiceHolder);
+    public LoadScreen(final VoiceLoader voiceLoader, final VoiceContainer voiceContainer) {
+        final LoadStageController stageController = new LoadStageController(voiceLoader, voiceContainer);
 
         setStage(stageController);
     }

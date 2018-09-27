@@ -11,6 +11,6 @@ public class AndroidLauncher extends AndroidApplication {
         final AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         config.useAccelerometer = false;
         config.useCompass = false;
-        initialize(new SoundBoard2(new AndroidSharingManager(this)), config);
+        initialize(new SoundBoard2(new AndroidShareDispatcher(this)), config);
     }
 }

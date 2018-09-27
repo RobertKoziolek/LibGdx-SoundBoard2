@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
@@ -17,12 +18,15 @@ import com.robcio.soundboard2.gui.assembler.LabelAssembler;
 import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
-import com.robcio.soundboard2.gui.options.component.FilterCheckBox;
+import com.robcio.soundboard2.gui.component.FilterCheckBox;
+import com.robcio.soundboard2.gui.component.SortingSelectBox;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.Maths;
-import com.robcio.soundboard2.utils.SharingManager;
-import com.robcio.soundboard2.voice.VoiceHolder;
+import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.voice.VoiceFilter;
+import com.robcio.soundboard2.voice.VoiceContainer;
+import com.robcio.soundboard2.voice.VoiceSorter;
 
 import java.util.Map;
 
@@ -33,26 +37,33 @@ import static com.robcio.soundboard2.gui.constants.Strings.*;
 class OptionsStageController extends StageController {
 
 
-    private final VoiceHolder voiceHolder;
-    private final SharingManager sharingManager;
+    private final VoiceContainer voiceContainer;
+    private final ShareDispatcher shareDispatcher;
     private final FilterMap filterMap;
-    private final EventListener filterClickListener;
 
-    OptionsStageController(final VoiceHolder voiceHolder,
-                           final SharingManager sharingManager,
+    private final EventListener filterClickListener;
+    private final VoiceFilter voiceFilter;
+    private final VoiceSorter voiceSorter;
+    private final FilterCheckBoxContainer filterCheckBoxContainer;
+
+    OptionsStageController(final VoiceContainer voiceContainer,
+                           final ShareDispatcher shareDispatcher,
                            final FilterMap filterMap) {
         super();
-        this.sharingManager = sharingManager;
-        FilterCheckBox.setFilterInformation(filterMap.getFilterInformation());
-        this.voiceHolder = voiceHolder;
+        this.shareDispatcher = shareDispatcher;
+        this.voiceContainer = voiceContainer;
         this.filterMap = filterMap;
-        filterClickListener = new ClickListener() {
+
+        this.filterClickListener = new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 filter();
             }
         };
+        this.voiceFilter = new VoiceFilter();
+        this.voiceSorter = new VoiceSorter();
+        this.filterCheckBoxContainer = new FilterCheckBoxContainer(filterMap.getFilterInformation());
     }
 
     void buildStage() {
@@ -62,12 +73,12 @@ class OptionsStageController extends StageController {
                                               .assemble();
 
         final Actor topBar = getTopBar();
-        final Actor filterPane = getFilterPane();
+        final Actor optionsPane = getOptionsPane();
         final Actor counter = getCounter();
 
         rootTable.add(topBar)
                  .row();
-        rootTable.add(filterPane)
+        rootTable.add(optionsPane)
                  .width(WIDTH)
                  .height(ALMOST_HEIGHT)
                  .row();
@@ -77,22 +88,13 @@ class OptionsStageController extends StageController {
         addActor(rootTable);
     }
 
-    private Actor getCounter() {
-        final Label counter = LabelAssembler.labelOf(ALL_FILTERS_BUTTON)
-                                            .observing(voiceHolder)
-                                            .assemble();
-        return PaneAssembler.paneOfInTable(counter)
-                            .withScrollingDisabled()
-                            .assemble();
-    }
-
     private Actor getTopBar() {
         final Button allFiltersButton = TextButtonAssembler.buttonOf(ALL_FILTERS_BUTTON)
                                                            .shakeStage(this)
                                                            .withClickCommand(new Command() {
                                                                @Override
                                                                public void execute() {
-                                                                   FilterCheckBox.setAll();
+                                                                   filterCheckBoxContainer.setAll();
                                                                    filter();
                                                                }
                                                            })
@@ -102,6 +104,7 @@ class OptionsStageController extends StageController {
                                                      .withClickCommand(new Command() {
                                                          @Override
                                                          public void execute() {
+                                                             voiceSorter.sort(voiceContainer);
                                                              changeScreen(ScreenId.MAIN,
                                                                           StageAnimation.exitToBot());
                                                          }
@@ -114,43 +117,69 @@ class OptionsStageController extends StageController {
     }
 
     private void filter() {
-        voiceHolder.filter(FilterCheckBox.getCurrentFilter(),
-                           filterMap.getFilterInformation());
+        voiceFilter.filter(voiceContainer, filterMap.getFilterInformation(),
+                           filterCheckBoxContainer.getCurrentFilter());
     }
 
-    private Actor getFilterPane() {
+    private Actor getOptionsPane() {
         final Table optionsTable = TableAssembler.table()
                                                  .align(Align.top)
                                                  .assemble();
         fillInFilterOptions(optionsTable);
-        fillInSharingOption(optionsTable);
+        fillInOtherOptions(optionsTable);
 
         return PaneAssembler.paneOf(optionsTable)
                             .withScrollingDisabledX()
                             .assemble();
     }
 
+    private void fillInOtherOptions(final Table optionsTable) {
+        final Table table = TableAssembler.table(OPTIONS_LABEL)
+                                          .align(Align.top)
+                                          .assemble();
+        optionsTable.add(table)
+                    .row();
+        fillInSharingOption(optionsTable);
+        fillInSortOption(optionsTable);
+    }
+
+    private void fillInSortOption(final Table optionsTable) {
+        final Label label = LabelAssembler.labelOf(SORT_LABEL)
+                                          .assemble();
+        final SortingSelectBox sortingSelectBox = new SortingSelectBox();
+        sortingSelectBox.setWidth(HALF_WIDTH);
+        sortingSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                voiceSorter.setSortingType(sortingSelectBox.getSelected());
+            }
+        });
+
+        final Table sortTable = TableAssembler.tableOf(label, sortingSelectBox)
+                                              .assemble();
+        optionsTable.add(sortTable)
+                    .width(WIDTH)
+                    .height(OPTION_HEIGHT)
+                    .row();
+    }
+
     private void fillInSharingOption(final Table optionsTable) {
         final CheckBox checkBox = new CheckBox(SHARING_LABEL, Assets.getSkin());
-        checkBox.setChecked(sharingManager.isSharingAllowed());
+        checkBox.setChecked(shareDispatcher.isSharingAllowed());
         checkBox.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 final boolean checked = checkBox.isChecked();
-                sharingManager.setSharingAllowed(checked);
+                shareDispatcher.setSharingAllowed(checked);
                 if (checked) {
-                    sharingManager.askForSharingPermission();
+                    shareDispatcher.askForSharingPermission();
                 }
             }
         });
-
-        final Table table = TableAssembler.table(OPTIONS_LABEL)
-                                          .align(Align.top)
-                                          .assemble();
-        table.add(checkBox)
-             .height(OPTION_HEIGHT);
-        optionsTable.add(table).row();
+        optionsTable.add(checkBox)
+                    .height(OPTION_HEIGHT)
+                    .row();
     }
 
     private void fillInFilterOptions(final Table optionsTable) {
@@ -172,21 +201,23 @@ class OptionsStageController extends StageController {
                     .width(WIDTH)
                     .row();
         optionsTable.add(thirdColumn)
-                    .width(WIDTH).row();
+                    .width(WIDTH)
+                    .row();
     }
 
-    private void buildFilterCheckBoxes(final Table firstColumn, final Table secondColumn, final Table thirdColumn) {
+    private void buildFilterCheckBoxes(final Table packetColumn, final Table peopleColumn, final Table otherColumn) {
         final int packetFilters = filterMap.getFilterInformation()
                                            .getPacketFilters();
         final int personFilters = filterMap.getFilterInformation()
                                            .getPeopleFilters();
         for (final Map.Entry<String, Integer> entry : filterMap.getEntrySet()) {
-            final FilterCheckBox filterCheckBox = FilterCheckBox.of(entry.getKey(), entry.getValue());
-            Table column = thirdColumn;
+            final FilterCheckBox filterCheckBox = filterCheckBoxContainer.createFilterCheckBox(entry.getKey(),
+                                                                                               entry.getValue());
+            Table column = otherColumn;
             if (Maths.containsBit(entry.getValue(), packetFilters)) {
-                column = firstColumn;
+                column = packetColumn;
             } else if (Maths.containsBit(entry.getValue(), personFilters)) {
-                column = secondColumn;
+                column = peopleColumn;
             }
             filterCheckBox.addListener(filterClickListener);
             column.add(filterCheckBox)
@@ -194,5 +225,14 @@ class OptionsStageController extends StageController {
                   .height(OPTION_HEIGHT)
                   .row();
         }
+    }
+
+    private Actor getCounter() {
+        final Label counter = LabelAssembler.labelOf(ALL_FILTERS_BUTTON)
+                                            .observing(voiceContainer)
+                                            .assemble();
+        return PaneAssembler.paneOfInTable(counter)
+                            .withScrollingDisabled()
+                            .assemble();
     }
 }

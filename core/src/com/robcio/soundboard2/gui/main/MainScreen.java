@@ -1,31 +1,29 @@
 package com.robcio.soundboard2.gui.main;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.robcio.soundboard2.gui.AbstractScreen;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
-import com.robcio.soundboard2.utils.SharingManager;
-import com.robcio.soundboard2.voice.VoiceHolder;
+import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.voice.VoiceContainer;
 
 public class MainScreen extends AbstractScreen {
-    private final VoiceHolder voiceHolder;
-    private final SharingManager sharingManager;
+    private final VoiceContainer voiceContainer;
+    private final ShareDispatcher shareDispatcher;
 
-    public MainScreen(final VoiceHolder voiceHolder, final SharingManager sharingManager) {
-        this.voiceHolder = voiceHolder;
-        this.sharingManager = sharingManager;
+    private MainStageController stageController;
+
+    public MainScreen(final VoiceContainer voiceContainer, final ShareDispatcher shareDispatcher) {
+        this.voiceContainer = voiceContainer;
+        this.shareDispatcher = shareDispatcher;
     }
 
     @Override
     public void show() {
-        final Stage stage = getStage();
-        if (stage == null) {
-            final MainStageController stageController = new MainStageController(voiceHolder.getCurrentList(), sharingManager);
-
+        if (stageController == null) {
+            stageController = new MainStageController(voiceContainer.getCurrentList(), shareDispatcher);
             setStage(stageController);
         } else {
-            StageAnimation.enterFromTop(stage);
-            final MainStageController mainStageController = (MainStageController) stage;
-            mainStageController.updateButtons();
+            StageAnimation.enterFromTop(stageController);
+            stageController.updateButtons();
         }
     }
 }
