@@ -1,0 +1,19 @@
+{
+  indicators: [
+    {
+      name: "P_Cello",
+      file: "cello",
+      align: LEFT,
+    },
+    {
+      name: "P_Organ",
+      file: "organ",
+      align: CENTER,
+    },
+    {
+      name: "P_Bass",
+      file: "bass",
+      align: RIGHT,
+    },
+  ]
+}

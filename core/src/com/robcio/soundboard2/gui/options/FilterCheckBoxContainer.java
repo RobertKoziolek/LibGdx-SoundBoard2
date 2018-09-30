@@ -8,16 +8,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static com.robcio.soundboard2.filter.FilterMap.PERSON_PREFIX;
-import static com.robcio.soundboard2.gui.constants.Strings.EMPTY_STRING;
+import static com.robcio.soundboard2.constants.Strings.EMPTY_STRING;
 
-public class FilterCheckBoxContainer {
+class FilterCheckBoxContainer {
 
     private final FilterInformation filterInformation;
     private final Set<FilterCheckBox> checkBoxSet = new HashSet<>();
 
     private final FilterCheckBox.FilterBoxCommand filterBoxCommand;
 
-    public FilterCheckBoxContainer(final FilterInformation filterInformation) {
+    FilterCheckBoxContainer(final FilterInformation filterInformation) {
         this.filterInformation = filterInformation;
         filterBoxCommand = new FilterCheckBox.FilterBoxCommand() {
             @Override
@@ -27,7 +27,7 @@ public class FilterCheckBoxContainer {
         };
     }
 
-    public FilterCheckBox createFilterCheckBox(final String text, final Integer filterBit) {
+    FilterCheckBox createFilterCheckBox(final String text, final Integer filterBit) {
         final FilterCheckBox filterCheckBox = new FilterCheckBox(text.replace(PERSON_PREFIX, EMPTY_STRING),
                                                                  filterBit,
                                                                  filterBoxCommand);
@@ -35,7 +35,7 @@ public class FilterCheckBoxContainer {
         return filterCheckBox;
     }
 
-    public int getCurrentFilter() {
+    int getCurrentFilter() {
         int filter = 0;
         for (final FilterCheckBox box : checkBoxSet) {
             if (box.isChecked()) {
@@ -45,7 +45,7 @@ public class FilterCheckBoxContainer {
         return filter;
     }
 
-    public void setAll() {
+    void setAll() {
         final int packetAndPeopleFilters = filterInformation.getPacketFilters() | filterInformation.getPeopleFilters();
         for (final FilterCheckBox checkBox : checkBoxSet) {
             if (Maths.containsBit(checkBox.getFilterBit(), packetAndPeopleFilters)) {

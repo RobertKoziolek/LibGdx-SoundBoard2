@@ -20,10 +20,7 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.component.FilterCheckBox;
 import com.robcio.soundboard2.gui.component.SortingSelectBox;
-import com.robcio.soundboard2.utils.Assets;
-import com.robcio.soundboard2.utils.Command;
-import com.robcio.soundboard2.utils.Maths;
-import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.utils.*;
 import com.robcio.soundboard2.voice.VoiceFilter;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSorter;
@@ -31,14 +28,15 @@ import com.robcio.soundboard2.voice.VoiceSorter;
 import java.util.Map;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.constants.Numeral.*;
-import static com.robcio.soundboard2.gui.constants.Strings.*;
+import static com.robcio.soundboard2.constants.Numeral.*;
+import static com.robcio.soundboard2.constants.Strings.*;
 
 class OptionsStageController extends StageController {
 
 
     private final VoiceContainer voiceContainer;
-    private final ShareDispatcher shareDispatcher;
+    private final Enablable sharingEnablable;
+    private final Enablable indicatorEnablable;
     private final FilterMap filterMap;
 
     private final EventListener filterClickListener;
@@ -47,10 +45,12 @@ class OptionsStageController extends StageController {
     private final FilterCheckBoxContainer filterCheckBoxContainer;
 
     OptionsStageController(final VoiceContainer voiceContainer,
-                           final ShareDispatcher shareDispatcher,
+                           final Enablable sharingEnablable,
+                           final Enablable indicatorEnablable,
                            final FilterMap filterMap) {
         super();
-        this.shareDispatcher = shareDispatcher;
+        this.sharingEnablable = sharingEnablable;
+        this.indicatorEnablable = indicatorEnablable;
         this.voiceContainer = voiceContainer;
         this.filterMap = filterMap;
 
@@ -139,8 +139,9 @@ class OptionsStageController extends StageController {
                                           .assemble();
         optionsTable.add(table)
                     .row();
-        fillInSharingOption(optionsTable);
+        fillInEnablable(optionsTable, SHARING_LABEL, sharingEnablable);
         fillInSortOption(optionsTable);
+        fillInEnablable(optionsTable, INDICATOR_LABEL, indicatorEnablable);
     }
 
     private void fillInSortOption(final Table optionsTable) {
@@ -163,18 +164,14 @@ class OptionsStageController extends StageController {
                     .row();
     }
 
-    private void fillInSharingOption(final Table optionsTable) {
-        final CheckBox checkBox = new CheckBox(SHARING_LABEL, Assets.getSkin());
-        checkBox.setChecked(shareDispatcher.isSharingAllowed());
+    private void fillInEnablable(final Table optionsTable, final String text, final Enablable enablable) {
+        final CheckBox checkBox = new CheckBox(text, Assets.getSkin());
+        checkBox.setChecked(enablable.isEnabled());
         checkBox.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                final boolean checked = checkBox.isChecked();
-                shareDispatcher.setSharingAllowed(checked);
-                if (checked) {
-                    shareDispatcher.askForSharingPermission();
-                }
+                enablable.setEnabled(checkBox.isChecked());
             }
         });
         optionsTable.add(checkBox)

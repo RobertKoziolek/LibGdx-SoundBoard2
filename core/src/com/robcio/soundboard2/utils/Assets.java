@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.robcio.soundboard2.enumeration.TextureId;
-import com.robcio.soundboard2.loader.model.VoiceModel;
+import com.robcio.soundboard2.voice.loader.model.VoiceModel;
 import lombok.Getter;
 
 public class Assets {
@@ -32,6 +32,7 @@ public class Assets {
     public static void initialize() {
         loadFont();
         loadSkin();
+        assetManager.load(TEXTURE_ATLAS, TextureAtlas.class);
         assetManager.finishLoading();
         textureAtlas = assetManager.get(TEXTURE_ATLAS);
     }
@@ -43,7 +44,6 @@ public class Assets {
 
     private static void loadSkin() {
         assetManager.load(UISKIN_ATLAS, TextureAtlas.class);
-        assetManager.load(TEXTURE_ATLAS, TextureAtlas.class);
         assetManager.finishLoading();
         skin = new Skin(assetManager.get(UISKIN_ATLAS, TextureAtlas.class));
         skin.add(FONT, font);
@@ -57,11 +57,11 @@ public class Assets {
     }
 
     public static Image getImage(final TextureId textureId) {
-        return new Image(getRegion(textureId));
+        return getImage(textureId.getFilename());
     }
 
-    public static TextureAtlas.AtlasRegion getRegion(final TextureId textureId) {
-        return textureAtlas.findRegion(textureId.getFilename());
+    public static Image getImage(final String textureName) {
+        return new Image(textureAtlas.findRegion(textureName));
     }
 
     public static void loadVoice(final VoiceModel voiceModel) {

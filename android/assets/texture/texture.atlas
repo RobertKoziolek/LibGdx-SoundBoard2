@@ -1,12 +1,33 @@
 
 texture.png
-size: 512,512
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-robciologo
+bass
   rotate: false
   xy: 2, 2
+  size: 108, 185
+  orig: 108, 185
+  offset: 0, 0
+  index: -1
+cello
+  rotate: false
+  xy: 660, 491
+  size: 204, 273
+  orig: 204, 273
+  offset: 0, 0
+  index: -1
+organ
+  rotate: false
+  xy: 2, 491
+  size: 656, 273
+  orig: 656, 273
+  offset: 0, 0
+  index: -1
+robciologo
+  rotate: false
+  xy: 2, 189
   size: 400, 300
   orig: 400, 300
   offset: 0, 0

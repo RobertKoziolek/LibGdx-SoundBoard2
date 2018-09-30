@@ -3,16 +3,20 @@ package com.robcio.soundboard2.gui.options;
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.gui.AbstractScreen;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
-import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.utils.Enablable;
 import com.robcio.soundboard2.voice.VoiceContainer;
 
 public class OptionsScreen extends AbstractScreen {
     final private OptionsStageController optionsStageController;
 
     public OptionsScreen(final VoiceContainer voiceContainer,
-                         final ShareDispatcher shareDispatcher,
+                         final Enablable sharingEnablable,
+                         final Enablable indicatorEnablable,
                          final FilterMap filterMap) {
-        optionsStageController = new OptionsStageController(voiceContainer, shareDispatcher, filterMap);
+        optionsStageController = new OptionsStageController(voiceContainer,
+                                                            sharingEnablable,
+                                                            indicatorEnablable,
+                                                            filterMap);
         setStage(optionsStageController);
     }
 

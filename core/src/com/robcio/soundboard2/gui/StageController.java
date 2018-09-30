@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.utils.ScreenChanger;
 
@@ -18,7 +18,7 @@ public abstract class StageController extends Stage {
     static private Camera camera;
 
     public StageController() {
-        super(new FillViewport(WIDTH, HEIGHT, camera));
+        super(new StretchViewport(WIDTH, HEIGHT, camera));
     }
 
     final protected void changeScreen(final ScreenId screenId) {

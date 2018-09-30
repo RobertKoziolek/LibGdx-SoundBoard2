@@ -11,6 +11,7 @@ import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
+import com.robcio.soundboard2.indicator.IndicatorContainer;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.ShareDispatcher;
 import com.robcio.soundboard2.voice.Voice;
@@ -19,9 +20,9 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import java.util.List;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.constants.Numeral.UNIT_HEIGHT;
-import static com.robcio.soundboard2.gui.constants.Numeral.THIRD_WIDTH;
-import static com.robcio.soundboard2.gui.constants.Strings.*;
+import static com.robcio.soundboard2.constants.Numeral.UNIT_HEIGHT;
+import static com.robcio.soundboard2.constants.Numeral.THIRD_WIDTH;
+import static com.robcio.soundboard2.constants.Strings.*;
 import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
 
 class MainStageController extends StageController {
@@ -29,10 +30,14 @@ class MainStageController extends StageController {
     private final List<Voice> voiceList;
     private final ShareDispatcher shareDispatcher;
     private final ScrollPane buttonPane;
+    private final IndicatorContainer indicatorContainer;
 
-    MainStageController(final List<Voice> voiceList, final ShareDispatcher shareDispatcher) {
+    MainStageController(final List<Voice> voiceList,
+                        final IndicatorContainer indicatorContainer,
+                        final ShareDispatcher shareDispatcher) {
         super();
         this.voiceList = voiceList;
+        this.indicatorContainer = indicatorContainer;
         this.shareDispatcher = shareDispatcher;
 
         final Table rootTable = TableAssembler.table()
@@ -130,9 +135,11 @@ class MainStageController extends StageController {
                                                                            public void execute() {
                                                                                sound.stop();
                                                                                sound.play();
+                                                                               indicatorContainer.indicate(
+                                                                                       voice.getFilter());
                                                                            }
                                                                        });
-        if (shareDispatcher.isSharingAllowed()) {
+        if (shareDispatcher.isEnabled()) {
             buttonAssembler.withSpecialClickCommand(new Command() {
                 @Override
                 public void execute() {

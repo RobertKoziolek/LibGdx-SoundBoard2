@@ -1,7 +1,7 @@
 package com.robcio.soundboard2.voice;
 
-import com.robcio.soundboard2.gui.constants.Strings;
-import com.robcio.soundboard2.loader.VoiceLoader;
+import com.robcio.soundboard2.constants.Strings;
+import com.robcio.soundboard2.voice.loader.VoiceLoader;
 import lombok.Getter;
 
 import java.util.LinkedList;

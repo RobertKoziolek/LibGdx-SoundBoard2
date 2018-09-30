@@ -8,7 +8,7 @@ import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
 
-import static com.robcio.soundboard2.gui.constants.Numeral.UNIT_WIDTH;
+import static com.robcio.soundboard2.constants.Numeral.UNIT_WIDTH;
 
 public class TextButtonAssembler {
     private final TextButton button;

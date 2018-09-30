@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.robcio.soundboard2.enumeration.ScreenId;
-import com.robcio.soundboard2.loader.VoiceLoader;
+import com.robcio.soundboard2.voice.loader.VoiceLoader;
 import com.robcio.soundboard2.registrar.ScreenRegistrar;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Maths;

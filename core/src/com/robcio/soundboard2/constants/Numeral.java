@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.gui.constants;
+package com.robcio.soundboard2.constants;
 
 import com.robcio.soundboard2.utils.Maths;
 import lombok.AccessLevel;
@@ -25,5 +25,18 @@ public class Numeral {
     public static final float NORMAL_DURATION = 0.25f;
     public static final float LONG_DURATION = 0.4f;
     public static final float SHAKE_OFFSET = Maths.PPM / 4f;
+
+    //INDICATOR
+    public static final float X_POSITION_FRACTION_LEFT = -0.067f;
+    public static final float Y_POSITION_FRACTION_LEFT = -0.059f;
+    public static final float X_POSITION_FRACTION_CENTER = -0.067f;
+    public static final float Y_POSITION_FRACTION_CENTER = -0.059f;
+    public static final float X_POSITION_FRACTION_RIGHT = 0.8f;
+    public static final float Y_POSITION_FRACTION_RIGHT = -0.027f;
+    public static final float INDICATOR_SHORT_DURATION = 0.3f;
+    public static final float INDICATOR_LONG_DURATION = 0.85f;
+    public static final float INDICATOR_ANGLE = 90f;
+
+
 
 }

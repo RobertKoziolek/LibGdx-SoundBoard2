@@ -1,11 +1,11 @@
-package com.robcio.soundboard2.loader;
+package com.robcio.soundboard2.voice.loader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
 import com.robcio.soundboard2.filter.FilterMap;
-import com.robcio.soundboard2.loader.model.PacketModel;
-import com.robcio.soundboard2.loader.model.PacketsInformationModel;
-import com.robcio.soundboard2.loader.model.VoiceModel;
+import com.robcio.soundboard2.voice.loader.model.PacketModel;
+import com.robcio.soundboard2.voice.loader.model.PacketsInformationModel;
+import com.robcio.soundboard2.voice.loader.model.VoiceModel;
 import com.robcio.soundboard2.utils.Assets;
 
 import java.util.ArrayList;

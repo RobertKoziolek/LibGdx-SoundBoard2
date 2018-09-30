@@ -1,15 +1,14 @@
 {
   name: "Cello",
   folder: "cello",
-  filter: "CELLO",
+  filter: "Cello",
   format: ".ogg",
   voiceModels: [
     {
       name: "Cello 1",
       file: "cello01",
       filter: [
-        "P_Instrument",
-        "CELLO"
+        "P_Cello"
       ] 
     } 
   ]

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 import java.util.Comparator;
 
-import static com.robcio.soundboard2.gui.constants.Strings.*;
+import static com.robcio.soundboard2.constants.Strings.*;
 
 @Getter
 @AllArgsConstructor

@@ -1,8 +1,5 @@
 package com.robcio.soundboard2.utils;
 
-public interface ShareDispatcher {
+public interface ShareDispatcher extends Enablable {
     void share(String filePath);
-    void askForSharingPermission();
-    boolean isSharingAllowed();
-    void setSharingAllowed(final boolean isSharingAllowed);
 }

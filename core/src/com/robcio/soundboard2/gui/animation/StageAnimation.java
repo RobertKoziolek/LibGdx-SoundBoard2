@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.gui.constants.Numeral.*;
+import static com.robcio.soundboard2.constants.Numeral.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StageAnimation {

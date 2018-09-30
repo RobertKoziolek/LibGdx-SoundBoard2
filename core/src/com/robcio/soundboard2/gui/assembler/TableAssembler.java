@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.utils.Assets;
 
-import static com.robcio.soundboard2.gui.constants.Numeral.OPTION_HEIGHT;
+import static com.robcio.soundboard2.constants.Numeral.OPTION_HEIGHT;
 
 public class TableAssembler {
 

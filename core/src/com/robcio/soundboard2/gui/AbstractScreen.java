@@ -2,10 +2,7 @@ package com.robcio.soundboard2.gui;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.robcio.soundboard2.SoundBoard2;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -15,21 +12,13 @@ import lombok.NonNull;
 public abstract class AbstractScreen implements Screen {
     private Stage stage;
 
-    public AbstractScreen(@NonNull final Camera camera) {
-        this.stage = new Stage(new FitViewport(SoundBoard2.WIDTH, SoundBoard2.HEIGHT, camera));
-    }
-
     @Override
     abstract public void show();
 
     @Override
-    public void render(final float delta) {
-        update(delta);
-        stage.draw();
-    }
-
-    protected void update(final float deltaTime) {
+    public void render(final float deltaTime) {
         stage.act(deltaTime);
+        stage.draw();
     }
 
     @Override
@@ -40,17 +29,14 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override

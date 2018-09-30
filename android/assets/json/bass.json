@@ -1,15 +1,14 @@
 {
   name: "Bass",
   folder: "bass",
-  filter: "BASS",
+  filter: "Bass",
   format: ".ogg",
   voiceModels: [
     {
       name: "Bass 1",
       file: "bassslap01",
       filter: [
-        "P_Instrument",
-        "BASS",
+        "P_Bass",
         "TIBIA"
       ] 
     },
@@ -17,8 +16,7 @@
       name: "Inny bass",
       file: "bassslap02",
       filter: [
-        "P_Instrument",
-        "BASS"
+        "P_Bass"
       ] 
     }
   ]

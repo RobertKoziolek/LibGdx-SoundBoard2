@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.loader.model;
+package com.robcio.soundboard2.voice.loader.model;
 
 import lombok.Getter;
 

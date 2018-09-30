@@ -1,39 +1,39 @@
 {
   name: "Organy",
   folder: "organ",
-  filter: "ORGAN",
+  filter: "Organ",
   format: ".ogg",
   voiceModels: [
     {
       name: "Organy 1",
       file: "church_organ01",
       filter: [
-        "P_Instrument",
-        "ORGAN"
+        "P_Organ",
+        "LONG"
       ] 
     },
     {
       name: "Organy 2",
       file: "church_organ02",
       filter: [
-        "P_Instrument",
-        "ORGAN"
+        "P_Organ",
+        "LONG"
       ] 
     },
     {
       name: "Organy 3",
       file: "church_organ03",
       filter: [
-        "P_Instrument",
-        "ORGAN"
+        "P_Organ",
+        "LONG"
       ] 
     },
     {
       name: "Organy 4",
       file: "church_organ04",
       filter: [
-        "P_Instrument",
-        "ORGAN"
+        "P_Organ",
+        "LONG"
       ] 
     }
   ]

@@ -8,10 +8,9 @@ import lombok.Getter;
 public class DesktopShareDispatcher implements ShareDispatcher {
 
     private final String SHARING_TAG = "Sharing";
-    private final String SHARE_PERMISSION = "Asking for permission to share";
 
     @Getter
-    private boolean isSharingAllowed;
+    private boolean enabled;
 
     @Override
     public void share(final String filePath) {
@@ -19,14 +18,9 @@ public class DesktopShareDispatcher implements ShareDispatcher {
     }
 
     @Override
-    public void askForSharingPermission() {
-        Log.i(SHARING_TAG, SHARE_PERMISSION);
-    }
-
-    @Override
-    public void setSharingAllowed(final boolean isSharingAllowed) {
-        Log.i(SHARING_TAG, String.valueOf(isSharingAllowed));
-        this.isSharingAllowed = isSharingAllowed;
+    public void setEnabled(final boolean enabled) {
+        Log.i(SHARING_TAG, String.valueOf(enabled));
+        this.enabled = enabled;
     }
 
 }

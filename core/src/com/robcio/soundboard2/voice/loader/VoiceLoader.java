@@ -1,8 +1,8 @@
-package com.robcio.soundboard2.loader;
+package com.robcio.soundboard2.voice.loader;
 
 import com.badlogic.gdx.audio.Sound;
 import com.robcio.soundboard2.filter.FilterMap;
-import com.robcio.soundboard2.loader.model.VoiceModel;
+import com.robcio.soundboard2.voice.loader.model.VoiceModel;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.voice.Voice;
 import lombok.Getter;
