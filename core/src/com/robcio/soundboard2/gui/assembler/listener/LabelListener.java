@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.utils;
+package com.robcio.soundboard2.gui.assembler.listener;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import lombok.AllArgsConstructor;

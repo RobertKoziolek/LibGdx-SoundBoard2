@@ -20,6 +20,10 @@ public class StageAnimation {
                                  moveBy(SHAKE_OFFSET, SHAKE_OFFSET, SHORT_DURATION)));
     }
 
+    public static void enterFadeIn(final Stage stage) {
+        stage.addAction(sequence(alpha(0f), fadeIn(LONG_DURATION)));
+    }
+
     public static void enterFromTop(final Stage stage) {
         stage.addAction(sequence(alpha(0f), moveTo(0f, HEIGHT),
                                  parallel(fadeIn(LONG_DURATION),
@@ -34,6 +38,10 @@ public class StageAnimation {
 
     public static void enterFromRight(final Stage stage) {
         stage.addAction(parallel(moveTo(WIDTH, 0f), fadeIn(NORMAL_DURATION), moveBy(-WIDTH, 0f, NORMAL_DURATION)));
+    }
+
+    public static Action exitFadeOut() {
+        return fadeOut(NORMAL_DURATION);
     }
 
     public static Action exitToLeft() {

@@ -2,7 +2,7 @@ package com.robcio.soundboard2.gui.assembler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.robcio.soundboard2.utils.Assets;
-import com.robcio.soundboard2.utils.LabelListener;
+import com.robcio.soundboard2.gui.assembler.listener.LabelListener;
 
 import java.util.Observable;
 

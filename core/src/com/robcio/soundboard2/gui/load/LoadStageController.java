@@ -48,8 +48,8 @@ class LoadStageController extends StageController {
     private void loadAssets() {
         if (Assets.update()) {
             voiceContainer.loadUp(voiceLoader);
-//            changeScreen(ScreenId.SPLASH);
-            changeScreen(ScreenId.MAIN);
+            changeScreen(ScreenId.SPLASH);
+//            changeScreen(ScreenId.MAIN);
         }
     }
 

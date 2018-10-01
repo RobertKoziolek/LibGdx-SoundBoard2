@@ -20,7 +20,7 @@ public class Numeral {
     public static final float OPTION_HEIGHT = HEIGHT / 17f;
     public static final float UNIT_HEIGHT = HEIGHT / 12f;
 
-    //ANIMATION
+    //STAGE ANIMATION
     public static final float SHORT_DURATION = 0.05f;
     public static final float NORMAL_DURATION = 0.25f;
     public static final float LONG_DURATION = 0.4f;
@@ -38,6 +38,9 @@ public class Numeral {
     public static final float INDICATOR_LONG_DURATION = 2.35f;
     public static final float INDICATOR_ANGLE = 90f;
 
-
+    //SPLASH ANIMATION
+    public static final float FADE_IN_DURATION = 2f;
+    public static final float MOVE_IN_DURATION = 2f;
+    public static final float SCALE_IN_DURATION = 2.5f;
 
 }

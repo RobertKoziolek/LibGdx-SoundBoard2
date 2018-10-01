@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TextureId {
 
-    LOGO("robciologo");
+    ROBCIO_LOGO("robcio_logo"),
+    SOUNDBOARD_LOGO("soundboard_logo");
 
     private String filename;
 }

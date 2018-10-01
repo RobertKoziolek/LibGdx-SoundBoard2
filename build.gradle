@@ -9,8 +9,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.0'
-        
-
     }
 }
 
@@ -66,11 +64,12 @@ project(":android") {
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "org.projectlombok:lombok:1.16.20"
         compile 'me.xdrop:fuzzywuzzy:1.1.10'
+        compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.0'
+
     }
 }

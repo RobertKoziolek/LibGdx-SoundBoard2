@@ -2,10 +2,11 @@ package com.robcio.soundboard2.voice.loader;
 
 import com.badlogic.gdx.audio.Sound;
 import com.robcio.soundboard2.filter.FilterMap;
-import com.robcio.soundboard2.voice.loader.model.VoiceModel;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.voice.Voice;
+import com.robcio.soundboard2.voice.loader.model.VoiceModel;
 import lombok.Getter;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -21,11 +22,11 @@ public class VoiceLoader {
     }
 
     public List<Voice> getVoiceList() {
-        if (voiceModelList == null || voiceModelList.isEmpty()){
+        if (CollectionUtils.isEmpty(voiceModelList)) {
             throw new IllegalStateException("Cannot get voices without loading them first");
         }
         final List<Voice> voiceList = new LinkedList<>();
-        for (final VoiceModel model : voiceModelList){
+        for (final VoiceModel model : voiceModelList) {
             final Sound sound = Assets.getSound(model.getFile());
             voiceList.add(Voice.of(filterMap, model, sound));
         }

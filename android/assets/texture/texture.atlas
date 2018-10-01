@@ -6,28 +6,35 @@ filter: Nearest,Nearest
 repeat: none
 bass
   rotate: false
-  xy: 2, 2
+  xy: 404, 419
   size: 108, 185
   orig: 108, 185
   offset: 0, 0
   index: -1
 cello
   rotate: false
-  xy: 660, 491
+  xy: 660, 606
   size: 204, 273
   orig: 204, 273
   offset: 0, 0
   index: -1
 organ
   rotate: false
-  xy: 2, 491
+  xy: 2, 606
   size: 656, 273
   orig: 656, 273
   offset: 0, 0
   index: -1
-robciologo
+robcio_logo
   rotate: false
-  xy: 2, 189
+  xy: 2, 304
+  size: 400, 300
+  orig: 400, 300
+  offset: 0, 0
+  index: -1
+soundboard_logo
+  rotate: false
+  xy: 2, 2
   size: 400, 300
   orig: 400, 300
   offset: 0, 0

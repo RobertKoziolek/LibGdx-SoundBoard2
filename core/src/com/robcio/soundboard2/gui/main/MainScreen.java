@@ -34,6 +34,7 @@ public class MainScreen extends AbstractScreen {
                                                       indicatorContainer);
             indicatorContainer.loadUp(stageController);
             setStage(stageController);
+            StageAnimation.enterFadeIn(stageController);
         } else {
             StageAnimation.enterFromTop(stageController);
             stageController.updateButtons();
