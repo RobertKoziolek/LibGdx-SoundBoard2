@@ -8,6 +8,12 @@ public class Strings {
 
     public static final String EMPTY_STRING = "";
 
+    //SETTINGS
+    public static final String SETTING_APP_NAME = "robcio_soundboard2_settings";
+    public static final String SETTING_INDICATORS = "setting_indicator_on";
+    public static final String SETTING_SORT_TYPE = "setting_sort_type";
+    public static final String SETTING_SHARING = "setting_sharing_on";
+
     //SHARING
     public static final String SHARE_SUBJECT = "Cud natury";
     public static final String SHARE_QUESTION = "Dokąd wysłać ten cud natury?";
@@ -26,7 +32,7 @@ public class Strings {
     //SORTING
     public static final String SORT_PACKETS = "Po pakietach";
     public static final String SORT_RANDOM = "Losowo";
-    public static final String SORT_ALPHABETICAL  = "Alfabetycznie";
+    public static final String SORT_ALPHABETICAL = "Alfabetycznie";
     public static final String SORT_ANALPHABETIC = "Analfabetycznie";
 
 

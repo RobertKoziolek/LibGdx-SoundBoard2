@@ -15,8 +15,7 @@ public class FilterMap extends HashMap<String, Integer> {
     @Getter
     private int index = 1;
 
-    @Override
-    public Integer get(final Object key) {
+    private Integer getOrAdd(final Object key) {
         if (!containsKey(key)) {
             put(String.valueOf(key));
         }
@@ -32,7 +31,7 @@ public class FilterMap extends HashMap<String, Integer> {
     public int getFilter(final List<String> filterList) {
         int filter = 0;
         for (final String filterString : filterList) {
-            final int filterShort = get(filterString);
+            final int filterShort = getOrAdd(filterString);
             filter = filter | filterShort;
         }
         return filter;

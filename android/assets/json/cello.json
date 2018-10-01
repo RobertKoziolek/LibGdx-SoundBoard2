@@ -8,8 +8,9 @@
       name: "Cello 1",
       file: "cello01",
       filter: [
-        "P_Cello"
-      ] 
+        "P_Cello",
+        "Cello",
+      ]
     } 
   ]
 }

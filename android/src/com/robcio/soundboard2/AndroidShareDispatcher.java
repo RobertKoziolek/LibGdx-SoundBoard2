@@ -9,13 +9,13 @@ import android.os.Build;
 import android.os.Environment;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.robcio.soundboard2.utils.Settings;
 import com.robcio.soundboard2.utils.ShareDispatcher;
 import lombok.Getter;
 
 import java.io.File;
 
-import static com.robcio.soundboard2.constants.Strings.SHARE_QUESTION;
-import static com.robcio.soundboard2.constants.Strings.SHARE_SUBJECT;
+import static com.robcio.soundboard2.constants.Strings.*;
 
 public class AndroidShareDispatcher implements ShareDispatcher {
     private final String PACKAGE_PATH = "/robcio/soundboard2/startSharingIntent/";
@@ -23,7 +23,7 @@ public class AndroidShareDispatcher implements ShareDispatcher {
     private final int REQUEST_CODE = 9;
 
     @Getter
-    private boolean enabled;
+    private boolean enabled = Settings.getBoolean(SETTING_SHARING, false);
 
     final private AndroidApplication application;
 
@@ -36,6 +36,7 @@ public class AndroidShareDispatcher implements ShareDispatcher {
     @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+        Settings.putBoolean(SETTING_SHARING, enabled);
         if (enabled) askForSharingPermission();
     }
 

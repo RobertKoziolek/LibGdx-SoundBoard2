@@ -35,23 +35,25 @@ class OptionsStageController extends StageController {
 
 
     private final VoiceContainer voiceContainer;
+    private final VoiceSorter voiceSorter;
     private final Enablable sharingEnablable;
     private final Enablable indicatorEnablable;
     private final FilterMap filterMap;
 
     private final EventListener filterClickListener;
     private final VoiceFilter voiceFilter;
-    private final VoiceSorter voiceSorter;
     private final FilterCheckBoxContainer filterCheckBoxContainer;
 
     OptionsStageController(final VoiceContainer voiceContainer,
+                           final VoiceSorter voiceSorter,
                            final Enablable sharingEnablable,
                            final Enablable indicatorEnablable,
                            final FilterMap filterMap) {
         super();
+        this.voiceContainer = voiceContainer;
+        this.voiceSorter = voiceSorter;
         this.sharingEnablable = sharingEnablable;
         this.indicatorEnablable = indicatorEnablable;
-        this.voiceContainer = voiceContainer;
         this.filterMap = filterMap;
 
         this.filterClickListener = new ClickListener() {
@@ -62,7 +64,6 @@ class OptionsStageController extends StageController {
             }
         };
         this.voiceFilter = new VoiceFilter();
-        this.voiceSorter = new VoiceSorter();
         this.filterCheckBoxContainer = new FilterCheckBoxContainer(filterMap.getFilterInformation());
     }
 
@@ -104,7 +105,6 @@ class OptionsStageController extends StageController {
                                                      .withClickCommand(new Command() {
                                                          @Override
                                                          public void execute() {
-                                                             voiceSorter.sort(voiceContainer);
                                                              changeScreen(ScreenId.MAIN,
                                                                           StageAnimation.exitToBot());
                                                          }

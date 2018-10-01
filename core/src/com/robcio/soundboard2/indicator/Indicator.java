@@ -12,7 +12,7 @@ import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 import static com.robcio.soundboard2.constants.Numeral.*;
 
-class Indicator {
+public class Indicator {
 
     @Getter
     private final Image image;
@@ -49,11 +49,11 @@ class Indicator {
                                  alpha(0f)));
     }
 
-    void start() {
+    public void start(final boolean isLong) {
         reset();
         image.addAction(parallel(
                 sequence(fadeIn(INDICATOR_SHORT_DURATION),
-                         delay(INDICATOR_LONG_DURATION),
+                         delay(isLong ? INDICATOR_LONG_DURATION : INDICATOR_NORMAL_DURATION),
                          parallel(fadeOut(INDICATOR_SHORT_DURATION),
                                   moveBy(0, -HALF_HEIGHT, INDICATOR_SHORT_DURATION, Interpolation.pow5)
                                  )

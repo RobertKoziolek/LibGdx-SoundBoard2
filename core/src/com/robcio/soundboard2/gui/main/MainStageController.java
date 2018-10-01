@@ -15,30 +15,35 @@ import com.robcio.soundboard2.indicator.IndicatorContainer;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.ShareDispatcher;
 import com.robcio.soundboard2.voice.Voice;
+import com.robcio.soundboard2.voice.VoiceSorter;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 import java.util.List;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.constants.Numeral.UNIT_HEIGHT;
 import static com.robcio.soundboard2.constants.Numeral.THIRD_WIDTH;
+import static com.robcio.soundboard2.constants.Numeral.UNIT_HEIGHT;
 import static com.robcio.soundboard2.constants.Strings.*;
 import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
 
 class MainStageController extends StageController {
 
     private final List<Voice> voiceList;
+    private final VoiceSorter voiceSorter;
     private final ShareDispatcher shareDispatcher;
-    private final ScrollPane buttonPane;
     private final IndicatorContainer indicatorContainer;
 
+    private final ScrollPane buttonPane;
+
     MainStageController(final List<Voice> voiceList,
-                        final IndicatorContainer indicatorContainer,
-                        final ShareDispatcher shareDispatcher) {
+                        final VoiceSorter voiceSorter,
+                        final ShareDispatcher shareDispatcher,
+                        final IndicatorContainer indicatorContainer) {
         super();
         this.voiceList = voiceList;
-        this.indicatorContainer = indicatorContainer;
+        this.voiceSorter = voiceSorter;
         this.shareDispatcher = shareDispatcher;
+        this.indicatorContainer = indicatorContainer;
 
         final Table rootTable = TableAssembler.table()
                                               .fillParent()
@@ -108,6 +113,7 @@ class MainStageController extends StageController {
     }
 
     private void updateButtons(final String searchString) {
+        voiceSorter.sort();
         final Table table = TableAssembler.table()
                                           .assemble();
         for (final Voice voice : voiceList) {

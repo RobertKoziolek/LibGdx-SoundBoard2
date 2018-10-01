@@ -18,7 +18,7 @@ public enum SortingType {
 
     ALPHABETHIC(SORT_ALPHABETICAL, 2),
 
-    CONTRALPHABETHIC(SORT_ANALPHABETIC, 3);
+    ANALPHABETHIC(SORT_ANALPHABETIC, 3);
 
     final private String value;
 

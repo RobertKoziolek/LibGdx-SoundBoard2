@@ -5,15 +5,18 @@ import com.robcio.soundboard2.gui.AbstractScreen;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.utils.Enablable;
 import com.robcio.soundboard2.voice.VoiceContainer;
+import com.robcio.soundboard2.voice.VoiceSorter;
 
 public class OptionsScreen extends AbstractScreen {
     final private OptionsStageController optionsStageController;
 
     public OptionsScreen(final VoiceContainer voiceContainer,
+                         final VoiceSorter voiceSorter,
                          final Enablable sharingEnablable,
                          final Enablable indicatorEnablable,
                          final FilterMap filterMap) {
         optionsStageController = new OptionsStageController(voiceContainer,
+                                                            voiceSorter,
                                                             sharingEnablable,
                                                             indicatorEnablable,
                                                             filterMap);

@@ -9,14 +9,15 @@
       file: "bassslap01",
       filter: [
         "P_Bass",
-        "TIBIA"
-      ] 
+        "Bass",
+      ]
     },
     {
       name: "Inny bass",
       file: "bassslap02",
       filter: [
-        "P_Bass"
+        "P_Bass",
+        "Bass",
       ] 
     }
   ]

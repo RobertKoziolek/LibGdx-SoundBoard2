@@ -5,28 +5,33 @@ import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
 import com.robcio.soundboard2.utils.ShareDispatcher;
 import com.robcio.soundboard2.voice.VoiceContainer;
+import com.robcio.soundboard2.voice.VoiceSorter;
 
 public class MainScreen extends AbstractScreen {
     private final VoiceContainer voiceContainer;
-    private final IndicatorContainer indicatorContainer;
+    private final VoiceSorter voiceSorter;
     private final ShareDispatcher shareDispatcher;
+    private final IndicatorContainer indicatorContainer;
 
     private MainStageController stageController;
 
     public MainScreen(final VoiceContainer voiceContainer,
-                      final IndicatorContainer indicatorContainer,
-                      final ShareDispatcher shareDispatcher) {
+                      final VoiceSorter voiceSorter,
+                      final ShareDispatcher shareDispatcher,
+                      final IndicatorContainer indicatorContainer) {
         this.voiceContainer = voiceContainer;
-        this.indicatorContainer = indicatorContainer;
+        this.voiceSorter = voiceSorter;
         this.shareDispatcher = shareDispatcher;
+        this.indicatorContainer = indicatorContainer;
     }
 
     @Override
     public void show() {
         if (stageController == null) {
             stageController = new MainStageController(voiceContainer.getCurrentList(),
-                                                      indicatorContainer,
-                                                      shareDispatcher);
+                                                      voiceSorter,
+                                                      shareDispatcher,
+                                                      indicatorContainer);
             indicatorContainer.loadUp(stageController);
             setStage(stageController);
         } else {

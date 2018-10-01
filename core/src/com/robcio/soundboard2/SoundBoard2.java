@@ -7,12 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.robcio.soundboard2.enumeration.ScreenId;
+import com.robcio.soundboard2.utils.*;
 import com.robcio.soundboard2.voice.loader.VoiceLoader;
 import com.robcio.soundboard2.registrar.ScreenRegistrar;
-import com.robcio.soundboard2.utils.Assets;
-import com.robcio.soundboard2.utils.Maths;
-import com.robcio.soundboard2.utils.ScreenChanger;
-import com.robcio.soundboard2.utils.ShareDispatcher;
 
 public class SoundBoard2 extends Game implements ScreenChanger {
     public static final int WIDTH = (int) (9 * Maths.PPM);
@@ -82,5 +79,6 @@ public class SoundBoard2 extends Game implements ScreenChanger {
         batch.dispose();
         screenRegistrar.dispose();
         Assets.dispose();
+        Settings.flush();
     }
 }

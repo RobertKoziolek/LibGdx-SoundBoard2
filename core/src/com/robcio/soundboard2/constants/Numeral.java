@@ -9,7 +9,7 @@ import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Numeral {
-    //SIZES
+    //SIZE
     public static final float HALF_WIDTH = WIDTH / 2f;
     public static final float THIRD_WIDTH = WIDTH / 3f;
     public static final float ALMOST_WIDTH = WIDTH * 5f / 6f;
@@ -34,7 +34,8 @@ public class Numeral {
     public static final float X_POSITION_FRACTION_RIGHT = 0.8f;
     public static final float Y_POSITION_FRACTION_RIGHT = -0.027f;
     public static final float INDICATOR_SHORT_DURATION = 0.3f;
-    public static final float INDICATOR_LONG_DURATION = 0.85f;
+    public static final float INDICATOR_NORMAL_DURATION = 0.85f;
+    public static final float INDICATOR_LONG_DURATION = 2.35f;
     public static final float INDICATOR_ANGLE = 90f;
 
 
