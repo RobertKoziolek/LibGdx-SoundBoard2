@@ -32,7 +32,6 @@ public class SoundBoard2 extends Game implements ScreenChanger {
         initializeCamera();
         initializeBatch();
 
-
         final VoiceLoader voiceLoader = new VoiceLoader();
         voiceLoader.load();
 

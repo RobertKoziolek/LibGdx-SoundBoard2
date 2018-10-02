@@ -15,6 +15,8 @@ import lombok.Getter;
 public class Assets {
 
     private static final AssetManager assetManager = new AssetManager();
+    @Getter
+    private static final AssetsLoader assetsLoader = new AssetsLoader(assetManager);
 
     private static final String LOADING_BACKGROUND = "loading_background.png";
     private static final String UISKIN_ATLAS = "ui/uiskin.atlas";
@@ -57,10 +59,6 @@ public class Assets {
         assetManager.dispose();
         font.dispose();
         skin.dispose();
-    }
-
-    public static AssetsLoader getLoader() {
-        return new AssetsLoader(assetManager);
     }
 
     public static Texture getLoadingBackground() {

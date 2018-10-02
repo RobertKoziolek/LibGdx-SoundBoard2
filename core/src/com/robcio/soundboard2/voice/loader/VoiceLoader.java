@@ -1,6 +1,7 @@
 package com.robcio.soundboard2.voice.loader;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.voice.Voice;
@@ -29,6 +30,19 @@ public class VoiceLoader {
         for (final VoiceModel model : voiceModelList) {
             final Sound sound = Assets.getSound(model.getFile());
             voiceList.add(Voice.of(filterMap, model, sound));
+        }
+        return voiceList;
+    }
+
+    public List<Voice> getLoadedVoices() {
+        final List<Voice> voiceList = new LinkedList<>();
+        for (final VoiceModel model : voiceModelList) {
+            try {
+                final Sound sound = Assets.getSound(model.getFile());
+                voiceList.add(Voice.of(filterMap, model, sound));
+            } catch (final GdxRuntimeException exception){
+                break;
+            }
         }
         return voiceList;
     }

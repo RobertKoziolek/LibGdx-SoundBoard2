@@ -6,6 +6,9 @@ import com.badlogic.gdx.Preferences;
 import static com.robcio.soundboard2.constants.Strings.SETTING_APP_NAME;
 
 public class Settings {
+    static {
+
+    }
     private static final Preferences preferences = Gdx.app.getPreferences(SETTING_APP_NAME);
 
     public static void flush() {

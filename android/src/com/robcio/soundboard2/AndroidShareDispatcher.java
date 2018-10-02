@@ -23,7 +23,7 @@ public class AndroidShareDispatcher implements ShareDispatcher {
     private final int REQUEST_CODE = 9;
 
     @Getter
-    private boolean enabled = Settings.getBoolean(SETTING_SHARING, false);
+    private boolean enabled;
 
     final private AndroidApplication application;
 

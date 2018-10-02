@@ -49,6 +49,8 @@ public class VoiceSorter {
         final List<Voice> fullList = voiceContainer.getFullList();
         final List<Voice> currentList = voiceContainer.getCurrentList();
 
+        if (fullList.isEmpty()) return;
+
         if (currentList.size() == fullList.size()) {
             currentList.clear();
             currentList.addAll(fullList);

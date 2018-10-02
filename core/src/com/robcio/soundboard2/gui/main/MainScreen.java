@@ -28,7 +28,7 @@ public class MainScreen extends AbstractScreen {
     @Override
     public void show() {
         if (stageController == null) {
-            stageController = new MainStageController(voiceContainer.getCurrentList(),
+            stageController = new MainStageController(voiceContainer,
                                                       voiceSorter,
                                                       shareDispatcher,
                                                       indicatorContainer);

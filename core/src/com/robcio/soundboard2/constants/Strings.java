@@ -40,6 +40,7 @@ public class Strings {
 
 
     //MAIN
+    public static final String HUNDRED_PERCENT = "100.0%";
     public static final String OPTIONS_BUTTON = "Opcje";
     public static final String SILENCE_BUTTON = "Silentium";
     public static final String SEARCH_STRING = "Szukaj";

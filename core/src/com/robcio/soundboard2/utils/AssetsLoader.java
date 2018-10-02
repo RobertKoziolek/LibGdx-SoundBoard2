@@ -21,4 +21,8 @@ public class AssetsLoader extends Observable {
     public float getProgress() {
         return assetManager.getProgress();
     }
+
+    public void finishLoading(){
+        while(!update());
+    }
 }

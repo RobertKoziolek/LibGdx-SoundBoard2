@@ -29,7 +29,7 @@ public class ScreenRegistrar {
                            final ShareDispatcher shareDispatcher) {
         StageController.setScreenChangerAndCamera(screenChanger, camera);
 
-        final VoiceContainer voiceContainer = new VoiceContainer();
+        final VoiceContainer voiceContainer = new VoiceContainer(voiceLoader);
         final VoiceSorter voiceSorter = new VoiceSorter(voiceContainer);
         final FilterMap filterMap = voiceLoader.getFilterMap();
         final IndicatorContainer indicatorContainer = new IndicatorContainer(filterMap);

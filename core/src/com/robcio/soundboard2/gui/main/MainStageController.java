@@ -12,13 +12,13 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
+import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.ShareDispatcher;
 import com.robcio.soundboard2.voice.Voice;
+import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSorter;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
-
-import java.util.List;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 import static com.robcio.soundboard2.constants.Numeral.THIRD_WIDTH;
@@ -28,19 +28,19 @@ import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
 
 class MainStageController extends StageController {
 
-    private final List<Voice> voiceList;
+    private final VoiceContainer voiceContainer;
     private final VoiceSorter voiceSorter;
     private final ShareDispatcher shareDispatcher;
     private final IndicatorContainer indicatorContainer;
 
     private final ScrollPane buttonPane;
 
-    MainStageController(final List<Voice> voiceList,
+    MainStageController(final VoiceContainer voiceContainer,
                         final VoiceSorter voiceSorter,
                         final ShareDispatcher shareDispatcher,
                         final IndicatorContainer indicatorContainer) {
         super();
-        this.voiceList = voiceList;
+        this.voiceContainer = voiceContainer;
         this.voiceSorter = voiceSorter;
         this.shareDispatcher = shareDispatcher;
         this.indicatorContainer = indicatorContainer;
@@ -85,15 +85,30 @@ class MainStageController extends StageController {
                                                         })
                                                         .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                         .assemble();
+        final Command partialUpdateCommand = new Command() {
+            @Override
+            public void execute() {
+                voiceContainer.partialLoadUp();
+                updateButtons();
+            }
+        };
         final TextButton optionsButton = TextButtonAssembler.buttonOf(OPTIONS_BUTTON)
                                                             .withClickCommand(new Command() {
                                                                 @Override
                                                                 public void execute() {
-                                                                    silenceAllVoices();
-                                                                    changeScreen(ScreenId.OPTIONS,
-                                                                                 StageAnimation.exitToTop());
+                                                                    if (voiceContainer.isLoaded()) {
+                                                                        silenceAllVoices();
+                                                                        changeScreen(ScreenId.OPTIONS,
+                                                                                     StageAnimation.exitToTop());
+                                                                    } else {
+                                                                        partialUpdateCommand.execute();
+                                                                    }
                                                                 }
                                                             })
+                                                            .observing(Assets.getAssetsLoader(),
+                                                                       partialUpdateCommand,
+                                                                       HUNDRED_PERCENT,
+                                                                       OPTIONS_BUTTON)
                                                             .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                             .assemble();
 
@@ -102,7 +117,7 @@ class MainStageController extends StageController {
     }
 
     private void silenceAllVoices() {
-        for (final Voice voice : voiceList) {
+        for (final Voice voice : voiceContainer.getCurrentList()) {
             voice.getSound()
                  .stop();
         }
@@ -117,7 +132,7 @@ class MainStageController extends StageController {
         voiceSorter.sort();
         final Table table = TableAssembler.table()
                                           .assemble();
-        for (final Voice voice : voiceList) {
+        for (final Voice voice : voiceContainer.getCurrentList()) {
             if (!searchString.isEmpty() && FuzzySearch.tokenSetPartialRatio(voice.getName(),
                                                                             searchString) < SEARCH_RATIO) {
                 continue;

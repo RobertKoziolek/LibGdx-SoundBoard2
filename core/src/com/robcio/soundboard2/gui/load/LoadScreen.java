@@ -1,8 +1,8 @@
 package com.robcio.soundboard2.gui.load;
 
 import com.robcio.soundboard2.gui.AbstractScreen;
-import com.robcio.soundboard2.voice.loader.VoiceLoader;
 import com.robcio.soundboard2.voice.VoiceContainer;
+import com.robcio.soundboard2.voice.loader.VoiceLoader;
 
 public class LoadScreen extends AbstractScreen {
 
@@ -14,6 +14,5 @@ public class LoadScreen extends AbstractScreen {
 
     @Override
     public void show() {
-
     }
 }

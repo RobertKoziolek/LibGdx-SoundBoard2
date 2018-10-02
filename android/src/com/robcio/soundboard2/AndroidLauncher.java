@@ -3,6 +3,9 @@ package com.robcio.soundboard2;
 import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.robcio.soundboard2.utils.Settings;
+
+import static com.robcio.soundboard2.constants.Strings.SETTING_SHARING;
 
 public class AndroidLauncher extends AndroidApplication {
     @Override
@@ -11,6 +14,8 @@ public class AndroidLauncher extends AndroidApplication {
         final AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         config.useAccelerometer = false;
         config.useCompass = false;
-        initialize(new SoundBoard2(new AndroidShareDispatcher(this)), config);
+        final AndroidShareDispatcher androidShareDispatcher = new AndroidShareDispatcher(this);
+        initialize(new SoundBoard2(androidShareDispatcher), config);
+        androidShareDispatcher.setEnabled(Settings.getBoolean(SETTING_SHARING, false));
     }
 }
