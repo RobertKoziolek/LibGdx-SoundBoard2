@@ -4,19 +4,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.robcio.soundboard2.constants.Strings;
 import com.robcio.soundboard2.voice.VoiceContainer;
-import lombok.AllArgsConstructor;
 
 import java.util.Observable;
 
-@AllArgsConstructor
 public class AssetsLoader extends Observable {
 
     final private AssetManager assetManager;
+    private boolean done;
+
+    AssetsLoader(final AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
 
     @Override
-    public void notifyObservers(){
-        setChanged();
-        notifyObservers(Strings.percentage(assetManager.getProgress()));
+    public void notifyObservers() {
+        if (!done) {
+            setChanged();
+            notifyObservers(Strings.percentage(assetManager.getProgress()));
+        }
     }
 
     public float getProgress() {
@@ -27,13 +32,14 @@ public class AssetsLoader extends Observable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (!assetManager.update());
+                while (!assetManager.update()) ;
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
                         voiceContainer.loadUp();
                         notifyObservers();
                         deleteObservers();
+                        done = true;
                     }
                 });
             }

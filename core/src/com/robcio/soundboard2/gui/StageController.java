@@ -44,8 +44,7 @@ public abstract class StageController extends Stage {
         StageController.camera = camera;
     }
 
-    protected void backKeyDown() {
-    }
+    abstract protected void backKeyDown();
 
     @Override
     public boolean keyDown(int keycode) {

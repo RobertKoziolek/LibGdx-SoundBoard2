@@ -16,6 +16,7 @@ public class Numeral {
     public static final float UNIT_WIDTH = HEIGHT / 12f;
 
     public static final float HALF_HEIGHT = HEIGHT / 2f;
+    public static final float THIRD_HEIGHT = HEIGHT / 3f;
     public static final float ALMOST_HEIGHT = HEIGHT * 5f / 6f;
     public static final float OPTION_HEIGHT = HEIGHT / 17f;
     public static final float UNIT_HEIGHT = HEIGHT / 12f;

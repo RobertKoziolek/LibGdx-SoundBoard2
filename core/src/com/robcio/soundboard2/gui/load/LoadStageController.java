@@ -3,7 +3,7 @@ package com.robcio.soundboard2.gui.load;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.robcio.soundboard2.constants.Strings;
 import com.robcio.soundboard2.enumeration.ScreenId;
@@ -21,7 +21,7 @@ import static com.robcio.soundboard2.constants.Numeral.*;
 class LoadStageController extends StageController {
 
     private final Texture loadingBackground;
-    private final Slider slider;
+    private final ProgressBar progressBar;
     private final VoiceContainer voiceContainer;
     private final AssetsLoader assetsLoader;
 
@@ -31,9 +31,9 @@ class LoadStageController extends StageController {
         this.voiceContainer = voiceContainer;
         this.assetsLoader = Assets.getAssetsLoader();
 
-        slider = new Slider(0, 1, 0.001f, false, Assets.getSkin());
-        slider.getStyle().knob.setMinWidth(Maths.PPM / 2);
-        slider.getStyle().knob.setMinHeight(Maths.PPM);
+        progressBar = new ProgressBar(0f, 1f, 0.001f, false, Assets.getSkin());
+        progressBar.getStyle().knob.setMinWidth(Maths.PPM / 2);
+        progressBar.getStyle().knob.setMinHeight(Maths.PPM);
 
         final Table rootTable = TableAssembler.table()
                                               .fillParent()
@@ -42,7 +42,7 @@ class LoadStageController extends StageController {
                                                   .observing(assetsLoader)
                                                   .assemble();
 
-        rootTable.add(slider)
+        rootTable.add(progressBar)
                  .width(ALMOST_WIDTH)
                  .height(UNIT_HEIGHT)
                  .padBottom(HALF_HEIGHT)
@@ -76,7 +76,7 @@ class LoadStageController extends StageController {
     }
 
     private void updateProgress() {
-        slider.setValue(assetsLoader.getProgress());
+        progressBar.setValue(assetsLoader.getProgress());
     }
 
     private void checkIfAssetsLoaded() {

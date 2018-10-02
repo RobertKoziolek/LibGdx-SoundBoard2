@@ -15,7 +15,6 @@ public class Strings {
     public static final String INSTRUCTION_LOADING = "Kliknij by ładować w tle";
     public static final String INSTRUCTION_SHARING = "Kliknij guzik mocno z lewej by wysłać";
 
-
     //SETTINGS
     public static final String SETTING_APP_NAME = "robcio_soundboard2_settings";
     public static final String SETTING_INDICATORS = "setting_indicator_on";
@@ -49,6 +48,11 @@ public class Strings {
     public static final String OPTIONS_BUTTON = "Opcje";
     public static final String SILENCE_BUTTON = "Silentium";
     public static final String SEARCH_STRING = "Szukaj";
+
+    //EXIT DIALOG
+    public static final String EXIT_QUESTION = "Już lecisz?";
+    public static final String EXIT_YES = "Naaajak";
+    public static final String EXIT_NO = "Newer";
 
     //INTERNAL
     private static final String PERCENTAGE_FORMAT = "%,.1f%%";

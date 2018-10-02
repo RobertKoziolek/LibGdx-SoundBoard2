@@ -1,6 +1,5 @@
 package com.robcio.soundboard2.gui.main;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -35,6 +34,7 @@ class MainStageController extends StageController {
     private final IndicatorContainer indicatorContainer;
 
     private final ScrollPane buttonPane;
+    private final ExitDialogBox exitDialogBox;
 
     MainStageController(final VoiceContainer voiceContainer,
                         final VoiceSorter voiceSorter,
@@ -63,11 +63,13 @@ class MainStageController extends StageController {
 
         addActor(rootTable);
         updateButtons();
+
+        exitDialogBox = new ExitDialogBox();
     }
 
     @Override
     protected void backKeyDown() {
-        Gdx.app.exit();
+        exitDialogBox.showOrHide(this);
     }
 
     private Actor getTopBar() {
