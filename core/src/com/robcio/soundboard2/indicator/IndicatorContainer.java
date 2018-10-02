@@ -49,6 +49,10 @@ public class IndicatorContainer implements Enablable {
         indicatorPlayer.indicate(filter);
     }
 
+    public void stopAll() {
+        indicatorPlayer.stopAll();
+    }
+
     @Override
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;

@@ -106,6 +106,7 @@ class MainStageController extends StageController {
             voice.getSound()
                  .stop();
         }
+        indicatorContainer.stopAll();
     }
 
     void updateButtons() {

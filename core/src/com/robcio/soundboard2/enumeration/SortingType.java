@@ -48,6 +48,7 @@ public enum SortingType {
             return res;
         }
     };
+
     public static final Comparator<Voice> ANALPHABETICAL_ORDER = new Comparator<Voice>() {
         @Override
         public int compare(final Voice s2, final Voice s1) {

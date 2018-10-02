@@ -1,7 +1,10 @@
 package com.robcio.soundboard2.constants;
 
+import com.badlogic.gdx.math.MathUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.Locale;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Strings {
@@ -42,14 +45,20 @@ public class Strings {
     public static final String SEARCH_STRING = "Szukaj";
 
     //INTERNAL
+    private static final String PERCENTAGE_FORMAT = "%,.1f%%";
     private static final String DIVISION_SLASH = " / ";
     private static final String BLANK = "Nic";
     private static final String FULL = "Wszystko";
 
-
+    //FUNCTION
     public static String counter(final int current, final int all) {
         if (current == 0) return BLANK;
         if (current == all) return FULL;
         return current + DIVISION_SLASH + all;
+    }
+
+    public static String percentage(final float value) {
+        final float percentage = MathUtils.clamp(value, 0f, 1f) * 100;
+        return String.format(Locale.ENGLISH, PERCENTAGE_FORMAT, percentage);
     }
 }

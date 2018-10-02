@@ -42,7 +42,7 @@ public class Indicator {
         }
     }
 
-    private void reset() {
+    public void reset() {
         image.clearActions();
         image.addAction(sequence(rotateTo(-INDICATOR_ANGLE),
                                  moveTo(WIDTH * resetX, HEIGHT * resetY),

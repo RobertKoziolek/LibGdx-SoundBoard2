@@ -13,6 +13,12 @@ public abstract class IndicatorPlayer {
     final protected Map<Integer, Indicator> map;
     final protected FilterMap filterMap;
 
+    public void stopAll() {
+        for (final Indicator indicator : map.values()) {
+            indicator.reset();
+        }
+    }
+
     abstract public void indicate(final int filter);
 
     public static IndicatorPlayer getNewIndicatorPlayer(final Map<Integer, Indicator> map, final FilterMap filterMap) {
