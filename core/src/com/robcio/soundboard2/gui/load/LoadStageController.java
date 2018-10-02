@@ -55,6 +55,11 @@ class LoadStageController extends StageController {
     }
 
     @Override
+    protected void backKeyDown() {
+        moveToSplashScreen();
+    }
+
+    @Override
     public void act(final float delta) {
         super.act(delta);
         drawBackground();

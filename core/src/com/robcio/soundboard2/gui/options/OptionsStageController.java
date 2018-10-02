@@ -67,6 +67,16 @@ class OptionsStageController extends StageController {
         this.filterCheckBoxContainer = new FilterCheckBoxContainer(filterMap.getFilterInformation());
     }
 
+    @Override
+    protected void backKeyDown() {
+        changeScreenToMain();
+    }
+
+    private void changeScreenToMain() {
+        changeScreen(ScreenId.MAIN,
+                     StageAnimation.exitToBot());
+    }
+
     void buildStage() {
         final Table rootTable = TableAssembler.table()
                                               .align(Align.top)
@@ -105,8 +115,7 @@ class OptionsStageController extends StageController {
                                                      .withClickCommand(new Command() {
                                                          @Override
                                                          public void execute() {
-                                                             changeScreen(ScreenId.MAIN,
-                                                                          StageAnimation.exitToBot());
+                                                             changeScreenToMain();
                                                          }
                                                      })
                                                      .withSize(HALF_WIDTH, UNIT_HEIGHT)

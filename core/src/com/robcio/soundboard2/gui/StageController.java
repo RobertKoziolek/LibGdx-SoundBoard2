@@ -1,5 +1,6 @@
 package com.robcio.soundboard2.gui;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -41,5 +42,16 @@ public abstract class StageController extends Stage {
         }
         StageController.screenChanger = screenChanger;
         StageController.camera = camera;
+    }
+
+    protected void backKeyDown() {
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
+            backKeyDown();
+        }
+        return super.keyDown(keycode);
     }
 }

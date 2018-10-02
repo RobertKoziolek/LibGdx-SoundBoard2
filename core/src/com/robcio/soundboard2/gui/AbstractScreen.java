@@ -55,6 +55,6 @@ public abstract class AbstractScreen implements Screen {
     }
 
     public InputProcessor[] getInputs() {
-        return new Stage[]{stage};
+        return new InputProcessor[]{stage};
     }
 }

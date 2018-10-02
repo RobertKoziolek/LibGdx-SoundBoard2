@@ -28,6 +28,11 @@ class SplashStageController extends StageController {
         addActor(soundboardLogo);
     }
 
+    @Override
+    protected void backKeyDown() {
+        moveToMainScreen();
+    }
+
     private void setUpRobcioLogoAnimation() {
         robcioLogo.setPosition(HALF_WIDTH, ALMOST_HEIGHT);
         final float centerX = HALF_WIDTH - robcioLogo.getWidth() / 2f;

@@ -28,6 +28,7 @@ public class SoundBoard2 extends Game implements ScreenChanger {
 
     @Override
     public void create() {
+        Gdx.input.setCatchBackKey(true);
         Assets.initialize();
         initializeCamera();
         initializeBatch();
