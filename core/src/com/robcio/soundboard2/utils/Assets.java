@@ -78,7 +78,9 @@ public class Assets {
     }
 
     public static Sound getSound(final String file) {
-        return assetManager.get(file, Sound.class);
+        synchronized (assetManager) {
+            return assetManager.get(file, Sound.class);
+        }
     }
 
 }

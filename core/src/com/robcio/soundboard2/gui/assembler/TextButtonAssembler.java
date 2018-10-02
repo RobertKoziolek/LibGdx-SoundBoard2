@@ -8,6 +8,7 @@ import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.listener.ButtonListener;
 import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.Command;
+import lombok.NonNull;
 
 import java.util.Observable;
 
@@ -19,11 +20,12 @@ public class TextButtonAssembler {
     private Command clickCommand, specialClickCommand;
     private Observable observable;
     private Command observableFinishCommand;
-    private Object observableFinishTrigger, observableFinishValue;
+    private String observableFinishString;
     private Stage stage;
 
     private TextButtonAssembler(final String text) {
         this.button = new TextButton(text, Assets.getSkin());
+        this.observableFinishString = text;
     }
 
     public static TextButtonAssembler buttonOf(final String text) {
@@ -49,10 +51,7 @@ public class TextButtonAssembler {
             }
         });
         if (observable != null) {
-            observable.addObserver(new ButtonListener(button,
-                                                      observableFinishCommand,
-                                                      observableFinishTrigger,
-                                                      observableFinishValue));
+            observable.addObserver(new ButtonListener(button, observableFinishCommand, observableFinishString));
         }
         return button;
     }
@@ -73,14 +72,9 @@ public class TextButtonAssembler {
         return this;
     }
 
-    public TextButtonAssembler observing(final Observable observable,
-                                         final Command command,
-                                         final Object previous,
-                                         final Object next) {
+    public TextButtonAssembler observing(@NonNull final Observable observable, @NonNull final Command command) {
         this.observable = observable;
         this.observableFinishCommand = command;
-        this.observableFinishTrigger = previous;
-        this.observableFinishValue = next;
         return this;
     }
 

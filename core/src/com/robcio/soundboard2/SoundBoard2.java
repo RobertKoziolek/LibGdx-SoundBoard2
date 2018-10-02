@@ -22,7 +22,7 @@ public class SoundBoard2 extends Game implements ScreenChanger {
     private OrthographicCamera camera;
     private ScreenRegistrar screenRegistrar;
 
-    public SoundBoard2(final ShareDispatcher shareDispatcher){
+    public SoundBoard2(final ShareDispatcher shareDispatcher) {
         this.shareDispatcher = shareDispatcher;
     }
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.robcio.soundboard2.utils.Settings;
 import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.utils.ToastMessage;
 import lombok.Getter;
 
 import java.io.File;
@@ -37,7 +38,10 @@ public class AndroidShareDispatcher implements ShareDispatcher {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
         Settings.putBoolean(SETTING_SHARING, enabled);
-        if (enabled) askForSharingPermission();
+        if (enabled) {
+            askForSharingPermission();
+            ToastMessage.showText(INSTRUCTION_SHARING);
+        }
     }
 
     @Override

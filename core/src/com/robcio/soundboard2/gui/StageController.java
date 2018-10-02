@@ -21,7 +21,7 @@ public abstract class StageController extends Stage {
         super(new StretchViewport(WIDTH, HEIGHT, camera));
     }
 
-    final protected void changeScreen(final ScreenId screenId) {
+    private void changeScreen(final ScreenId screenId) {
         screenChanger.setScreen(screenId);
     }
 

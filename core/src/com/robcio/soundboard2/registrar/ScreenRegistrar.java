@@ -10,11 +10,11 @@ import com.robcio.soundboard2.gui.main.MainScreen;
 import com.robcio.soundboard2.gui.options.OptionsScreen;
 import com.robcio.soundboard2.gui.splash.SplashScreen;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
-import com.robcio.soundboard2.voice.VoiceSorter;
-import com.robcio.soundboard2.voice.loader.VoiceLoader;
 import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.utils.ShareDispatcher;
 import com.robcio.soundboard2.voice.VoiceContainer;
+import com.robcio.soundboard2.voice.VoiceSorter;
+import com.robcio.soundboard2.voice.loader.VoiceLoader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class ScreenRegistrar {
         final IndicatorContainer indicatorContainer = new IndicatorContainer(filterMap);
 
         map = new HashMap<>();
-        map.put(ScreenId.LOAD, new LoadScreen(voiceLoader, voiceContainer));
+        map.put(ScreenId.LOAD, new LoadScreen(voiceContainer));
         map.put(ScreenId.SPLASH, new SplashScreen());
         map.put(ScreenId.MAIN, new MainScreen(voiceContainer, voiceSorter, shareDispatcher, indicatorContainer));
         map.put(ScreenId.OPTIONS, new OptionsScreen(voiceContainer,

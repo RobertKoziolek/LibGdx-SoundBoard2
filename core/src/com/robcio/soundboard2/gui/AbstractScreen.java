@@ -3,6 +3,7 @@ package com.robcio.soundboard2.gui;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.robcio.soundboard2.utils.Assets;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -17,6 +18,8 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void render(final float deltaTime) {
+        Assets.getAssetsLoader()
+              .notifyObservers();
         stage.act(deltaTime);
         stage.draw();
     }
@@ -41,7 +44,9 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        if (stage != null) {
+            stage.dispose();
+        }
     }
 
     protected final void setStage(@NonNull final Stage stage) {

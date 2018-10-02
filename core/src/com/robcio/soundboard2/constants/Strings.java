@@ -11,6 +11,11 @@ public class Strings {
 
     public static final String EMPTY_STRING = "";
 
+    //INSTUCTIONS
+    public static final String INSTRUCTION_LOADING = "Kliknij by ładować w tle";
+    public static final String INSTRUCTION_SHARING = "Kliknij guzik mocno z lewej by wysłać";
+
+
     //SETTINGS
     public static final String SETTING_APP_NAME = "robcio_soundboard2_settings";
     public static final String SETTING_INDICATORS = "setting_indicator_on";

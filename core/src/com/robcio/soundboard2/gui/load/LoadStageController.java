@@ -1,6 +1,5 @@
 package com.robcio.soundboard2.gui.load;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,7 +15,6 @@ import com.robcio.soundboard2.utils.Assets;
 import com.robcio.soundboard2.utils.AssetsLoader;
 import com.robcio.soundboard2.utils.Maths;
 import com.robcio.soundboard2.voice.VoiceContainer;
-import com.robcio.soundboard2.voice.loader.VoiceLoader;
 
 import static com.robcio.soundboard2.constants.Numeral.*;
 
@@ -24,15 +22,12 @@ class LoadStageController extends StageController {
 
     private final Texture loadingBackground;
     private final Slider slider;
-    private final VoiceLoader voiceLoader;
     private final VoiceContainer voiceContainer;
     private final AssetsLoader assetsLoader;
 
-    LoadStageController(final VoiceLoader voiceLoader,
-                        final VoiceContainer voiceContainer) {
+    LoadStageController(final VoiceContainer voiceContainer) {
         super();
         this.loadingBackground = Assets.getLoadingBackground();
-        this.voiceLoader = voiceLoader;
         this.voiceContainer = voiceContainer;
         this.assetsLoader = Assets.getAssetsLoader();
 
@@ -44,8 +39,8 @@ class LoadStageController extends StageController {
                                               .fillParent()
                                               .assemble();
         final Label progressLabel = LabelAssembler.labelOf(Strings.percentage(0f))
-                                          .observing(assetsLoader)
-                                          .assemble();
+                                                  .observing(assetsLoader)
+                                                  .assemble();
 
         rootTable.add(slider)
                  .width(ALMOST_WIDTH)
@@ -55,6 +50,8 @@ class LoadStageController extends StageController {
         rootTable.add(progressLabel)
                  .height(UNIT_HEIGHT);
         addActor(rootTable);
+
+        assetsLoader.finishLoading(voiceContainer);
     }
 
     @Override
@@ -62,43 +59,35 @@ class LoadStageController extends StageController {
         super.act(delta);
         drawBackground();
         updateProgress();
-        loadAssets();
+        checkIfAssetsLoaded();
     }
 
     private void drawBackground() {
         final Batch batch = getBatch();
+        if (batch.isDrawing()) batch.end();
         batch.begin();
         batch.draw(loadingBackground, 0f, 0f, getWidth(), getHeight());
         batch.end();
-    }
-
-    private void loadAssets() {
-        if (assetsLoader.update() && !voiceContainer.isLoaded()) {
-            voiceContainer.loadUp();
-            changeScreen(ScreenId.SPLASH, StageAnimation.exitFadeOut());
-        }
     }
 
     private void updateProgress() {
         slider.setValue(assetsLoader.getProgress());
     }
 
+    private void checkIfAssetsLoaded() {
+        if (voiceContainer.isLoaded()) {
+            moveToSplashScreen();
+        }
+    }
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         voiceContainer.partialLoadUp();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                assetsLoader.finishLoading();
-                Gdx.app.postRunnable(new Runnable() {
-                    @Override
-                    public void run() {
-                        voiceContainer.loadUp();
-                    }
-                });
-            }
-        }).start();
-        changeScreen(ScreenId.MAIN);
+        moveToSplashScreen();
         return true;
+    }
+
+    private void moveToSplashScreen() {
+        changeScreen(ScreenId.SPLASH, StageAnimation.exitFadeOut());
     }
 }

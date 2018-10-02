@@ -106,9 +106,7 @@ class MainStageController extends StageController {
                                                                 }
                                                             })
                                                             .observing(Assets.getAssetsLoader(),
-                                                                       partialUpdateCommand,
-                                                                       HUNDRED_PERCENT,
-                                                                       OPTIONS_BUTTON)
+                                                                       partialUpdateCommand)
                                                             .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                             .assemble();
 
