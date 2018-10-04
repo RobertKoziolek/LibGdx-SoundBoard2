@@ -3,7 +3,7 @@ package com.robcio.soundboard2.gui.component;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.robcio.soundboard2.utils.Assets;
+import com.robcio.soundboard2.utils.assets.Assets;
 import lombok.Getter;
 
 public class FilterCheckBox extends CheckBox {

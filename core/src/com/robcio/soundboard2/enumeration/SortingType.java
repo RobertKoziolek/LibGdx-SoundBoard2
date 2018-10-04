@@ -1,5 +1,6 @@
 package com.robcio.soundboard2.enumeration;
 
+import com.robcio.soundboard2.utils.Settings;
 import com.robcio.soundboard2.voice.Voice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,14 +21,14 @@ public enum SortingType {
 
     ANALPHABETHIC(SORT_ANALPHABETIC, 3);
 
-    final private String value;
+    final private String name;
 
-    final private int integer;
+    final private int id;
 
     public static SortingType fromInteger(final int i) {
         final SortingType[] values = values();
         for (final SortingType type : values) {
-            if (type.getInteger() == i)
+            if (type.getId() == i)
                 return type;
         }
         return PACKETS;
@@ -35,7 +36,12 @@ public enum SortingType {
 
     @Override
     public String toString() {
-        return value;
+        return name;
+    }
+
+    public static final SortingType getFromSettings(){
+        final Integer sortId = Settings.get(Setting.SORT_TYPE_INTEGER);;
+        return fromInteger(sortId);
     }
 
     public static final Comparator<Voice> ALPHABETICAL_ORDER = new Comparator<Voice>() {

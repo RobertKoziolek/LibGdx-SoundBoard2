@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.utils;
+package com.robcio.soundboard2.utils.helper;
 
 import com.badlogic.gdx.Gdx;
 import lombok.AccessLevel;

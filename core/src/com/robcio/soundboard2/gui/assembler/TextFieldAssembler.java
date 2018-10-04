@@ -1,7 +1,7 @@
 package com.robcio.soundboard2.gui.assembler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.robcio.soundboard2.utils.Assets;
+import com.robcio.soundboard2.utils.assets.Assets;
 
 public class TextFieldAssembler {
     private final TextField textField;

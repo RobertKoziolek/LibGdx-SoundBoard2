@@ -3,7 +3,7 @@ package com.robcio.soundboard2.gui.main;
 import com.robcio.soundboard2.gui.AbstractScreen;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
-import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSorter;
 

@@ -3,7 +3,7 @@ package com.robcio.soundboard2.gui;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.robcio.soundboard2.utils.Assets;
+import com.robcio.soundboard2.utils.assets.Assets;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;

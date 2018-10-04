@@ -44,6 +44,11 @@ public abstract class StageController extends Stage {
         StageController.camera = camera;
     }
 
+    public static void resetScreenChangerAndCamera() {
+        StageController.screenChanger = null;
+        StageController.camera = null;
+    }
+
     abstract protected void backKeyDown();
 
     @Override

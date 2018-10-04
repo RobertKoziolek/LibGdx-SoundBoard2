@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.utils;
+package com.robcio.soundboard2.utils.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -32,7 +32,7 @@ public class AssetsLoader extends Observable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (!assetManager.update()) ;
+                assetManager.finishLoading();
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {

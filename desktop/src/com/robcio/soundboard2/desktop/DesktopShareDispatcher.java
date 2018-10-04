@@ -1,8 +1,10 @@
 package com.robcio.soundboard2.desktop;
 
 
-import com.robcio.soundboard2.utils.Log;
-import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.enumeration.Setting;
+import com.robcio.soundboard2.utils.Settings;
+import com.robcio.soundboard2.utils.helper.Log;
+import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
 import lombok.Getter;
 
 public class DesktopShareDispatcher implements ShareDispatcher {
@@ -19,8 +21,8 @@ public class DesktopShareDispatcher implements ShareDispatcher {
 
     @Override
     public void setEnabled(final boolean enabled) {
-        Log.i(SHARING_TAG, String.valueOf(enabled));
         this.enabled = enabled;
+        Settings.put(Setting.SHARING_BOOLEAN, enabled);
     }
 
 }

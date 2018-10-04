@@ -12,19 +12,18 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
-import com.robcio.soundboard2.utils.Assets;
+import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.Command;
-import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
 import com.robcio.soundboard2.voice.Voice;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSorter;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-import static com.robcio.soundboard2.constants.Numeral.THIRD_WIDTH;
-import static com.robcio.soundboard2.constants.Numeral.UNIT_HEIGHT;
+import static com.robcio.soundboard2.constants.Numeral.*;
 import static com.robcio.soundboard2.constants.Strings.*;
-import static com.robcio.soundboard2.utils.Maths.SEARCH_RATIO;
+import static com.robcio.soundboard2.utils.helper.Maths.SEARCH_RATIO;
 
 class MainStageController extends StageController {
 
@@ -146,12 +145,13 @@ class MainStageController extends StageController {
             addVoiceButton(table, voice);
         }
         final int size = table.getCells().size;
-        if (size < 11) {
+        final boolean isFillingNeeded = size < SEGMENTS_WITHOUT_TOP;
+        if (isFillingNeeded) {
             table.add()
-                 .height(UNIT_HEIGHT * (11 - size))
+                 .height(UNIT_HEIGHT * (SEGMENTS_WITHOUT_TOP - size))
                  .width(WIDTH);
         }
-        buttonPane.setScrollingDisabled(true, size < 11);
+        buttonPane.setScrollingDisabled(true, isFillingNeeded);
         buttonPane.setActor(table);
     }
 

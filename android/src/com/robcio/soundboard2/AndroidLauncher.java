@@ -4,22 +4,27 @@ import android.os.Bundle;
 import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.robcio.soundboard2.enumeration.Setting;
 import com.robcio.soundboard2.utils.Settings;
-import com.robcio.soundboard2.utils.ToastMessage;
-
-import static com.robcio.soundboard2.constants.Strings.SETTING_SHARING;
+import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
+import com.robcio.soundboard2.utils.dispatcher.ToastDispatcher;
 
 public class AndroidLauncher extends AndroidApplication {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         final AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         config.useAccelerometer = false;
         config.useCompass = false;
-        final AndroidShareDispatcher androidShareDispatcher = new AndroidShareDispatcher(this);
-        initialize(new SoundBoard2(androidShareDispatcher), config);
-        androidShareDispatcher.setEnabled(Settings.getBoolean(SETTING_SHARING, false));
-        ToastMessage.setToastMaker(new ToastMessage.ToastMaker() {
+
+        final ShareDispatcher shareDispatcher = new AndroidShareDispatcher(this);
+        initialize(new SoundBoard2(shareDispatcher), config);
+
+        final Boolean sharingEnabled = Settings.get(Setting.SHARING_BOOLEAN);
+        shareDispatcher.setEnabled(sharingEnabled);
+
+        ToastDispatcher.setToastMaker(new ToastDispatcher.ToastMaker() {
             @Override
             public void show(final String text) {
                 handler.post(new Runnable() {

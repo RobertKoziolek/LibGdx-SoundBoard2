@@ -1,5 +1,6 @@
 package com.robcio.soundboard2.voice;
 
+import com.robcio.soundboard2.enumeration.Setting;
 import com.robcio.soundboard2.enumeration.SortingType;
 import com.robcio.soundboard2.utils.Settings;
 import lombok.Getter;
@@ -7,8 +8,6 @@ import lombok.Getter;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.robcio.soundboard2.constants.Strings.SETTING_SORT_TYPE;
 
 public class VoiceSorter {
 
@@ -19,13 +18,12 @@ public class VoiceSorter {
 
     public VoiceSorter(final VoiceContainer voiceContainer) {
         this.voiceContainer = voiceContainer;
-        this.sortingType = SortingType.fromInteger(
-                Settings.getInteger(SETTING_SORT_TYPE, SortingType.PACKETS.getInteger()));
+        this.sortingType = SortingType.getFromSettings();
     }
 
     public void setSortingType(final SortingType sortingType) {
         this.sortingType = sortingType;
-        Settings.putInteger(SETTING_SORT_TYPE, sortingType.getInteger());
+        Settings.put(Setting.SORT_TYPE_INTEGER, sortingType.getId());
     }
 
     public void sort() {

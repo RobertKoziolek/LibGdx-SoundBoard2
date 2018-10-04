@@ -11,7 +11,7 @@ import com.robcio.soundboard2.gui.options.OptionsScreen;
 import com.robcio.soundboard2.gui.splash.SplashScreen;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
 import com.robcio.soundboard2.utils.ScreenChanger;
-import com.robcio.soundboard2.utils.ShareDispatcher;
+import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSorter;
 import com.robcio.soundboard2.voice.loader.VoiceLoader;
@@ -61,5 +61,6 @@ public class ScreenRegistrar {
         for (final AbstractScreen screen : map.values()) {
             screen.dispose();
         }
+        StageController.resetScreenChangerAndCamera();
     }
 }

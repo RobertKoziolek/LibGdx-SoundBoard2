@@ -6,7 +6,7 @@ import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.voice.loader.model.PacketModel;
 import com.robcio.soundboard2.voice.loader.model.PacketsInformationModel;
 import com.robcio.soundboard2.voice.loader.model.VoiceModel;
-import com.robcio.soundboard2.utils.Assets;
+import com.robcio.soundboard2.utils.assets.Assets;
 
 import java.util.ArrayList;
 import java.util.List;

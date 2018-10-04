@@ -1,6 +1,6 @@
 package com.robcio.soundboard2.filter;
 
-import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.utils.helper.Maths;
 import lombok.Getter;
 
 import java.util.HashSet;

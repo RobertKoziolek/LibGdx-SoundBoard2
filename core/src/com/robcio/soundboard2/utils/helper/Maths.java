@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.utils;
+package com.robcio.soundboard2.utils.helper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

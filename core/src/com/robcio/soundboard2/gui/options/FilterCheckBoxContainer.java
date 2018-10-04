@@ -2,7 +2,7 @@ package com.robcio.soundboard2.gui.options;
 
 import com.robcio.soundboard2.filter.FilterInformation;
 import com.robcio.soundboard2.gui.component.FilterCheckBox;
-import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.utils.helper.Maths;
 
 import java.util.HashSet;
 import java.util.Set;

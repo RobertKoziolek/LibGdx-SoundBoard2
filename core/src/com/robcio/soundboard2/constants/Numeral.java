@@ -1,6 +1,8 @@
 package com.robcio.soundboard2.constants;
 
-import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.enumeration.Setting;
+import com.robcio.soundboard2.utils.Settings;
+import com.robcio.soundboard2.utils.helper.Maths;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -9,17 +11,35 @@ import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Numeral {
+    //SEGMENT
+    private static final int DEFAULT_NUMBER_OF_SEGMENTS = 12;
+    private static final int MIN_NUMBER_OF_SEGMENTS = 9;
+    private static final int MAX_NUMBER_OF_SEGMENTS = 22;
+    private static final int NUMBER_OF_STEPS = 5;
+
+    public static final float MIN_SEGMENT_SIZE = 1f / MAX_NUMBER_OF_SEGMENTS;
+    public static final float MAX_SEGMENT_SIZE = 1f / MIN_NUMBER_OF_SEGMENTS;
+    private static final float SEGMENT_SIZE_SCOPE = MAX_SEGMENT_SIZE - MIN_SEGMENT_SIZE;
+    public static final float SEGMENT_SIZE_STEP = SEGMENT_SIZE_SCOPE / NUMBER_OF_STEPS;
+
+    static final float DEFAULT_SEGMENT_SIZE = 1f / DEFAULT_NUMBER_OF_SEGMENTS;
+    private static final float SEGMENT_SIZE = Settings.get(Setting.SEGMENT_SIZE_FLOAT);
+    private static final float NUMBER_OF_SEGMENTS = 1f / SEGMENT_SIZE;
+
+    public static final float SEGMENTS_WITHOUT_TOP = NUMBER_OF_SEGMENTS - 1f;
+    public static final float SEGMENTS_WITHOUT_TOP_AND_BOTTOM = SEGMENTS_WITHOUT_TOP - 1f;
+
     //SIZE
     public static final float HALF_WIDTH = WIDTH / 2f;
     public static final float THIRD_WIDTH = WIDTH / 3f;
     public static final float ALMOST_WIDTH = WIDTH * 5f / 6f;
-    public static final float UNIT_WIDTH = HEIGHT / 12f;
+    public static final float UNIT_WIDTH = HEIGHT / NUMBER_OF_SEGMENTS;
 
     public static final float HALF_HEIGHT = HEIGHT / 2f;
     public static final float THIRD_HEIGHT = HEIGHT / 3f;
-    public static final float ALMOST_HEIGHT = HEIGHT * 5f / 6f;
-    public static final float OPTION_HEIGHT = HEIGHT / 17f;
-    public static final float UNIT_HEIGHT = HEIGHT / 12f;
+    public static final float OPTION_HEIGHT = HEIGHT / 18f;
+    public static final float ALMOST_HEIGHT = HEIGHT * SEGMENTS_WITHOUT_TOP_AND_BOTTOM / NUMBER_OF_SEGMENTS;
+    public static final float UNIT_HEIGHT = HEIGHT / NUMBER_OF_SEGMENTS;
 
     //STAGE ANIMATION
     public static final float SHORT_DURATION = 0.05f;

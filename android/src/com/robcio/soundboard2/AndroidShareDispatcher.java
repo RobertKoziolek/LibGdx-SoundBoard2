@@ -9,9 +9,10 @@ import android.os.Build;
 import android.os.Environment;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.robcio.soundboard2.enumeration.Setting;
 import com.robcio.soundboard2.utils.Settings;
-import com.robcio.soundboard2.utils.ShareDispatcher;
-import com.robcio.soundboard2.utils.ToastMessage;
+import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
+import com.robcio.soundboard2.utils.dispatcher.ToastDispatcher;
 import lombok.Getter;
 
 import java.io.File;
@@ -37,10 +38,10 @@ public class AndroidShareDispatcher implements ShareDispatcher {
     @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-        Settings.putBoolean(SETTING_SHARING, enabled);
+        Settings.put(Setting.SHARING_BOOLEAN, enabled);
         if (enabled) {
             askForSharingPermission();
-            ToastMessage.showText(INSTRUCTION_SHARING);
+            ToastDispatcher.showText(INSTRUCTION_SHARING);
         }
     }
 

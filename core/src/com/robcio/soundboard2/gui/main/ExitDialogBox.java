@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.robcio.soundboard2.gui.assembler.LabelAssembler;
-import com.robcio.soundboard2.utils.Assets;
-import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.utils.assets.Assets;
+import com.robcio.soundboard2.utils.helper.Maths;
 
 import static com.robcio.soundboard2.constants.Strings.*;
 

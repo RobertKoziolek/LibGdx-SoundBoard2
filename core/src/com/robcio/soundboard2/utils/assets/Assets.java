@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.utils;
+package com.robcio.soundboard2.utils.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -10,13 +10,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.robcio.soundboard2.enumeration.TextureId;
 import com.robcio.soundboard2.voice.loader.model.VoiceModel;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Assets {
 
-    private static final AssetManager assetManager = new AssetManager();
+    private static AssetManager assetManager;
     @Getter
-    private static final AssetsLoader assetsLoader = new AssetsLoader(assetManager);
+    private static AssetsLoader assetsLoader;
 
     private static final String LOADING_BACKGROUND = "loading_background.png";
     private static final String UISKIN_ATLAS = "ui/uiskin.atlas";
@@ -34,6 +37,8 @@ public class Assets {
     static private TextureAtlas textureAtlas;
 
     public static void initialize() {
+        assetManager = new AssetManager();
+        assetsLoader = new AssetsLoader(assetManager);
         loadFont();
         loadSkin();
         assetManager.load(LOADING_BACKGROUND, Texture.class);

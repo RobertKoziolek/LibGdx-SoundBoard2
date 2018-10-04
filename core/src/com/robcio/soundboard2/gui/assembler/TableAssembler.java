@@ -3,7 +3,7 @@ package com.robcio.soundboard2.gui.assembler;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
-import com.robcio.soundboard2.utils.Assets;
+import com.robcio.soundboard2.utils.assets.Assets;
 
 import static com.robcio.soundboard2.constants.Numeral.OPTION_HEIGHT;
 

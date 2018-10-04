@@ -6,8 +6,8 @@ import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.enumeration.TextureId;
 import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
-import com.robcio.soundboard2.utils.Assets;
-import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.utils.assets.Assets;
+import com.robcio.soundboard2.utils.helper.Maths;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.robcio.soundboard2.constants.Numeral.*;

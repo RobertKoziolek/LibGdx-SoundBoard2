@@ -3,14 +3,12 @@ package com.robcio.soundboard2.gui.options;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
+import com.robcio.soundboard2.enumeration.Setting;
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
@@ -20,7 +18,11 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.component.FilterCheckBox;
 import com.robcio.soundboard2.gui.component.SortingSelectBox;
+import com.robcio.soundboard2.utils.Enablable;
 import com.robcio.soundboard2.utils.*;
+import com.robcio.soundboard2.utils.assets.Assets;
+import com.robcio.soundboard2.utils.dispatcher.ToastDispatcher;
+import com.robcio.soundboard2.utils.helper.Maths;
 import com.robcio.soundboard2.voice.VoiceFilter;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSorter;
@@ -151,6 +153,33 @@ class OptionsStageController extends StageController {
         fillInEnablable(optionsTable, SHARING_LABEL, sharingEnablable);
         fillInSortOption(optionsTable);
         fillInEnablable(optionsTable, INDICATOR_LABEL, indicatorEnablable);
+        fillInSizeSlider(optionsTable);
+    }
+
+    private void fillInSizeSlider(final Table optionsTable) {
+        final Label label = LabelAssembler.labelOf(SEGMENT_SIZE_LABEL)
+                                          .assemble();
+        final Slider slider = new Slider(MIN_SEGMENT_SIZE, MAX_SEGMENT_SIZE, SEGMENT_SIZE_STEP,
+                                         false, Assets.getSkin());
+        slider.getStyle().knob.setMinWidth(Maths.PPM / 2);
+        slider.getStyle().knob.setMinHeight(Maths.PPM);
+        final float sizeValue = Settings.get(Setting.SEGMENT_SIZE_FLOAT);
+        slider.setValue(sizeValue);
+        slider.addListener(new ChangeListener() {
+            @Override
+            public void changed(final ChangeEvent event, final Actor actor) {
+                Settings.put(Setting.SEGMENT_SIZE_FLOAT, slider.getValue());
+                ToastDispatcher.showText(INSTRUCTION_RESTART_NEEDED);
+            }
+        });
+
+        optionsTable.add(label)
+                    .height(OPTION_HEIGHT)
+                    .row();
+        optionsTable.add(slider)
+                    .width(ALMOST_WIDTH)
+                    .height(OPTION_HEIGHT)
+                    .row();
     }
 
     private void fillInSortOption(final Table optionsTable) {
@@ -165,9 +194,9 @@ class OptionsStageController extends StageController {
             }
         });
 
-        final Table sortTable = TableAssembler.tableOf(label, sortingSelectBox)
-                                              .assemble();
-        optionsTable.add(sortTable)
+        final Table table = TableAssembler.tableOf(label, sortingSelectBox)
+                                          .assemble();
+        optionsTable.add(table)
                     .width(WIDTH)
                     .height(OPTION_HEIGHT)
                     .row();

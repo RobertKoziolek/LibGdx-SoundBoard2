@@ -3,7 +3,7 @@ package com.robcio.soundboard2.gui.assembler;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.robcio.soundboard2.utils.Assets;
+import com.robcio.soundboard2.utils.assets.Assets;
 
 public class PaneAssembler {
     private final ScrollPane pane;

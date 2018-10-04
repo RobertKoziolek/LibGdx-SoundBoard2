@@ -14,14 +14,16 @@ public class Strings {
     //INSTUCTIONS
     public static final String INSTRUCTION_LOADING = "Kliknij by ładować w tle";
     public static final String INSTRUCTION_SHARING = "Kliknij guzik mocno z lewej by wysłać";
+    public static final String INSTRUCTION_RESTART_NEEDED = "Zmiany będą widoczne po ponownym uruchomieniu aplikacji";
 
     //SETTINGS
     public static final String SETTING_APP_NAME = "robcio_soundboard2_settings";
+    public static final String SETTING_SEGMENT_SIZE = "setting_segment_size";
     public static final String SETTING_INDICATORS = "setting_indicator_on";
     public static final String SETTING_SORT_TYPE = "setting_sort_type";
     public static final String SETTING_SHARING = "setting_sharing_on";
 
-    //SHARING
+    //SHARING_BOOLEAN
     public static final String SHARE_SUBJECT = "Cud natury";
     public static final String SHARE_QUESTION = "Dokąd wysłać ten cud natury?";
 
@@ -35,6 +37,7 @@ public class Strings {
     public static final String SHARING_LABEL = "Udostępnianie";
     public static final String INDICATOR_LABEL = "Wskaźniki";
     public static final String SORT_LABEL = "Sortowanie:  ";
+    public static final String SEGMENT_SIZE_LABEL = "Rozmiar:";
 
     //SORTING
     public static final String SORT_PACKETS = "Po pakietach";

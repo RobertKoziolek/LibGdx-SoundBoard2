@@ -2,7 +2,7 @@ package com.robcio.soundboard2.indicator.player;
 
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.indicator.Indicator;
-import com.robcio.soundboard2.utils.Maths;
+import com.robcio.soundboard2.utils.helper.Maths;
 
 import java.util.Map;
 
