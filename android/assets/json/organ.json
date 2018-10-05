@@ -1,7 +1,6 @@
 {
-  name: "Organy",
   folder: "organ",
-  filter: "Organ",
+  filter: "Organy",
   format: ".ogg",
   voiceModels: [
     {
@@ -9,8 +8,8 @@
       file: "church_organ01",
       filter: [
         "P_Organ",
-        "Organ",
-        "LONG"
+        "Organy",
+        "Długie"
       ] 
     },
     {
@@ -18,8 +17,8 @@
       file: "church_organ02",
       filter: [
         "P_Organ",
-        "Organ",
-        "LONG"
+        "Organy",
+        "Długie"
       ] 
     },
     {
@@ -27,8 +26,8 @@
       file: "church_organ03",
       filter: [
         "P_Organ",
-        "Organ",
-        "LONG"
+        "Organy",
+        "Długie"
       ] 
     },
     {
@@ -36,8 +35,8 @@
       file: "church_organ04",
       filter: [
         "P_Organ",
-        "Organ",
-        "LONG"
+        "Organy",
+        "Długie"
       ] 
     }
   ]

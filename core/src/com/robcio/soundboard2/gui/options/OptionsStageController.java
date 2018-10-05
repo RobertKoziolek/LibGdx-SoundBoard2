@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.enumeration.Setting;
 import com.robcio.soundboard2.filter.FilterMap;
@@ -18,18 +17,18 @@ import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.component.FilterCheckBox;
 import com.robcio.soundboard2.gui.component.SortingSelectBox;
+import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.Enablable;
-import com.robcio.soundboard2.utils.*;
+import com.robcio.soundboard2.utils.Settings;
 import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.dispatcher.ToastDispatcher;
 import com.robcio.soundboard2.utils.helper.Maths;
-import com.robcio.soundboard2.voice.VoiceFilter;
 import com.robcio.soundboard2.voice.VoiceContainer;
+import com.robcio.soundboard2.voice.VoiceFilter;
 import com.robcio.soundboard2.voice.VoiceSorter;
 
 import java.util.Map;
 
-import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 import static com.robcio.soundboard2.constants.Numeral.*;
 import static com.robcio.soundboard2.constants.Strings.*;
 
@@ -75,13 +74,12 @@ class OptionsStageController extends StageController {
     }
 
     private void changeScreenToMain() {
-        changeScreen(ScreenId.MAIN,
-                     StageAnimation.exitToBot());
+        changeScreen(ScreenId.MAIN, StageAnimation.exitToBot());
     }
 
     void buildStage() {
         final Table rootTable = TableAssembler.table()
-                                              .align(Align.top)
+                                              .alignTop()
                                               .fillParent()
                                               .assemble();
 
@@ -93,7 +91,7 @@ class OptionsStageController extends StageController {
                  .row();
         rootTable.add(optionsPane)
                  .width(WIDTH)
-                 .height(ALMOST_HEIGHT)
+                 .height(NO_TOP_AND_BOTTOM_HEIGHT)
                  .row();
         rootTable.add(counter)
                  .width(WIDTH)
@@ -134,7 +132,7 @@ class OptionsStageController extends StageController {
 
     private Actor getOptionsPane() {
         final Table optionsTable = TableAssembler.table()
-                                                 .align(Align.top)
+                                                 .alignTop()
                                                  .assemble();
         fillInFilterOptions(optionsTable);
         fillInOtherOptions(optionsTable);
@@ -146,7 +144,7 @@ class OptionsStageController extends StageController {
 
     private void fillInOtherOptions(final Table optionsTable) {
         final Table table = TableAssembler.table(OPTIONS_LABEL)
-                                          .align(Align.top)
+                                          .alignTop()
                                           .assemble();
         optionsTable.add(table)
                     .row();
@@ -219,17 +217,17 @@ class OptionsStageController extends StageController {
 
     private void fillInFilterOptions(final Table optionsTable) {
         final Table firstColumn = TableAssembler.table(PACKETS_LABEL)
-                                                .align(Align.top)
+                                                .alignTop()
                                                 .assemble();
         final Table secondColumn = TableAssembler.table(PEOPLE_LABEL)
-                                                 .align(Align.top)
+                                                 .alignTop()
                                                  .assemble();
         final Table thirdColumn = TableAssembler.table(FILTERS_LABEL)
-                                                .align(Align.top)
+                                                .alignTop()
                                                 .assemble();
 
         buildFilterCheckBoxes(firstColumn, secondColumn, thirdColumn);
-        final Table doubleColumn = TableAssembler.equalizedDoubleColumn(firstColumn, secondColumn)
+        final Table doubleColumn = TableAssembler.equalizedColumns(UNIT_HEIGHT, firstColumn, secondColumn)
                                                  .assemble();
 
         optionsTable.add(doubleColumn)
@@ -246,20 +244,24 @@ class OptionsStageController extends StageController {
         final int personFilters = filterMap.getFilterInformation()
                                            .getPeopleFilters();
         for (final Map.Entry<String, Integer> entry : filterMap.getEntrySet()) {
-            final FilterCheckBox filterCheckBox = filterCheckBoxContainer.createFilterCheckBox(entry.getKey(),
-                                                                                               entry.getValue());
-            Table column = otherColumn;
             if (Maths.containsBit(entry.getValue(), packetFilters)) {
-                column = packetColumn;
+                addFilterCheckBox(entry, packetColumn);
             } else if (Maths.containsBit(entry.getValue(), personFilters)) {
-                column = peopleColumn;
+                addFilterCheckBox(entry, peopleColumn);
+            } else{
+                addFilterCheckBox(entry, otherColumn);
             }
-            filterCheckBox.addListener(filterClickListener);
-            column.add(filterCheckBox)
-                  .width(HALF_WIDTH)
-                  .height(OPTION_HEIGHT)
-                  .row();
         }
+    }
+
+    private void addFilterCheckBox(final Map.Entry<String, Integer> entry, final Table column) {
+        final FilterCheckBox filterCheckBox = filterCheckBoxContainer.createFilterCheckBox(entry.getKey(),
+                                                                                           entry.getValue());
+        filterCheckBox.addListener(filterClickListener);
+        column.add(filterCheckBox)
+              .width(HALF_WIDTH)
+              .height(OPTION_HEIGHT)
+              .row();
     }
 
     private Actor getCounter() {

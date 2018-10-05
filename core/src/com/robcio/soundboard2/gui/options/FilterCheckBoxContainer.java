@@ -22,7 +22,7 @@ class FilterCheckBoxContainer {
         filterBoxCommand = new FilterCheckBox.FilterBoxCommand() {
             @Override
             public void execute(FilterCheckBox filterCheckBox) {
-                leaveOnlyOneInFilterColumn(filterCheckBox);
+                uncheckAllExcept(filterCheckBox);
             }
         };
     }
@@ -54,18 +54,22 @@ class FilterCheckBoxContainer {
         }
     }
 
-    private void leaveOnlyOneInFilterColumn(final FilterCheckBox filterCheckBox) {
+    private void uncheckAllExcept(final FilterCheckBox filterCheckBox) {
         final int filterBit = filterCheckBox.getFilterBit();
 
-        int columnFilter = 0;
         if (Maths.containsBit(filterBit, filterInformation.getPacketFilters())) {
-            columnFilter = filterInformation.getPacketFilters();
+            uncheckAll(filterInformation.getPacketFilters());
+            filterCheckBox.setChecked(true);
         } else if (Maths.containsBit(filterBit, filterInformation.getPeopleFilters())) {
-            columnFilter = filterInformation.getPeopleFilters();
+            uncheckAll(filterInformation.getPeopleFilters());
+            filterCheckBox.setChecked(true);
         }
-        for (final FilterCheckBox checkBox : checkBoxSet) {
-            if (Maths.containsBit(checkBox.getFilterBit(), columnFilter)) {
-                checkBox.setChecked(checkBox == filterCheckBox);
+    }
+
+    private void uncheckAll(final int columnFilter) {
+        for (final FilterCheckBox checkBox : checkBoxSet){
+            if (Maths.containsBit(checkBox.getFilterBit(), columnFilter)){
+                checkBox.setChecked(false);
             }
         }
     }

@@ -13,31 +13,31 @@ import static com.robcio.soundboard2.constants.Strings.SETTING_APP_NAME;
 public class Settings {
     private static final Preferences preferences = Gdx.app.getPreferences(SETTING_APP_NAME);
 
-    public static void flush() {
-        preferences.flush();
-    }
-
-    public static void put(final Setting setting, final Object newValue){
+    public static void put(final Setting setting, final Object newValue) {
         final Class typeClass = setting.getTypeClass();
         final Class<?> newValueClass = newValue.getClass();
-        if (!typeClass.equals(newValueClass)){
+        if (!typeClass.equals(newValueClass)) {
             throw new IllegalArgumentException("New value for setting must match setting type");
         }
         final String key = setting.getKey();
         Log.i(key, String.valueOf(newValue));
-        if (typeClass.equals(Integer.class)){
+        if (typeClass.equals(Integer.class)) {
             preferences.putInteger(key, (Integer) newValue);
+            preferences.flush();
             return;
-        } else if(typeClass.equals(Boolean.class)){
+        } else if (typeClass.equals(Boolean.class)) {
             preferences.putBoolean(key, (Boolean) newValue);
+            preferences.flush();
             return;
-        } else if(typeClass.equals(Float.class)){
+        } else if (typeClass.equals(Float.class)) {
             preferences.putFloat(key, (Float) newValue);
+            preferences.flush();
             return;
         }
         throw new IllegalArgumentException("Setting type not implemented");
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends Comparable> T get(final Setting setting) {
         final String key = setting.getKey();
         final Class typeClass = setting.getTypeClass();
@@ -45,10 +45,10 @@ public class Settings {
         if (typeClass.equals(Integer.class)) {
             return (T) (Integer) preferences.getInteger(key, (Integer) defaultValue);
         }
-        if (typeClass.equals(Boolean.class)){
+        if (typeClass.equals(Boolean.class)) {
             return (T) (Boolean) preferences.getBoolean(key, (Boolean) defaultValue);
         }
-        if (typeClass.equals(Float.class)){
+        if (typeClass.equals(Float.class)) {
             return (T) (Float) preferences.getFloat(key, (Float) defaultValue);
         }
         throw new IllegalArgumentException("Expecting wrong value type from a setting");

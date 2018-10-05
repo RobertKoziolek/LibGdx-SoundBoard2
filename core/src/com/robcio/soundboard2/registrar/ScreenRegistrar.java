@@ -61,6 +61,5 @@ public class ScreenRegistrar {
         for (final AbstractScreen screen : map.values()) {
             screen.dispose();
         }
-        StageController.resetScreenChangerAndCamera();
     }
 }

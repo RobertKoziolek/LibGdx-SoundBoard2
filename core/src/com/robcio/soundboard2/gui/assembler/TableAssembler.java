@@ -5,8 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.utils.assets.Assets;
 
-import static com.robcio.soundboard2.constants.Numeral.OPTION_HEIGHT;
-
 public class TableAssembler {
 
     private final Table table;
@@ -45,10 +43,10 @@ public class TableAssembler {
         return tableAssembler;
     }
 
-    public static TableAssembler equalizedDoubleColumn(final Table firstColumn, final Table secondColumn) {
-        final TableAssembler tableAssembler = TableAssembler.table();
-        equalizeFilterColumns(firstColumn, secondColumn);
-        tableAssembler.table.add(firstColumn, secondColumn);
+    public static TableAssembler equalizedColumns(final float unitHeight, final Table... tables) {
+        final TableAssembler tableAssembler = table();
+        equalizeColumns(unitHeight, tables);
+        tableAssembler.table.add(tables);
         return tableAssembler;
     }
 
@@ -56,6 +54,11 @@ public class TableAssembler {
         table.align(align);
         table.setFillParent(fillParent);
         return table;
+    }
+
+    public TableAssembler alignTop() {
+        align(Align.top);
+        return this;
     }
 
     public TableAssembler align(final int align) {
@@ -68,16 +71,15 @@ public class TableAssembler {
         return this;
     }
 
-    private static void equalizeFilterColumns(final Table firstColumn, final Table secondColumn) {
-        final int firstColumnSize = firstColumn.getCells().size;
-        final int secondColumnSize = secondColumn.getCells().size;
-        final int diff = Math.abs(secondColumnSize - firstColumnSize);
-
-        Table shorterColumn = firstColumn;
-        if (firstColumnSize > secondColumnSize) {
-            shorterColumn = secondColumn;
+    private static void equalizeColumns(final float unitHeight, final Table... tables) {
+        int maxSize = 0;
+        for (final Table table : tables) {
+            maxSize = Math.max(maxSize, table.getCells().size);
         }
-        shorterColumn.add()
-                     .height(diff * OPTION_HEIGHT);
+        for (final Table table : tables) {
+            final int diff = maxSize - table.getCells().size;
+            table.add()
+                 .height(diff * unitHeight);
+        }
     }
 }

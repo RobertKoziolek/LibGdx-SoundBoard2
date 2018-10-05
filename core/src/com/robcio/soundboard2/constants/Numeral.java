@@ -6,9 +6,6 @@ import com.robcio.soundboard2.utils.helper.Maths;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
-import static com.robcio.soundboard2.SoundBoard2.WIDTH;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Numeral {
     //SEGMENT
@@ -30,15 +27,20 @@ public class Numeral {
     public static final float SEGMENTS_WITHOUT_TOP_AND_BOTTOM = SEGMENTS_WITHOUT_TOP - 1f;
 
     //SIZE
+    public static final int WIDTH = (int) (9 * Maths.PPM);
+    public static final int HEIGHT = (int) (16 * Maths.PPM);
+
     public static final float HALF_WIDTH = WIDTH / 2f;
     public static final float THIRD_WIDTH = WIDTH / 3f;
+    public static final float QUATER_WIDTH = WIDTH / 4f;
     public static final float ALMOST_WIDTH = WIDTH * 5f / 6f;
     public static final float UNIT_WIDTH = HEIGHT / NUMBER_OF_SEGMENTS;
 
     public static final float HALF_HEIGHT = HEIGHT / 2f;
     public static final float THIRD_HEIGHT = HEIGHT / 3f;
     public static final float OPTION_HEIGHT = HEIGHT / 18f;
-    public static final float ALMOST_HEIGHT = HEIGHT * SEGMENTS_WITHOUT_TOP_AND_BOTTOM / NUMBER_OF_SEGMENTS;
+    public static final float NO_TOP_HEIGHT = HEIGHT * SEGMENTS_WITHOUT_TOP / NUMBER_OF_SEGMENTS;
+    public static final float NO_TOP_AND_BOTTOM_HEIGHT = HEIGHT * SEGMENTS_WITHOUT_TOP_AND_BOTTOM / NUMBER_OF_SEGMENTS;
     public static final float UNIT_HEIGHT = HEIGHT / NUMBER_OF_SEGMENTS;
 
     //STAGE ANIMATION
@@ -46,6 +48,10 @@ public class Numeral {
     public static final float NORMAL_DURATION = 0.25f;
     public static final float LONG_DURATION = 0.4f;
     public static final float SHAKE_OFFSET = Maths.PPM / 4f;
+
+    //ACTOR ANIMATION
+    public static final float ACTOR_IN_DURATION = 0.3f;
+    public static final float ACTOR_OUT_DURATION = 0.3f;
 
     //INDICATOR
     public static final float X_POSITION_FRACTION_LEFT = -0.067f;

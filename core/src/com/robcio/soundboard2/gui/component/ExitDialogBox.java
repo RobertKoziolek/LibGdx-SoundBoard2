@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.gui.main;
+package com.robcio.soundboard2.gui.component;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,11 +12,13 @@ import static com.robcio.soundboard2.constants.Strings.*;
 public class ExitDialogBox extends Dialog {
 
     private static final String WINDOW_STYLE_DIALOG = "dialog";
+    private final Stage stage;
 
     private boolean active;
 
-    ExitDialogBox() {
+    public ExitDialogBox(final Stage stage) {
         super(EMPTY_STRING, Assets.getSkin(), WINDOW_STYLE_DIALOG);
+        this.stage = stage;
 
         getButtonTable().pad(Maths.PPM / 3f, Maths.PPM, Maths.PPM / 3f, Maths.PPM);
         getContentTable().add(LabelAssembler.labelOf(EXIT_QUESTION)
@@ -34,7 +36,7 @@ public class ExitDialogBox extends Dialog {
         }
     }
 
-    void showOrHide(final Stage stage) {
+    public void showOrHide() {
         if (active) {
             hide();
         } else {

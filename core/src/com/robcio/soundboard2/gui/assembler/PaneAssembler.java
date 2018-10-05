@@ -16,12 +16,16 @@ public class PaneAssembler {
         this.pane = new ScrollPane(widget, Assets.getSkin());
     }
 
+    public static PaneAssembler blank() {
+        return new PaneAssembler(null);
+    }
+
     public static PaneAssembler paneOf(final Actor widget) {
         return new PaneAssembler(widget);
     }
 
-    public static PaneAssembler paneOfInTable(final Actor counter) {
-        final Table table = TableAssembler.table(counter)
+    public static PaneAssembler paneOfInTable(final Actor actor) {
+        final Table table = TableAssembler.table(actor)
                                           .assemble();
         return paneOf(table);
     }

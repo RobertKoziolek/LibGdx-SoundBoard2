@@ -9,6 +9,8 @@ import java.util.Locale;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Strings {
 
+    //APP
+    public static final String TITLE = "SoundBoard2";
     public static final String EMPTY_STRING = "";
 
     //INSTUCTIONS
@@ -45,11 +47,12 @@ public class Strings {
     public static final String SORT_ALPHABETICAL = "Alfabetycznie";
     public static final String SORT_ANALPHABETIC = "Analfabetycznie";
 
-
     //MAIN
     public static final String HUNDRED_PERCENT = "100.0%";
+    public static final String LIST_IS_EMPTY = "pusto here";
     public static final String OPTIONS_BUTTON = "Opcje";
-    public static final String SILENCE_BUTTON = "Silentium";
+    public static final String RESET_BUTTON = "Reset";
+    public static final String SILENCE_BUTTON = "Cicho";
     public static final String SEARCH_STRING = "Szukaj";
 
     //EXIT DIALOG

@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.robcio.soundboard2.gui.animation.ActorAnimation;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.listener.ButtonListener;
 import com.robcio.soundboard2.utils.assets.Assets;
@@ -42,6 +43,7 @@ public class TextButtonAssembler {
             public void clicked(InputEvent event, float x, float y) {
                 if (specialClickCommand != null && x < UNIT_WIDTH) {
                     specialClickCommand.execute();
+                    ActorAnimation.shake(button);
                     return;
                 }
                 clickCommand.execute();

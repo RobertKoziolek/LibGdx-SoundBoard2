@@ -11,8 +11,8 @@ import com.robcio.soundboard2.utils.ScreenChanger;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
-import static com.robcio.soundboard2.SoundBoard2.WIDTH;
+import static com.robcio.soundboard2.constants.Numeral.HEIGHT;
+import static com.robcio.soundboard2.constants.Numeral.WIDTH;
 
 public abstract class StageController extends Stage {
     static private ScreenChanger screenChanger;
@@ -44,18 +44,31 @@ public abstract class StageController extends Stage {
         StageController.camera = camera;
     }
 
-    public static void resetScreenChangerAndCamera() {
-        StageController.screenChanger = null;
-        StageController.camera = null;
+    protected abstract void backKeyDown();
+
+    protected void touchDown() {
+
     }
 
-    abstract protected void backKeyDown();
-
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown(final int keycode) {
         if (keycode == Input.Keys.BACK || keycode == Input.Keys.ESCAPE) {
             backKeyDown();
         }
         return super.keyDown(keycode);
+    }
+
+    @Override
+    public boolean touchDown(final int screenX, final int screenY, final int pointer, final int button) {
+        final boolean handled = super.touchDown(screenX, screenY, pointer, button);
+        touchDown();
+        return handled;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        StageController.screenChanger = null;
+        StageController.camera = null;
     }
 }

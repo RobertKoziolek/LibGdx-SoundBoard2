@@ -34,7 +34,7 @@ class SplashStageController extends StageController {
     }
 
     private void setUpRobcioLogoAnimation() {
-        robcioLogo.setPosition(HALF_WIDTH, ALMOST_HEIGHT);
+        robcioLogo.setPosition(HALF_WIDTH, NO_TOP_AND_BOTTOM_HEIGHT);
         final float centerX = HALF_WIDTH - robcioLogo.getWidth() / 2f;
         final float centerY = HALF_HEIGHT + Maths.PPM * 2f;
 
@@ -68,8 +68,7 @@ class SplashStageController extends StageController {
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    protected void touchDown() {
         moveToMainScreen();
-        return true;
     }
 }

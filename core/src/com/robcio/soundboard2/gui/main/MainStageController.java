@@ -3,27 +3,26 @@ package com.robcio.soundboard2.gui.main;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.utils.Align;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.animation.ActorAnimation;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.gui.assembler.TextFieldAssembler;
+import com.robcio.soundboard2.gui.component.ExitDialogBox;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
-import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.Command;
+import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
 import com.robcio.soundboard2.voice.Voice;
 import com.robcio.soundboard2.voice.VoiceContainer;
+import com.robcio.soundboard2.voice.VoiceSearcher;
 import com.robcio.soundboard2.voice.VoiceSorter;
-import me.xdrop.fuzzywuzzy.FuzzySearch;
 
-import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 import static com.robcio.soundboard2.constants.Numeral.*;
 import static com.robcio.soundboard2.constants.Strings.*;
-import static com.robcio.soundboard2.utils.helper.Maths.SEARCH_RATIO;
 
 class MainStageController extends StageController {
 
@@ -32,7 +31,10 @@ class MainStageController extends StageController {
     private final ShareDispatcher shareDispatcher;
     private final IndicatorContainer indicatorContainer;
 
+    private final VoiceSearcher voiceSearcher;
     private final ScrollPane buttonPane;
+    private final Actor searchField;
+
     private final ExitDialogBox exitDialogBox;
 
     MainStageController(final VoiceContainer voiceContainer,
@@ -44,36 +46,50 @@ class MainStageController extends StageController {
         this.voiceSorter = voiceSorter;
         this.shareDispatcher = shareDispatcher;
         this.indicatorContainer = indicatorContainer;
+        this.voiceSearcher = new VoiceSearcher();
 
         final Table rootTable = TableAssembler.table()
                                               .fillParent()
-                                              .align(Align.top)
+                                              .alignTop()
                                               .assemble();
 
-        final Actor topBar = getTopBar();
-        buttonPane = PaneAssembler.paneOf(null)
+        searchField = getSearchField();
+        buttonPane = PaneAssembler.blank()
+                                  .withScrollingDisabledX()
                                   .assemble();
-
+        final Actor topBar = getTopBar();
 
         rootTable.add(topBar)
+                 .width(WIDTH)
+                 .height(UNIT_HEIGHT)
                  .row();
         rootTable.add(buttonPane)
+                 .width(WIDTH)
+                 .height(NO_TOP_HEIGHT)
                  .row();
 
         addActor(rootTable);
+        addActor(searchField);
         updateButtons();
 
-        exitDialogBox = new ExitDialogBox();
+        exitDialogBox = new ExitDialogBox(this);
     }
 
     @Override
     protected void backKeyDown() {
-        exitDialogBox.showOrHide(this);
+        exitDialogBox.showOrHide();
     }
 
-    private Actor getTopBar() {
-        final TextField searchField = TextFieldAssembler.fieldOf(SEARCH_STRING)
-                                                        .withSize(THIRD_WIDTH, UNIT_HEIGHT)
+    @Override
+    protected void touchDown() {
+        ActorAnimation.exitToTop(searchField);
+        setKeyboardFocus(null);
+    }
+
+    private TextField getSearchField() {
+        final TextField searchField = TextFieldAssembler.field()
+                                                        .resetting()
+                                                        .withSize(WIDTH, UNIT_HEIGHT)
                                                         .withTextFieldListener(
                                                                 new TextField.TextFieldListener() {
                                                                     @Override
@@ -82,6 +98,31 @@ class MainStageController extends StageController {
                                                                     }
                                                                 })
                                                         .assemble();
+        searchField.setPosition(0, HEIGHT);
+        return searchField;
+    }
+
+    private Actor getTopBar() {
+        final Button searchButton = TextButtonAssembler.buttonOf(SEARCH_STRING)
+                                                       .withClickCommand(new Command() {
+                                                           @Override
+                                                           public void execute() {
+                                                               ActorAnimation.enterToTopBar(searchField);
+                                                               setKeyboardFocus(searchField);
+                                                           }
+                                                       })
+                                                       .withSize(QUATER_WIDTH, UNIT_HEIGHT)
+                                                       .assemble();
+        final Button resetButton = TextButtonAssembler.buttonOf(RESET_BUTTON)
+                                                      .shakeStage(this)
+                                                      .withClickCommand(new Command() {
+                                                          @Override
+                                                          public void execute() {
+                                                              updateButtons();
+                                                          }
+                                                      })
+                                                      .withSize(QUATER_WIDTH, UNIT_HEIGHT)
+                                                      .assemble();
         final Button silenceButton = TextButtonAssembler.buttonOf(SILENCE_BUTTON)
                                                         .shakeStage(this)
                                                         .withClickCommand(new Command() {
@@ -90,7 +131,7 @@ class MainStageController extends StageController {
                                                                 silenceAllVoices();
                                                             }
                                                         })
-                                                        .withSize(THIRD_WIDTH, UNIT_HEIGHT)
+                                                        .withSize(QUATER_WIDTH, UNIT_HEIGHT)
                                                         .assemble();
         final Command partialUpdateCommand = new Command() {
             @Override
@@ -114,10 +155,11 @@ class MainStageController extends StageController {
                                                             })
                                                             .observing(Assets.getAssetsLoader(),
                                                                        partialUpdateCommand)
-                                                            .withSize(THIRD_WIDTH, UNIT_HEIGHT)
+                                                            .withSize(QUATER_WIDTH, UNIT_HEIGHT)
                                                             .assemble();
 
-        return TableAssembler.tableOf(searchField, silenceButton, optionsButton)
+        return TableAssembler.tableOf(searchButton, resetButton, silenceButton, optionsButton)
+                             .alignTop()
                              .assemble();
     }
 
@@ -135,23 +177,18 @@ class MainStageController extends StageController {
 
     private void updateButtons(final String searchString) {
         voiceSorter.sort();
+        voiceSearcher.setSearchString(searchString);
         final Table table = TableAssembler.table()
+                                          .alignTop()
                                           .assemble();
         for (final Voice voice : voiceContainer.getCurrentList()) {
-            if (!searchString.isEmpty() && FuzzySearch.tokenSetPartialRatio(voice.getName(),
-                                                                            searchString) < SEARCH_RATIO) {
-                continue;
+            if (voiceSearcher.doesQualify(voice.getName())) {
+                addVoiceButton(table, voice);
             }
-            addVoiceButton(table, voice);
         }
-        final int size = table.getCells().size;
-        final boolean isFillingNeeded = size < SEGMENTS_WITHOUT_TOP;
-        if (isFillingNeeded) {
-            table.add()
-                 .height(UNIT_HEIGHT * (SEGMENTS_WITHOUT_TOP - size))
-                 .width(WIDTH);
+        if (table.getCells().size == 0) {
+            table.add(LIST_IS_EMPTY);
         }
-        buttonPane.setScrollingDisabled(true, isFillingNeeded);
         buttonPane.setActor(table);
     }
 

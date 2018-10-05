@@ -8,8 +8,6 @@ import com.robcio.soundboard2.enumeration.IndicatorAlign;
 import lombok.Getter;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-import static com.robcio.soundboard2.SoundBoard2.HEIGHT;
-import static com.robcio.soundboard2.SoundBoard2.WIDTH;
 import static com.robcio.soundboard2.constants.Numeral.*;
 
 public class Indicator {

@@ -1,7 +1,6 @@
 package com.robcio.soundboard2;
 
 import android.os.Bundle;
-import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.robcio.soundboard2.enumeration.Setting;
@@ -24,17 +23,6 @@ public class AndroidLauncher extends AndroidApplication {
         final Boolean sharingEnabled = Settings.get(Setting.SHARING_BOOLEAN);
         shareDispatcher.setEnabled(sharingEnabled);
 
-        ToastDispatcher.setToastMaker(new ToastDispatcher.ToastMaker() {
-            @Override
-            public void show(final String text) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(AndroidLauncher.this, text, Toast.LENGTH_LONG)
-                             .show();
-                    }
-                });
-            }
-        });
+        ToastDispatcher.setToastMaker(new AndroidToastMaker(handler, this));
     }
 }

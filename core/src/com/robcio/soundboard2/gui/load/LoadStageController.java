@@ -86,10 +86,9 @@ class LoadStageController extends StageController {
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    protected void touchDown() {
         voiceContainer.partialLoadUp();
         moveToSplashScreen();
-        return true;
     }
 
     private void moveToSplashScreen() {
