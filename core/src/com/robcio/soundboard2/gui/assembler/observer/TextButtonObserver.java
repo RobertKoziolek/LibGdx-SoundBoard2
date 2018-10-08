@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.gui.assembler.listener;
+package com.robcio.soundboard2.gui.assembler.observer;
 
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.robcio.soundboard2.utils.Command;
@@ -8,13 +8,13 @@ import java.util.Observer;
 
 import static com.robcio.soundboard2.constants.Strings.HUNDRED_PERCENT;
 
-public class ButtonListener implements Observer {
+public class TextButtonObserver implements Observer {
 
     private final TextButton button;
     private final Command command;
     private final Object finishTrigger, finishValue;
 
-    public ButtonListener(final TextButton button, final Command command, final String text) {
+    public TextButtonObserver(final TextButton button, final Command command, final String text) {
         this.button = button;
         this.command = command;
         this.finishTrigger = HUNDRED_PERCENT;

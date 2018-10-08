@@ -10,10 +10,10 @@ import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.LabelAssembler;
+import com.robcio.soundboard2.gui.assembler.ProgressBarAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.assets.AssetsLoader;
-import com.robcio.soundboard2.utils.helper.Maths;
 import com.robcio.soundboard2.voice.VoiceContainer;
 
 import static com.robcio.soundboard2.constants.Numeral.*;
@@ -31,9 +31,8 @@ class LoadStageController extends StageController {
         this.voiceContainer = voiceContainer;
         this.assetsLoader = Assets.getAssetsLoader();
 
-        progressBar = new ProgressBar(0f, 1f, 0.001f, false, Assets.getSkin());
-        progressBar.getStyle().knob.setMinWidth(Maths.PPM / 2);
-        progressBar.getStyle().knob.setMinHeight(Maths.PPM);
+        progressBar = ProgressBarAssembler.barOf(0f, 1f, 0.001f)
+                                          .assemble();
 
         final Table rootTable = TableAssembler.table()
                                               .fillParent()

@@ -15,7 +15,7 @@ public class Strings {
 
     //INSTUCTIONS
     public static final String INSTRUCTION_LOADING = "Kliknij by ładować w tle";
-    public static final String INSTRUCTION_SHARING = "Kliknij guzik mocno z lewej by wysłać";
+    public static final String INSTRUCTION_SHARING = "Trzymaj guzik ponad sekundę by wysłać";
     public static final String INSTRUCTION_RESTART_NEEDED = "Zmiany będą widoczne po ponownym uruchomieniu aplikacji";
 
     //SETTINGS

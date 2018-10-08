@@ -2,7 +2,7 @@ package com.robcio.soundboard2.gui.assembler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.robcio.soundboard2.utils.assets.Assets;
-import com.robcio.soundboard2.gui.assembler.listener.LabelListener;
+import com.robcio.soundboard2.gui.assembler.observer.LabelObserver;
 
 import java.util.Observable;
 
@@ -20,7 +20,7 @@ public class LabelAssembler {
 
     public Label assemble() {
         if (observable != null) {
-            observable.addObserver(new LabelListener(label));
+            observable.addObserver(new LabelObserver(label));
         }
         return label;
     }

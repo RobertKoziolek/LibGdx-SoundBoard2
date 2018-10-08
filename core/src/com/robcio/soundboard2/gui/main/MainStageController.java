@@ -205,7 +205,7 @@ class MainStageController extends StageController {
                                                                            }
                                                                        });
         if (shareDispatcher.isEnabled()) {
-            buttonAssembler.withSpecialClickCommand(new Command() {
+            buttonAssembler.withLongPressCommand(new Command() {
                 @Override
                 public void execute() {
                     shareDispatcher.share(voice.getFilePath());

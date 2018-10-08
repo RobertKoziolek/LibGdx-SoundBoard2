@@ -9,6 +9,7 @@ public class PaneAssembler {
     private final ScrollPane pane;
     private float width, height;
     private boolean scrollingDisabledX, scrollingDisabledY;
+    private boolean cancelTouchFocus = true;
     private float fadeAlphaSeconds = 1f, fadeDelaySeconds = 1f;
     private float overscrollDistance = 50, overscrollSpeedMin = 30, overscrollSpeedMax = 200;
 
@@ -35,6 +36,7 @@ public class PaneAssembler {
         pane.setScrollingDisabled(scrollingDisabledX, scrollingDisabledY);
         pane.setupFadeScrollBars(fadeAlphaSeconds, fadeDelaySeconds);
         pane.setupOverscroll(overscrollDistance, overscrollSpeedMin, overscrollSpeedMax);
+        pane.setCancelTouchFocus(cancelTouchFocus);
         return pane;
     }
 
@@ -57,6 +59,11 @@ public class PaneAssembler {
     public PaneAssembler withScrollingDisabled() {
         this.scrollingDisabledX = true;
         this.scrollingDisabledY = true;
+        return this;
+    }
+
+    public PaneAssembler dontCancelTouchFocus() {
+        this.cancelTouchFocus = false;
         return this;
     }
 

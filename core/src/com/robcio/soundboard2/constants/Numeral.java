@@ -12,7 +12,7 @@ public class Numeral {
     private static final int DEFAULT_NUMBER_OF_SEGMENTS = 12;
     private static final int MIN_NUMBER_OF_SEGMENTS = 9;
     private static final int MAX_NUMBER_OF_SEGMENTS = 22;
-    private static final int NUMBER_OF_STEPS = 5;
+    private static final int NUMBER_OF_STEPS = 9;
 
     public static final float MIN_SEGMENT_SIZE = 1f / MAX_NUMBER_OF_SEGMENTS;
     public static final float MAX_SEGMENT_SIZE = 1f / MIN_NUMBER_OF_SEGMENTS;
@@ -29,6 +29,8 @@ public class Numeral {
     //SIZE
     public static final int WIDTH = (int) (9 * Maths.PPM);
     public static final int HEIGHT = (int) (16 * Maths.PPM);
+    public static final float MIN_KNOB_WIDTH = Maths.PPM / 2f;
+    public static final float MIN_KNOB_HEIGHT = Maths.PPM;
 
     public static final float HALF_WIDTH = WIDTH / 2f;
     public static final float THIRD_WIDTH = WIDTH / 3f;

@@ -11,17 +11,12 @@ import com.robcio.soundboard2.enumeration.Setting;
 import com.robcio.soundboard2.filter.FilterMap;
 import com.robcio.soundboard2.gui.StageController;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
-import com.robcio.soundboard2.gui.assembler.LabelAssembler;
-import com.robcio.soundboard2.gui.assembler.PaneAssembler;
-import com.robcio.soundboard2.gui.assembler.TableAssembler;
-import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
+import com.robcio.soundboard2.gui.assembler.*;
 import com.robcio.soundboard2.gui.component.FilterCheckBox;
 import com.robcio.soundboard2.gui.component.SortingSelectBox;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.Enablable;
-import com.robcio.soundboard2.utils.Settings;
 import com.robcio.soundboard2.utils.assets.Assets;
-import com.robcio.soundboard2.utils.dispatcher.ToastDispatcher;
 import com.robcio.soundboard2.utils.helper.Maths;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceFilter;
@@ -136,40 +131,29 @@ class OptionsStageController extends StageController {
                                                  .assemble();
         fillInFilterOptions(optionsTable);
         fillInOtherOptions(optionsTable);
-
         return PaneAssembler.paneOf(optionsTable)
                             .withScrollingDisabledX()
+                            .dontCancelTouchFocus()
                             .assemble();
     }
 
     private void fillInOtherOptions(final Table optionsTable) {
-        final Table table = TableAssembler.table(OPTIONS_LABEL)
-                                          .alignTop()
-                                          .assemble();
-        optionsTable.add(table)
+        optionsTable.add(OPTIONS_LABEL)
                     .row();
+        fillInSizeSlider(optionsTable);
         fillInEnablable(optionsTable, SHARING_LABEL, sharingEnablable);
         fillInSortOption(optionsTable);
         fillInEnablable(optionsTable, INDICATOR_LABEL, indicatorEnablable);
-        fillInSizeSlider(optionsTable);
     }
 
     private void fillInSizeSlider(final Table optionsTable) {
         final Label label = LabelAssembler.labelOf(SEGMENT_SIZE_LABEL)
                                           .assemble();
-        final Slider slider = new Slider(MIN_SEGMENT_SIZE, MAX_SEGMENT_SIZE, SEGMENT_SIZE_STEP,
-                                         false, Assets.getSkin());
-        slider.getStyle().knob.setMinWidth(Maths.PPM / 2);
-        slider.getStyle().knob.setMinHeight(Maths.PPM);
-        final float sizeValue = Settings.get(Setting.SEGMENT_SIZE_FLOAT);
-        slider.setValue(sizeValue);
-        slider.addListener(new ChangeListener() {
-            @Override
-            public void changed(final ChangeEvent event, final Actor actor) {
-                Settings.put(Setting.SEGMENT_SIZE_FLOAT, slider.getValue());
-                ToastDispatcher.showText(INSTRUCTION_RESTART_NEEDED);
-            }
-        });
+
+        final Slider slider = SliderAssembler.sliderOf(MIN_SEGMENT_SIZE, MAX_SEGMENT_SIZE, SEGMENT_SIZE_STEP)
+                                             .withSetting(Setting.SEGMENT_SIZE_FLOAT)
+                                             .withChangeText(INSTRUCTION_RESTART_NEEDED)
+                                             .assemble();
 
         optionsTable.add(label)
                     .height(OPTION_HEIGHT)
@@ -227,7 +211,7 @@ class OptionsStageController extends StageController {
                                                 .assemble();
 
         buildFilterCheckBoxes(firstColumn, secondColumn, thirdColumn);
-        final Table doubleColumn = TableAssembler.equalizedColumns(UNIT_HEIGHT, firstColumn, secondColumn)
+        final Table doubleColumn = TableAssembler.equalizedColumns(OPTION_HEIGHT, firstColumn, secondColumn)
                                                  .assemble();
 
         optionsTable.add(doubleColumn)
@@ -248,7 +232,7 @@ class OptionsStageController extends StageController {
                 addFilterCheckBox(entry, packetColumn);
             } else if (Maths.containsBit(entry.getValue(), personFilters)) {
                 addFilterCheckBox(entry, peopleColumn);
-            } else{
+            } else {
                 addFilterCheckBox(entry, otherColumn);
             }
         }
