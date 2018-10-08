@@ -9,9 +9,11 @@ import com.robcio.soundboard2.gui.load.LoadScreen;
 import com.robcio.soundboard2.gui.main.MainScreen;
 import com.robcio.soundboard2.gui.options.OptionsScreen;
 import com.robcio.soundboard2.gui.splash.SplashScreen;
+import com.robcio.soundboard2.gui.suite.SuiteScreen;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
 import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
+import com.robcio.soundboard2.voice.SuiteContainer;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSorter;
 import com.robcio.soundboard2.voice.loader.VoiceLoader;
@@ -30,14 +32,16 @@ public class ScreenRegistrar {
         StageController.setScreenChangerAndCamera(screenChanger, camera);
 
         final VoiceContainer voiceContainer = new VoiceContainer(voiceLoader);
+        final SuiteContainer suiteContainer = new SuiteContainer(voiceLoader);
         final VoiceSorter voiceSorter = new VoiceSorter(voiceContainer);
         final FilterMap filterMap = voiceLoader.getFilterMap();
         final IndicatorContainer indicatorContainer = new IndicatorContainer(filterMap);
 
         map = new HashMap<>();
-        map.put(ScreenId.LOAD, new LoadScreen(voiceContainer));
+        map.put(ScreenId.LOAD, new LoadScreen(voiceContainer, suiteContainer));
         map.put(ScreenId.SPLASH, new SplashScreen());
         map.put(ScreenId.MAIN, new MainScreen(voiceContainer, voiceSorter, shareDispatcher, indicatorContainer));
+        map.put(ScreenId.SUITES, new SuiteScreen(voiceContainer, suiteContainer));
         map.put(ScreenId.OPTIONS, new OptionsScreen(voiceContainer,
                                                     voiceSorter,
                                                     shareDispatcher,

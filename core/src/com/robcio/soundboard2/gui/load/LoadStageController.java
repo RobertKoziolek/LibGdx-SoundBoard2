@@ -14,6 +14,7 @@ import com.robcio.soundboard2.gui.assembler.ProgressBarAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.assets.AssetsLoader;
+import com.robcio.soundboard2.voice.SuiteContainer;
 import com.robcio.soundboard2.voice.VoiceContainer;
 
 import static com.robcio.soundboard2.constants.Numeral.*;
@@ -25,7 +26,7 @@ class LoadStageController extends StageController {
     private final VoiceContainer voiceContainer;
     private final AssetsLoader assetsLoader;
 
-    LoadStageController(final VoiceContainer voiceContainer) {
+    LoadStageController(final VoiceContainer voiceContainer, final SuiteContainer suiteContainer) {
         super();
         this.loadingBackground = Assets.getLoadingBackground();
         this.voiceContainer = voiceContainer;
@@ -50,12 +51,16 @@ class LoadStageController extends StageController {
                  .height(UNIT_HEIGHT);
         addActor(rootTable);
 
-        assetsLoader.finishLoading(voiceContainer);
+        assetsLoader.finishLoading(voiceContainer, suiteContainer);
     }
 
     @Override
     protected void backKeyDown() {
-        moveToSplashScreen();
+        changeScreenToSplash();
+    }
+
+    private void changeScreenToSplash() {
+        changeScreen(ScreenId.SPLASH, StageAnimation.exitFadeOut());
     }
 
     @Override
@@ -80,17 +85,13 @@ class LoadStageController extends StageController {
 
     private void checkIfAssetsLoaded() {
         if (voiceContainer.isLoaded()) {
-            moveToSplashScreen();
+            changeScreenToSplash();
         }
     }
 
     @Override
     protected void touchDown() {
         voiceContainer.partialLoadUp();
-        moveToSplashScreen();
-    }
-
-    private void moveToSplashScreen() {
-        changeScreen(ScreenId.SPLASH, StageAnimation.exitFadeOut());
+        changeScreenToSplash();
     }
 }

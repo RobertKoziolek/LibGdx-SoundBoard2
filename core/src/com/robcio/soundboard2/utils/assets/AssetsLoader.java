@@ -3,6 +3,7 @@ package com.robcio.soundboard2.utils.assets;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.robcio.soundboard2.constants.Strings;
+import com.robcio.soundboard2.voice.SuiteContainer;
 import com.robcio.soundboard2.voice.VoiceContainer;
 
 import java.util.Observable;
@@ -28,7 +29,7 @@ public class AssetsLoader extends Observable {
         return assetManager.getProgress();
     }
 
-    public void finishLoading(final VoiceContainer voiceContainer) {
+    public void finishLoading(final VoiceContainer voiceContainer, final SuiteContainer suiteContainer) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -37,6 +38,7 @@ public class AssetsLoader extends Observable {
                     @Override
                     public void run() {
                         voiceContainer.loadUp();
+                        suiteContainer.loadUp();
                         notifyObservers();
                         deleteObservers();
                         done = true;

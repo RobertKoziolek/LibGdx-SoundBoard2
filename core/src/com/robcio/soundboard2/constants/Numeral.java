@@ -12,7 +12,7 @@ public class Numeral {
     private static final int DEFAULT_NUMBER_OF_SEGMENTS = 12;
     private static final int MIN_NUMBER_OF_SEGMENTS = 9;
     private static final int MAX_NUMBER_OF_SEGMENTS = 22;
-    private static final int NUMBER_OF_STEPS = 9;
+    private static final int NUMBER_OF_STEPS = 15;
 
     public static final float MIN_SEGMENT_SIZE = 1f / MAX_NUMBER_OF_SEGMENTS;
     public static final float MAX_SEGMENT_SIZE = 1f / MIN_NUMBER_OF_SEGMENTS;

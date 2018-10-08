@@ -31,6 +31,7 @@ public class Strings {
 
     //OPTIONS
     public static final String ALL_FILTERS_BUTTON = "Wszystko";
+    public static final String SUITES_BUTTON = "Paczki";
     public static final String BACK_BUTTON = "Wróć";
     public static final String PACKETS_LABEL = "Pakiety:";
     public static final String PEOPLE_LABEL = "Ludzie:";

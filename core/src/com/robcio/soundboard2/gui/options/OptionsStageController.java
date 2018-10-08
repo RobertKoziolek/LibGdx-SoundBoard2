@@ -95,6 +95,15 @@ class OptionsStageController extends StageController {
     }
 
     private Actor getTopBar() {
+        final Button suitesButton = TextButtonAssembler.buttonOf(SUITES_BUTTON)
+                                                     .withClickCommand(new Command() {
+                                                         @Override
+                                                         public void execute() {
+                                                             changeScreen(ScreenId.SUITES, StageAnimation.exitToLeft());
+                                                         }
+                                                     })
+                                                     .withSize(THIRD_WIDTH, UNIT_HEIGHT)
+                                                     .assemble();
         final Button allFiltersButton = TextButtonAssembler.buttonOf(ALL_FILTERS_BUTTON)
                                                            .shakeStage(this)
                                                            .withClickCommand(new Command() {
@@ -104,7 +113,7 @@ class OptionsStageController extends StageController {
                                                                    filter();
                                                                }
                                                            })
-                                                           .withSize(HALF_WIDTH, UNIT_HEIGHT)
+                                                           .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                            .assemble();
         final Button backButton = TextButtonAssembler.buttonOf(BACK_BUTTON)
                                                      .withClickCommand(new Command() {
@@ -113,10 +122,10 @@ class OptionsStageController extends StageController {
                                                              changeScreenToMain();
                                                          }
                                                      })
-                                                     .withSize(HALF_WIDTH, UNIT_HEIGHT)
+                                                     .withSize(THIRD_WIDTH, UNIT_HEIGHT)
                                                      .assemble();
 
-        return TableAssembler.tableOf(allFiltersButton, backButton)
+        return TableAssembler.tableOf(suitesButton, allFiltersButton, backButton)
                              .assemble();
     }
 
@@ -140,10 +149,10 @@ class OptionsStageController extends StageController {
     private void fillInOtherOptions(final Table optionsTable) {
         optionsTable.add(OPTIONS_LABEL)
                     .row();
-        fillInSizeSlider(optionsTable);
         fillInEnablable(optionsTable, SHARING_LABEL, sharingEnablable);
         fillInSortOption(optionsTable);
         fillInEnablable(optionsTable, INDICATOR_LABEL, indicatorEnablable);
+        fillInSizeSlider(optionsTable);
     }
 
     private void fillInSizeSlider(final Table optionsTable) {
