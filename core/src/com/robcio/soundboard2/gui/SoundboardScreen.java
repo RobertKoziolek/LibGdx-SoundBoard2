@@ -2,22 +2,32 @@ package com.robcio.soundboard2.gui;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.robcio.soundboard2.utils.assets.Assets;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Getter
-@NoArgsConstructor
-public abstract class AbstractScreen implements Screen {
-    private Stage stage;
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class SoundboardScreen implements Screen {
+    private SoundboardStage stage;
+
+    public static SoundboardScreen of(@NonNull final SoundboardStage stage){
+        return new SoundboardScreen(stage);
+    }
 
     @Override
-    abstract public void show();
+    public final void show() {
+        if (stage.getActors().size == 0) {
+            stage.buildStage();
+        }
+        stage.show();
+    }
 
     @Override
     public void render(final float deltaTime) {
+        //TODO might be better to make this screen-specific
         Assets.getAssetsLoader()
               .notifyObservers();
         stage.act(deltaTime);
@@ -47,11 +57,6 @@ public abstract class AbstractScreen implements Screen {
         if (stage != null) {
             stage.dispose();
         }
-    }
-
-    protected final void setStage(@NonNull final Stage stage) {
-        if (this.stage != null) throw new IllegalStateException("Cannot set another stage to a screen");
-        this.stage = stage;
     }
 
     public InputProcessor[] getInputs() {

@@ -14,11 +14,11 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import static com.robcio.soundboard2.constants.Numeral.HEIGHT;
 import static com.robcio.soundboard2.constants.Numeral.WIDTH;
 
-public abstract class StageController extends Stage {
+public abstract class SoundboardStage extends Stage {
     static private ScreenChanger screenChanger;
     static private Camera camera;
 
-    public StageController() {
+    public SoundboardStage() {
         super(new StretchViewport(WIDTH, HEIGHT, camera));
     }
 
@@ -37,14 +37,18 @@ public abstract class StageController extends Stage {
     }
 
     public static void setScreenChangerAndCamera(final ScreenChanger screenChanger, final OrthographicCamera camera) {
-        if (StageController.screenChanger != null || StageController.camera != null) {
+        if (SoundboardStage.screenChanger != null || SoundboardStage.camera != null) {
             throw new IllegalStateException("Stage controller components cannot be set more than once");
         }
-        StageController.screenChanger = screenChanger;
-        StageController.camera = camera;
+        SoundboardStage.screenChanger = screenChanger;
+        SoundboardStage.camera = camera;
     }
 
     protected abstract void backKeyDown();
+
+    protected abstract void buildStage();
+
+    protected abstract void show();
 
     protected void touchDown() {
 
@@ -68,7 +72,7 @@ public abstract class StageController extends Stage {
     @Override
     public void dispose() {
         super.dispose();
-        StageController.screenChanger = null;
-        StageController.camera = null;
+        SoundboardStage.screenChanger = null;
+        SoundboardStage.camera = null;
     }
 }

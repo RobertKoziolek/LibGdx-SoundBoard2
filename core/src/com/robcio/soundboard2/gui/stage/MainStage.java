@@ -1,10 +1,10 @@
-package com.robcio.soundboard2.gui.main;
+package com.robcio.soundboard2.gui.stage;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.robcio.soundboard2.enumeration.ScreenId;
-import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.SoundboardStage;
 import com.robcio.soundboard2.gui.animation.ActorAnimation;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.PaneAssembler;
@@ -24,7 +24,7 @@ import com.robcio.soundboard2.voice.VoiceSorter;
 import static com.robcio.soundboard2.constants.Numeral.*;
 import static com.robcio.soundboard2.constants.Strings.*;
 
-class MainStageController extends StageController {
+public class MainStage extends SoundboardStage {
 
     private final VoiceContainer voiceContainer;
     private final VoiceSorter voiceSorter;
@@ -37,10 +37,10 @@ class MainStageController extends StageController {
 
     private final ExitDialogBox exitDialogBox;
 
-    MainStageController(final VoiceContainer voiceContainer,
-                        final VoiceSorter voiceSorter,
-                        final ShareDispatcher shareDispatcher,
-                        final IndicatorContainer indicatorContainer) {
+    public MainStage(final VoiceContainer voiceContainer,
+                     final VoiceSorter voiceSorter,
+                     final ShareDispatcher shareDispatcher,
+                     final IndicatorContainer indicatorContainer) {
         super();
         this.voiceContainer = voiceContainer;
         this.voiceSorter = voiceSorter;
@@ -48,15 +48,26 @@ class MainStageController extends StageController {
         this.indicatorContainer = indicatorContainer;
         this.voiceSearcher = new VoiceSearcher();
 
+        this.searchField = getSearchField();
+        this.buttonPane = PaneAssembler.blank()
+                                       .withScrollingDisabledX()
+                                       .assemble();
+
+        this.exitDialogBox = new ExitDialogBox(this);
+    }
+
+    @Override
+    public void show() {
+        StageAnimation.enterFromTop(this);
+        updateButtons();
+    }
+
+    @Override
+    protected void buildStage() {
         final Table rootTable = TableAssembler.table()
                                               .fillParent()
                                               .alignTop()
                                               .assemble();
-
-        searchField = getSearchField();
-        buttonPane = PaneAssembler.blank()
-                                  .withScrollingDisabledX()
-                                  .assemble();
         final Actor topBar = getTopBar();
 
         rootTable.add(topBar)
@@ -70,9 +81,7 @@ class MainStageController extends StageController {
 
         addActor(rootTable);
         addActor(searchField);
-        updateButtons();
-
-        exitDialogBox = new ExitDialogBox(this);
+        indicatorContainer.loadUp(this);
     }
 
     @Override

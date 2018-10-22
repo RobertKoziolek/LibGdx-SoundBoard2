@@ -3,13 +3,13 @@ package com.robcio.soundboard2.registrar;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.filter.FilterMap;
-import com.robcio.soundboard2.gui.AbstractScreen;
-import com.robcio.soundboard2.gui.StageController;
-import com.robcio.soundboard2.gui.load.LoadScreen;
-import com.robcio.soundboard2.gui.main.MainScreen;
-import com.robcio.soundboard2.gui.options.OptionsScreen;
-import com.robcio.soundboard2.gui.splash.SplashScreen;
-import com.robcio.soundboard2.gui.suite.SuiteScreen;
+import com.robcio.soundboard2.gui.SoundboardScreen;
+import com.robcio.soundboard2.gui.SoundboardStage;
+import com.robcio.soundboard2.gui.stage.LoadStage;
+import com.robcio.soundboard2.gui.stage.MainStage;
+import com.robcio.soundboard2.gui.stage.OptionsStage;
+import com.robcio.soundboard2.gui.stage.SplashStage;
+import com.robcio.soundboard2.gui.stage.SuiteStage;
 import com.robcio.soundboard2.indicator.IndicatorContainer;
 import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
@@ -22,14 +22,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ScreenRegistrar {
-    private final Map<ScreenId, AbstractScreen> map;
-    private AbstractScreen current;
+    private final Map<ScreenId, SoundboardScreen> map;
+    private SoundboardScreen current;
 
     public ScreenRegistrar(final ScreenChanger screenChanger,
                            final OrthographicCamera camera,
                            final VoiceLoader voiceLoader,
                            final ShareDispatcher shareDispatcher) {
-        StageController.setScreenChangerAndCamera(screenChanger, camera);
+        SoundboardStage.setScreenChangerAndCamera(screenChanger, camera);
 
         final VoiceContainer voiceContainer = new VoiceContainer(voiceLoader);
         final SuiteContainer suiteContainer = new SuiteContainer(voiceLoader);
@@ -38,31 +38,31 @@ public class ScreenRegistrar {
         final IndicatorContainer indicatorContainer = new IndicatorContainer(filterMap);
 
         map = new HashMap<>();
-        map.put(ScreenId.LOAD, new LoadScreen(voiceContainer, suiteContainer));
-        map.put(ScreenId.SPLASH, new SplashScreen());
-        map.put(ScreenId.MAIN, new MainScreen(voiceContainer, voiceSorter, shareDispatcher, indicatorContainer));
-        map.put(ScreenId.SUITES, new SuiteScreen(voiceContainer, suiteContainer));
-        map.put(ScreenId.OPTIONS, new OptionsScreen(voiceContainer,
-                                                    voiceSorter,
-                                                    shareDispatcher,
-                                                    indicatorContainer,
-                                                    filterMap));
+        map.put(ScreenId.LOAD, SoundboardScreen.of(new LoadStage(voiceContainer, suiteContainer)));
+        map.put(ScreenId.SPLASH, SoundboardScreen.of(new SplashStage()));
+        map.put(ScreenId.MAIN, SoundboardScreen.of(new MainStage(voiceContainer, voiceSorter, shareDispatcher, indicatorContainer)));
+        map.put(ScreenId.SUITES, SoundboardScreen.of(new SuiteStage(voiceContainer, suiteContainer)));
+        map.put(ScreenId.OPTIONS, SoundboardScreen.of(new OptionsStage(voiceContainer,
+                                                                       voiceSorter,
+                                                                       shareDispatcher,
+                                                                       indicatorContainer,
+                                                                       filterMap)));
     }
 
-    public AbstractScreen get(final ScreenId screenId) {
+    public SoundboardScreen get(final ScreenId screenId) {
         if (!map.containsKey(screenId))
             throw new IllegalArgumentException("Screen " + screenId + " not implemented yet");
         current = map.get(screenId);
         return current;
     }
 
-    public AbstractScreen getCurrent() {
+    public SoundboardScreen getCurrent() {
         if (current == null) throw new IllegalStateException("Current screen cannot be null");
         return current;
     }
 
     public void dispose() {
-        for (final AbstractScreen screen : map.values()) {
+        for (final SoundboardScreen screen : map.values()) {
             screen.dispose();
         }
     }

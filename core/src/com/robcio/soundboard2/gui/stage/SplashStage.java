@@ -1,10 +1,10 @@
-package com.robcio.soundboard2.gui.splash;
+package com.robcio.soundboard2.gui.stage;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.enumeration.TextureId;
-import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.SoundboardStage;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.helper.Maths;
@@ -12,15 +12,19 @@ import com.robcio.soundboard2.utils.helper.Maths;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.robcio.soundboard2.constants.Numeral.*;
 
-class SplashStageController extends StageController {
+public class SplashStage extends SoundboardStage {
 
     private final Image robcioLogo, soundboardLogo;
 
-    SplashStageController() {
+    public SplashStage() {
         super();
         robcioLogo = Assets.getImage(TextureId.ROBCIO_LOGO);
         soundboardLogo = Assets.getImage(TextureId.SOUNDBOARD_LOGO);
+        buildStage();
+    }
 
+    @Override
+    protected void buildStage() {
         setUpRobcioLogoAnimation();
         setUpSoundboardLogoAnimation();
 
@@ -31,6 +35,10 @@ class SplashStageController extends StageController {
     @Override
     protected void backKeyDown() {
         moveToMainScreen();
+    }
+
+    @Override
+    protected void show() {
     }
 
     private void setUpRobcioLogoAnimation() {
@@ -71,4 +79,5 @@ class SplashStageController extends StageController {
     protected void touchDown() {
         moveToMainScreen();
     }
+
 }

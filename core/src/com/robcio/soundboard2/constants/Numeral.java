@@ -60,7 +60,7 @@ public class Numeral {
     public static final float Y_POSITION_FRACTION_LEFT = -0.059f;
     public static final float X_POSITION_FRACTION_CENTER = -0.067f;
     public static final float Y_POSITION_FRACTION_CENTER = -0.059f;
-    public static final float X_POSITION_FRACTION_RIGHT = 0.8f;
+    public static final float X_POSITION_FRACTION_RIGHT = 0.81f;
     public static final float Y_POSITION_FRACTION_RIGHT = -0.027f;
     public static final float INDICATOR_SHORT_DURATION = 0.3f;
     public static final float INDICATOR_NORMAL_DURATION = 0.85f;

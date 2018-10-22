@@ -33,8 +33,7 @@ public class IndicatorContainer implements Enablable {
         final Map<Integer, Indicator> indicatorMap = new HashMap<>();
         final List<IndicatorModel> modelList = new JsonIndicatorLoader().load();
         for (final IndicatorModel model : modelList) {
-            final Integer filter = filterMap.get(model.getName());
-            if (filter == null) continue;
+            final Integer filter = filterMap.getOrAdd(model.getName());
             final Image image = Assets.getImage(model.getFile());
             final Indicator indicator = new Indicator(image, model.getAlign());
             indicatorMap.put(filter, indicator);

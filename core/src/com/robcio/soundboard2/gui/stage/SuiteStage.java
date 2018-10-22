@@ -1,11 +1,11 @@
-package com.robcio.soundboard2.gui.suite;
+package com.robcio.soundboard2.gui.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.robcio.soundboard2.enumeration.ScreenId;
-import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.SoundboardStage;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
@@ -22,23 +22,27 @@ import static com.robcio.soundboard2.constants.Numeral.*;
 import static com.robcio.soundboard2.constants.Strings.BACK_BUTTON;
 import static com.robcio.soundboard2.constants.Strings.LIST_IS_EMPTY;
 
-class SuiteStageController extends StageController {
+public class SuiteStage extends SoundboardStage {
 
     private final VoiceContainer voiceContainer;
     private final SuiteContainer suiteContainer;
 
     private ScrollPane suitesPane;
 
-    SuiteStageController(final VoiceContainer voiceContainer, final SuiteContainer suiteContainer) {
+    public SuiteStage(final VoiceContainer voiceContainer, final SuiteContainer suiteContainer) {
         super();
         this.voiceContainer = voiceContainer;
         this.suiteContainer = suiteContainer;
-
     }
 
     @Override
     protected void backKeyDown() {
         changeScreenToOptions();
+    }
+
+    @Override
+    protected void show() {
+        StageAnimation.enterFromRight(this);
     }
 
     private void changeScreenToOptions() {
@@ -49,7 +53,9 @@ class SuiteStageController extends StageController {
         changeScreen(ScreenId.MAIN, StageAnimation.exitToBot());
     }
 
-    void buildStage() {
+
+    @Override
+    protected void buildStage() {
         final Table rootTable = TableAssembler.table()
                                               .alignTop()
                                               .fillParent()

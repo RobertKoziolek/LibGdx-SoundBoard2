@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.gui.options;
+package com.robcio.soundboard2.gui.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -9,10 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.enumeration.Setting;
 import com.robcio.soundboard2.filter.FilterMap;
-import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.SoundboardStage;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.*;
 import com.robcio.soundboard2.gui.component.FilterCheckBox;
+import com.robcio.soundboard2.gui.component.FilterCheckBoxContainer;
 import com.robcio.soundboard2.gui.component.SortingSelectBox;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.Enablable;
@@ -27,8 +28,7 @@ import java.util.Map;
 import static com.robcio.soundboard2.constants.Numeral.*;
 import static com.robcio.soundboard2.constants.Strings.*;
 
-class OptionsStageController extends StageController {
-
+public class OptionsStage extends SoundboardStage {
 
     private final VoiceContainer voiceContainer;
     private final VoiceSorter voiceSorter;
@@ -40,11 +40,11 @@ class OptionsStageController extends StageController {
     private final VoiceFilter voiceFilter;
     private final FilterCheckBoxContainer filterCheckBoxContainer;
 
-    OptionsStageController(final VoiceContainer voiceContainer,
-                           final VoiceSorter voiceSorter,
-                           final Enablable sharingEnablable,
-                           final Enablable indicatorEnablable,
-                           final FilterMap filterMap) {
+    public OptionsStage(final VoiceContainer voiceContainer,
+                        final VoiceSorter voiceSorter,
+                        final Enablable sharingEnablable,
+                        final Enablable indicatorEnablable,
+                        final FilterMap filterMap) {
         super();
         this.voiceContainer = voiceContainer;
         this.voiceSorter = voiceSorter;
@@ -68,11 +68,17 @@ class OptionsStageController extends StageController {
         changeScreenToMain();
     }
 
+    @Override
+    protected void show() {
+        StageAnimation.enterFromTop(this);
+    }
+
     private void changeScreenToMain() {
         changeScreen(ScreenId.MAIN, StageAnimation.exitToBot());
     }
 
-    void buildStage() {
+    @Override
+    protected void buildStage() {
         final Table rootTable = TableAssembler.table()
                                               .alignTop()
                                               .fillParent()

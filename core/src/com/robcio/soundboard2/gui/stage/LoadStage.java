@@ -1,4 +1,4 @@
-package com.robcio.soundboard2.gui.load;
+package com.robcio.soundboard2.gui.stage;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,26 +7,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.robcio.soundboard2.constants.Strings;
 import com.robcio.soundboard2.enumeration.ScreenId;
-import com.robcio.soundboard2.gui.StageController;
+import com.robcio.soundboard2.gui.SoundboardStage;
 import com.robcio.soundboard2.gui.animation.StageAnimation;
 import com.robcio.soundboard2.gui.assembler.LabelAssembler;
 import com.robcio.soundboard2.gui.assembler.ProgressBarAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.assets.AssetsLoader;
+import com.robcio.soundboard2.utils.dispatcher.ToastDispatcher;
 import com.robcio.soundboard2.voice.SuiteContainer;
 import com.robcio.soundboard2.voice.VoiceContainer;
 
 import static com.robcio.soundboard2.constants.Numeral.*;
+import static com.robcio.soundboard2.constants.Strings.INSTRUCTION_LOADING;
 
-class LoadStageController extends StageController {
+public class LoadStage extends SoundboardStage {
 
     private final Texture loadingBackground;
     private final ProgressBar progressBar;
     private final VoiceContainer voiceContainer;
     private final AssetsLoader assetsLoader;
 
-    LoadStageController(final VoiceContainer voiceContainer, final SuiteContainer suiteContainer) {
+    public LoadStage(final VoiceContainer voiceContainer, final SuiteContainer suiteContainer) {
         super();
         this.loadingBackground = Assets.getLoadingBackground();
         this.voiceContainer = voiceContainer;
@@ -35,6 +37,18 @@ class LoadStageController extends StageController {
         progressBar = ProgressBarAssembler.barOf(0f, 1f, 0.001f)
                                           .assemble();
 
+        buildStage();
+
+        assetsLoader.finishLoading(voiceContainer, suiteContainer);
+    }
+
+    @Override
+    protected void show() {
+        ToastDispatcher.showText(INSTRUCTION_LOADING);
+    }
+
+    @Override
+    protected void buildStage() {
         final Table rootTable = TableAssembler.table()
                                               .fillParent()
                                               .assemble();
@@ -50,8 +64,6 @@ class LoadStageController extends StageController {
         rootTable.add(progressLabel)
                  .height(UNIT_HEIGHT);
         addActor(rootTable);
-
-        assetsLoader.finishLoading(voiceContainer, suiteContainer);
     }
 
     @Override

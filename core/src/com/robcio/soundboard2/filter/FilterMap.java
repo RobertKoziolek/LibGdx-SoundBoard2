@@ -15,7 +15,7 @@ public class FilterMap extends HashMap<String, Integer> {
     @Getter
     private int index = 1;
 
-    private Integer getOrAdd(final Object key) {
+    public Integer getOrAdd(final Object key) {
         if (!containsKey(key)) {
             put(String.valueOf(key));
         }

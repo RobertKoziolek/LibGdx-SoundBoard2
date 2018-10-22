@@ -1,23 +1,22 @@
-package com.robcio.soundboard2.gui.options;
+package com.robcio.soundboard2.gui.component;
 
 import com.robcio.soundboard2.filter.FilterInformation;
-import com.robcio.soundboard2.gui.component.FilterCheckBox;
 import com.robcio.soundboard2.utils.helper.Maths;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.robcio.soundboard2.filter.FilterMap.PERSON_PREFIX;
 import static com.robcio.soundboard2.constants.Strings.EMPTY_STRING;
+import static com.robcio.soundboard2.filter.FilterMap.PERSON_PREFIX;
 
-class FilterCheckBoxContainer {
+public class FilterCheckBoxContainer {
 
     private final FilterInformation filterInformation;
     private final Set<FilterCheckBox> checkBoxSet = new HashSet<>();
 
     private final FilterCheckBox.FilterBoxCommand filterBoxCommand;
 
-    FilterCheckBoxContainer(final FilterInformation filterInformation) {
+    public FilterCheckBoxContainer(final FilterInformation filterInformation) {
         this.filterInformation = filterInformation;
         filterBoxCommand = new FilterCheckBox.FilterBoxCommand() {
             @Override
@@ -27,7 +26,7 @@ class FilterCheckBoxContainer {
         };
     }
 
-    FilterCheckBox createFilterCheckBox(final String text, final Integer filterBit) {
+    public FilterCheckBox createFilterCheckBox(final String text, final Integer filterBit) {
         final FilterCheckBox filterCheckBox = new FilterCheckBox(text.replace(PERSON_PREFIX, EMPTY_STRING),
                                                                  filterBit,
                                                                  filterBoxCommand);
@@ -35,7 +34,7 @@ class FilterCheckBoxContainer {
         return filterCheckBox;
     }
 
-    int getCurrentFilter() {
+    public int getCurrentFilter() {
         int filter = 0;
         for (final FilterCheckBox box : checkBoxSet) {
             if (box.isChecked()) {
@@ -45,7 +44,7 @@ class FilterCheckBoxContainer {
         return filter;
     }
 
-    void setAll() {
+    public void setAll() {
         final int packetAndPeopleFilters = filterInformation.getPacketFilters() | filterInformation.getPeopleFilters();
         for (final FilterCheckBox checkBox : checkBoxSet) {
             if (Maths.containsBit(checkBox.getFilterBit(), packetAndPeopleFilters)) {
