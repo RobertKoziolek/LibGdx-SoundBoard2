@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.robcio.soundboard2.enumeration.ScreenId;
 import com.robcio.soundboard2.utils.ScreenChanger;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -15,6 +18,10 @@ import static com.robcio.soundboard2.constants.Numeral.HEIGHT;
 import static com.robcio.soundboard2.constants.Numeral.WIDTH;
 
 public abstract class SoundboardStage extends Stage {
+
+    @Setter
+    @Getter(AccessLevel.PROTECTED)
+    static private SizeHolder sizeHolder;
     static private ScreenChanger screenChanger;
     static private Camera camera;
 
@@ -37,9 +44,6 @@ public abstract class SoundboardStage extends Stage {
     }
 
     public static void setScreenChangerAndCamera(final ScreenChanger screenChanger, final OrthographicCamera camera) {
-        if (SoundboardStage.screenChanger != null || SoundboardStage.camera != null) {
-            throw new IllegalStateException("Stage controller components cannot be set more than once");
-        }
         SoundboardStage.screenChanger = screenChanger;
         SoundboardStage.camera = camera;
     }

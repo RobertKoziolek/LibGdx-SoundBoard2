@@ -23,7 +23,6 @@ import java.util.Map;
 
 public class ScreenRegistrar {
     private final Map<ScreenId, SoundboardScreen> map;
-    private SoundboardScreen current;
 
     public ScreenRegistrar(final ScreenChanger screenChanger,
                            final OrthographicCamera camera,
@@ -52,13 +51,7 @@ public class ScreenRegistrar {
     public SoundboardScreen get(final ScreenId screenId) {
         if (!map.containsKey(screenId))
             throw new IllegalArgumentException("Screen " + screenId + " not implemented yet");
-        current = map.get(screenId);
-        return current;
-    }
-
-    public SoundboardScreen getCurrent() {
-        if (current == null) throw new IllegalStateException("Current screen cannot be null");
-        return current;
+        return map.get(screenId);
     }
 
     public void dispose() {

@@ -58,11 +58,11 @@ public class LoadStage extends SoundboardStage {
 
         rootTable.add(progressBar)
                  .width(ALMOST_WIDTH)
-                 .height(UNIT_HEIGHT)
+                 .height(getSizeHolder().UNIT_HEIGHT)
                  .padBottom(HALF_HEIGHT)
                  .row();
         rootTable.add(progressLabel)
-                 .height(UNIT_HEIGHT);
+                 .height(getSizeHolder().UNIT_HEIGHT);
         addActor(rootTable);
     }
 

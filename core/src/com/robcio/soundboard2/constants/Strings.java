@@ -12,6 +12,7 @@ public class Strings {
     //APP
     public static final String TITLE = "SoundBoard2";
     public static final String EMPTY_STRING = "";
+    public static final String LIST_IS_EMPTY = "pusto here";
 
     //INSTUCTIONS
     public static final String INSTRUCTION_LOADING = "Kliknij by ładować w tle";
@@ -50,7 +51,6 @@ public class Strings {
 
     //MAIN
     public static final String HUNDRED_PERCENT = "100.0%";
-    public static final String LIST_IS_EMPTY = "pusto here";
     public static final String OPTIONS_BUTTON = "Opcje";
     public static final String RESET_BUTTON = "Reset";
     public static final String SILENCE_BUTTON = "Cicho";

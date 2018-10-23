@@ -92,11 +92,11 @@ public class OptionsStage extends SoundboardStage {
                  .row();
         rootTable.add(optionsPane)
                  .width(WIDTH)
-                 .height(NO_TOP_AND_BOTTOM_HEIGHT)
+                 .height(getSizeHolder().NO_TOP_AND_BOTTOM_HEIGHT)
                  .row();
         rootTable.add(counter)
                  .width(WIDTH)
-                 .height(UNIT_HEIGHT);
+                 .height(getSizeHolder().UNIT_HEIGHT);
         addActor(rootTable);
     }
 
@@ -108,7 +108,7 @@ public class OptionsStage extends SoundboardStage {
                                                              changeScreen(ScreenId.SUITES, StageAnimation.exitToLeft());
                                                          }
                                                      })
-                                                     .withSize(THIRD_WIDTH, UNIT_HEIGHT)
+                                                     .withSize(THIRD_WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                      .assemble();
         final Button allFiltersButton = TextButtonAssembler.buttonOf(ALL_FILTERS_BUTTON)
                                                            .shakeStage(this)
@@ -119,7 +119,7 @@ public class OptionsStage extends SoundboardStage {
                                                                    filter();
                                                                }
                                                            })
-                                                           .withSize(THIRD_WIDTH, UNIT_HEIGHT)
+                                                           .withSize(THIRD_WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                            .assemble();
         final Button backButton = TextButtonAssembler.buttonOf(BACK_BUTTON)
                                                      .withClickCommand(new Command() {
@@ -128,7 +128,7 @@ public class OptionsStage extends SoundboardStage {
                                                              changeScreenToMain();
                                                          }
                                                      })
-                                                     .withSize(THIRD_WIDTH, UNIT_HEIGHT)
+                                                     .withSize(THIRD_WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                      .assemble();
 
         return TableAssembler.tableOf(suitesButton, allFiltersButton, backButton)

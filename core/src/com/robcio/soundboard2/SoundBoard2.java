@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.robcio.soundboard2.enumeration.ScreenId;
+import com.robcio.soundboard2.gui.SizeHolder;
+import com.robcio.soundboard2.gui.SoundboardScreen;
+import com.robcio.soundboard2.gui.SoundboardStage;
+import com.robcio.soundboard2.gui.animation.ActorAnimation;
 import com.robcio.soundboard2.registrar.ScreenRegistrar;
 import com.robcio.soundboard2.utils.ScreenChanger;
 import com.robcio.soundboard2.utils.assets.Assets;
@@ -32,6 +36,7 @@ public class SoundBoard2 extends Game implements ScreenChanger {
     public void create() {
         Gdx.input.setCatchBackKey(true);
         Assets.initialize();
+        initializeGuiSizes();
         initializeCamera();
         initializeBatch();
 
@@ -42,16 +47,17 @@ public class SoundBoard2 extends Game implements ScreenChanger {
         setScreen(ScreenId.LOAD);
     }
 
-    @Override
-    public void setScreen(final ScreenId screenId) {
-        setScreen(screenRegistrar.get(screenId));
-        setUpInput();
+    private void initializeGuiSizes() {
+        final SizeHolder sizeHolder = new SizeHolder();
+        ActorAnimation.setSizeHolder(sizeHolder);
+        SoundboardStage.setSizeHolder(sizeHolder);
     }
 
-    private void setUpInput() {
-        final InputMultiplexer multiplexer = new InputMultiplexer(screenRegistrar.getCurrent()
-                                                                                 .getInputs());
-        Gdx.input.setInputProcessor(multiplexer);
+    @Override
+    public void setScreen(final ScreenId screenId) {
+        final SoundboardScreen screen = screenRegistrar.get(screenId);
+        setScreen(screen);
+        Gdx.input.setInputProcessor(new InputMultiplexer(screen.getInputs()));
     }
 
     private void initializeRegistrars(final VoiceLoader voiceLoader) {

@@ -11,6 +11,7 @@ import com.robcio.soundboard2.gui.assembler.PaneAssembler;
 import com.robcio.soundboard2.gui.assembler.TableAssembler;
 import com.robcio.soundboard2.gui.assembler.TextButtonAssembler;
 import com.robcio.soundboard2.utils.Command;
+import com.robcio.soundboard2.utils.helper.TableHelper;
 import com.robcio.soundboard2.voice.SuiteContainer;
 import com.robcio.soundboard2.voice.Voice;
 import com.robcio.soundboard2.voice.VoiceContainer;
@@ -20,7 +21,6 @@ import java.util.Map;
 
 import static com.robcio.soundboard2.constants.Numeral.*;
 import static com.robcio.soundboard2.constants.Strings.BACK_BUTTON;
-import static com.robcio.soundboard2.constants.Strings.LIST_IS_EMPTY;
 
 public class SuiteStage extends SoundboardStage {
 
@@ -70,7 +70,7 @@ public class SuiteStage extends SoundboardStage {
                  .row();
         rootTable.add(suitesPane)
                  .width(WIDTH)
-                 .height(NO_TOP_HEIGHT)
+                 .height(getSizeHolder().NO_TOP_HEIGHT)
                  .row();
         addActor(rootTable);
         buildButtons();
@@ -84,7 +84,7 @@ public class SuiteStage extends SoundboardStage {
                                                              changeScreenToOptions();
                                                          }
                                                      })
-                                                     .withSize(WIDTH, UNIT_HEIGHT)
+                                                     .withSize(WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                      .assemble();
         return TableAssembler.tableOf(backButton)
                              .assemble();
@@ -98,9 +98,7 @@ public class SuiteStage extends SoundboardStage {
                                                                         .entrySet()) {
             addSuiteButton(table, entry);
         }
-        if (table.getCells().size == 0) {
-            table.add(LIST_IS_EMPTY);
-        }
+        TableHelper.markIfEmpty(table);
         suitesPane.setActor(table);
     }
 
@@ -110,7 +108,7 @@ public class SuiteStage extends SoundboardStage {
                                                  .assemble();
         table.add(button)
              .width(WIDTH)
-             .height(UNIT_HEIGHT)
+             .height(getSizeHolder().UNIT_HEIGHT)
              .row();
     }
 

@@ -42,7 +42,7 @@ public class SplashStage extends SoundboardStage {
     }
 
     private void setUpRobcioLogoAnimation() {
-        robcioLogo.setPosition(HALF_WIDTH, NO_TOP_AND_BOTTOM_HEIGHT);
+        robcioLogo.setPosition(HALF_WIDTH, getSizeHolder().NO_TOP_AND_BOTTOM_HEIGHT);
         final float centerX = HALF_WIDTH - robcioLogo.getWidth() / 2f;
         final float centerY = HALF_HEIGHT + Maths.PPM * 2f;
 

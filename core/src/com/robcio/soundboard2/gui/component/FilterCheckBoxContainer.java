@@ -20,7 +20,7 @@ public class FilterCheckBoxContainer {
         this.filterInformation = filterInformation;
         filterBoxCommand = new FilterCheckBox.FilterBoxCommand() {
             @Override
-            public void execute(FilterCheckBox filterCheckBox) {
+            public void execute(final FilterCheckBox filterCheckBox) {
                 uncheckAllExcept(filterCheckBox);
             }
         };

@@ -16,6 +16,7 @@ import com.robcio.soundboard2.indicator.IndicatorContainer;
 import com.robcio.soundboard2.utils.Command;
 import com.robcio.soundboard2.utils.assets.Assets;
 import com.robcio.soundboard2.utils.dispatcher.ShareDispatcher;
+import com.robcio.soundboard2.utils.helper.TableHelper;
 import com.robcio.soundboard2.voice.Voice;
 import com.robcio.soundboard2.voice.VoiceContainer;
 import com.robcio.soundboard2.voice.VoiceSearcher;
@@ -72,11 +73,11 @@ public class MainStage extends SoundboardStage {
 
         rootTable.add(topBar)
                  .width(WIDTH)
-                 .height(UNIT_HEIGHT)
+                 .height(getSizeHolder().UNIT_HEIGHT)
                  .row();
         rootTable.add(buttonPane)
                  .width(WIDTH)
-                 .height(NO_TOP_HEIGHT)
+                 .height(getSizeHolder().NO_TOP_HEIGHT)
                  .row();
 
         addActor(rootTable);
@@ -98,7 +99,7 @@ public class MainStage extends SoundboardStage {
     private TextField getSearchField() {
         final TextField searchField = TextFieldAssembler.field()
                                                         .resetting()
-                                                        .withSize(WIDTH, UNIT_HEIGHT)
+                                                        .withSize(WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                         .withTextFieldListener(
                                                                 new TextField.TextFieldListener() {
                                                                     @Override
@@ -120,7 +121,7 @@ public class MainStage extends SoundboardStage {
                                                                setKeyboardFocus(searchField);
                                                            }
                                                        })
-                                                       .withSize(QUATER_WIDTH, UNIT_HEIGHT)
+                                                       .withSize(QUATER_WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                        .assemble();
         final Button resetButton = TextButtonAssembler.buttonOf(RESET_BUTTON)
                                                       .shakeStage(this)
@@ -130,7 +131,7 @@ public class MainStage extends SoundboardStage {
                                                               updateButtons();
                                                           }
                                                       })
-                                                      .withSize(QUATER_WIDTH, UNIT_HEIGHT)
+                                                      .withSize(QUATER_WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                       .assemble();
         final Button silenceButton = TextButtonAssembler.buttonOf(SILENCE_BUTTON)
                                                         .shakeStage(this)
@@ -140,7 +141,7 @@ public class MainStage extends SoundboardStage {
                                                                 silenceAllVoices();
                                                             }
                                                         })
-                                                        .withSize(QUATER_WIDTH, UNIT_HEIGHT)
+                                                        .withSize(QUATER_WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                         .assemble();
         final Command partialUpdateCommand = new Command() {
             @Override
@@ -164,7 +165,7 @@ public class MainStage extends SoundboardStage {
                                                             })
                                                             .observing(Assets.getAssetsLoader(),
                                                                        partialUpdateCommand)
-                                                            .withSize(QUATER_WIDTH, UNIT_HEIGHT)
+                                                            .withSize(QUATER_WIDTH, getSizeHolder().UNIT_HEIGHT)
                                                             .assemble();
 
         return TableAssembler.tableOf(searchButton, resetButton, silenceButton, optionsButton)
@@ -180,7 +181,7 @@ public class MainStage extends SoundboardStage {
         indicatorContainer.stopAll();
     }
 
-    void updateButtons() {
+    private void updateButtons() {
         updateButtons(EMPTY_STRING);
     }
 
@@ -195,9 +196,7 @@ public class MainStage extends SoundboardStage {
                 addVoiceButton(table, voice);
             }
         }
-        if (table.getCells().size == 0) {
-            table.add(LIST_IS_EMPTY);
-        }
+        TableHelper.markIfEmpty(table);
         buttonPane.setActor(table);
     }
 
@@ -223,7 +222,7 @@ public class MainStage extends SoundboardStage {
         }
         table.add(buttonAssembler.assemble())
              .width(WIDTH)
-             .height(UNIT_HEIGHT)
+             .height(getSizeHolder().UNIT_HEIGHT)
              .row();
     }
 }
